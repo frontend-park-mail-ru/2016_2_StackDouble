@@ -26,9 +26,6 @@ function hello (text) {
 
 if (typeof exports === 'object') {
 	exports.hello = hello;
-}
-
-if (typeof exports === 'object') {
 	exports.plural = plural;
 }
 
