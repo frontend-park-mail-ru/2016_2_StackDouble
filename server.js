@@ -2,10 +2,7 @@ let express = require('express');
 let technologger = require('technologger');
 let parser = require('body-parser');
 let app = express();
-let userslist = {
-	email: [],
-	value: []
-}
+let userslist = new Map();
 
 app.use('/', express.static('public'));
 
@@ -23,13 +20,7 @@ app.listen(process.env.PORT || 3000, () => {
 });
 
 function getnumber(email){
-	let i = userslist.email.findIndex(str => str === email);
-
-	if (i==-1){
-		i=userslist.email.length;
-		userslist.email.push(email);
-		userslist.value.push(-1);
-	}
-	userslist.value[i]++;
-	return userslist.value[i];
+	let value =(userslist.has(email))?userslist.get(email)+1:0;
+	userslist.set(email,value);
+	return value;
 }
