@@ -1,0 +1,8 @@
+language: node_js
+node_js:
+- 6
+deploy:
+  provider: heroku
+  app: stack-double
+  api_key:
+    secure: jDCCMUOHolX3x6YCL4OijVETN0SueyVBIVC4p/KmtMU+qy0uaxMh2Voa+pVjCSFcpvTJLbtFUt6DFKJOzwngdV6UL97iQ9eRfbFPczFMSTtDZMk+Dr8EAQ9ndWg/ULvp/TSCmCw6qP5IeVkwyPnwobu0395Otoyj43nvh++vm/TxWUpi/3AwbUt6wFxKebO4DqLT49/PdEeCypEFCUy4N6WLdHa5cuTvmqNEIK/65LutbAkSaqWidnwR7StFpCpOMG35gWKeEPRdMs88J70O143wGS0UMSDmx0Ve/ojXxXvz6WCADmZeyUTuwheYTpfgBnoF3X0Pcl/4V+Adr7Otvurz/tNkUVo+kSZQGhZuSg1CPh243vmRQ5uCKjRBTyKw2hSZHnd9mRqzgjt0i+N44rXWzhLKDTHJLzCO2QqtgX0qxCO/WyeN+6YonpVgG5bkTkyKtbWd5OrMbLsOdJVoE24sj+jbFh9kzmiQfwq7OHRY6nvk4Tz4fAUb44ys5EaL61RB4r6LTiZ+S8150cebJ2LhR3y65nE+WuDpiX3nYy4F4/zl0CjQfgwVNqMlBsED/Hp6zTEFg/OzYZQhCBw+FqWQvSEFr6cnpcVlks/lD47pf9basMIPNn3vdiKfHTmoW/SkJZ21jboRgTPLTaXJGRxJr9vaNg5ryxCr8CKeOT8=
