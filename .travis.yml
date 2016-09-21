@@ -11,5 +11,3 @@ deploy:
   app:
     master: stack-double
     deathtest: stackdouble
-on:
-    all_branches: true
