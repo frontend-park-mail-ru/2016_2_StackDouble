@@ -5,6 +5,8 @@ let plural = require('./public/main').plural;
 
 let badwords = ['orange', 'apple'];
 
+assert.equal(hello('Test'), 'Привет, Test');
+
 assert.equal(plural(0), 'Вы были на портале 0 раз.');
 assert.equal(plural(1), 'Вы были на портале 1 раз.');
 assert.equal(plural(2), 'Вы были на портале 2 разa.');
