@@ -1,7 +1,4 @@
-/**
- * Created by root on 16.09.16.
- */
-(function () {
+/* *(function () {
     'use strict'
 
     // Template string
@@ -54,4 +51,4 @@
 
     Dog.catchDog(bob);
     bob.bark();
-})();
+})();*/

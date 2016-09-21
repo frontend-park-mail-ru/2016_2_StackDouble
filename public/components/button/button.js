@@ -1,6 +1,3 @@
-/**
- * Created by root on 16.09.16.
- */
 (function () {
     'use strict'
 
@@ -8,7 +5,7 @@
         constructor(options){
             this.el = document.createElement('button');
             this.el.innerHTML = options.test;
-            this.el.style.backgroundColor=options.backgroundColor;
+            this.el.style.backgroundColor=options.backgroundColor||'';
             this.el.classList.add('button');
 
             this.setAttrs(options,attrs);
