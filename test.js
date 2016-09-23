@@ -1,9 +1,9 @@
-let assert = require('assert');
-let hello = require('./public/main').hello;
-let filter = require('./public/main').filter;
-let plural = require('./public/main').plural;
+const assert = require('assert');
+const hello = require('./public/lib/hello').hello;
+const filter = require('./public/lib/filter').filter;
+const plural = require('./public/lib/plural').plural;
 
-let badwords = ['orange', 'apple'];
+const badwords = ['orange', 'apple'];
 
 assert.equal(hello('Test'), 'Привет, Test');
 
@@ -15,9 +15,9 @@ assert.equal(plural(15), 'Вы были на портале 15 раз.');
 assert.equal(plural(100), 'Вы были на портале 100 раз.');
 
 assert.equal(hello('Test'), 'Привет, Test');
-//TODO: Кейсы для функции filter
+/* * TODO: Кейсы для функции filter */
 assert.equal(filter('КЕК'), '***');
-assert.equal(filter('orange',badwords), '******');
-assert.equal(filter('orange, asasasasa',badwords), '******, asasasasa');
-assert.equal(filter('asasasasa orange',badwords), 'asasasasa ******');
-assert.equal(filter('asasasasaorange',badwords), 'asasasasaorange');
+assert.equal(filter('orange', badwords), '******');
+assert.equal(filter('orange, asasasasa', badwords), '******, asasasasa');
+assert.equal(filter('asasasasa orange', badwords), 'asasasasa ******');
+assert.equal(filter('asasasasaorange', badwords), 'asasasasaorange');

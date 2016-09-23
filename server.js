@@ -10,6 +10,8 @@ let technolibs = require('technolibs');
 
 let userslist = new Map();
 
+let filter = require('./public/lib/filter').filter;
+
 app.use('/', express.static('public'));
 technoDoc.generate(require('./api'), 'public');
 
