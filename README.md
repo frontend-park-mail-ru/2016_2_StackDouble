@@ -1,4 +1,5 @@
 # 2016_2_StackDouble
 Сетевая карточная игра
 
-https://stackdouble.herokuapp.com/
+играем по адресу:
+https://stack-double.herokuapp.com/
