@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 let express = require('express');
 let parser = require('body-parser');
@@ -8,24 +8,19 @@ let path = require('path');
 
 let technolibs = require('technolibs');
 
-let userslist = new Map();
+app.use('/', express.static('public', { maxAge: 1 }));
 
-let filter = require('./public/lib/filter').filter;
-
-app.use('/', express.static('public'));
 technoDoc.generate(require('./api'), 'public');
 
 app.use(parser.json());
 app.use('/libs', express.static('node_modules'));
 
-app.post('/api/messages', (req, res) => {
-	technolibs.publish(req.body).then(body => res.json(req.body));
+app.get('/api/session', (req, res) => {
+	res.send(technoDoc.mock(require('./api/scheme/Session')))
 });
 
-app.post('/users', (req, res) => {
-	console.log(req.body);
-	// TODO: вернуть количество обращений
-	res.send(String(getnumber(req.body.email)));
+app.post('/api/messages', (req, res) => {
+	technolibs.publish(req.body).then(body => res.json(req.body));
 });
 
 app.get('/api/messages', function (req, res) {
@@ -40,10 +35,4 @@ app.get('/api/messages', function (req, res) {
 app.listen(process.env.PORT || 3000, () => {
 	console.log(`App started on port ${process.env.PORT || 3000}`);
 });
-
-function getnumber(email){
-	let value =(userslist.has(email))?userslist.get(email)+1:0;
-	userslist.set(email,value);
-	return value;
-}
 

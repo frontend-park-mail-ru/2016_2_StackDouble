@@ -1,72 +1,65 @@
 (function () {
-  'use strict';
+	'use strict';
 
-  let userData = {};
+	if (typeof window === 'object') {
+		/* * import */
+		let Button = window.Button;
+		const Chat = window.Chat;
+		const Form = window.Form;
+		
+		const loginPage = document.querySelector('.js-login');
+		const chatPage = document.querySelector('.js-chat');
+		
+		const form = new Form({
+			el: document.createElement('div'),
+			data: {
+				title: 'Login',
+				fields: [
+					{
+						name: 'user',
+						type: 'text'
+					},
+					{
+						name: 'email',
+						type: 'email'
+					}
+				],
+				controls: [
+					{
+						text: 'Войти',
+						attrs: {
+							type: 'submit'
+						}
+					}
+				]
+			}
+		});
+		
+		const chat = new Chat({
+			el: document.createElement('div'),
+		});
+		
+		form.on('submit', (event) => {
+			event.preventDefault();
+			
+			const formData = form.getFormData();
+			technolibs.request('/api/login', formData);
 
-  function createMessage(opts, isMy = false) {
-    const message = document.createElement('div');
-    const email = document.createElement('div');
+			chat.set({
+				username: formData.user,
+				email: formData.email
+			})
+			.render();
+			
+			chat.subscribe();
+			
+			loginPage.hidden = true;
+			chatPage.hidden = false;
+		});
 
-    message.classList.add('chat__message');
-    email.classList.add('chat__email');
+		loginPage.appendChild(form.el);
+		chatPage.appendChild(chat.el);
 
-    if (isMy) {
-      message.classList.add('chat__message_my');
-    } else {
-      message.style.backgroundColor = `#${technolibs.colorHash(opts.email || '')}`;
-    }
-    message.innerHTML = opts.message;
-    email.innerHTML = opts.email;
-    message.appendChild(email);
-
-    return message;
-  }
-
-
-  function renderChat(items) {
-    jsMessages.innerHTML = '';
-    items.forEach((item) => {
-      const message = createMessage(item, item.email === userData.email);
-      jsMessages.appendChild(message);
-    });
-    jsMessages.scrollTop = jsMessages.scrollHeight;
-  }
-
-  function subscribe() {
-    technolibs.onMessage((data) => {
-      renderChat(Object.keys(data).map(key => data[key]));
-    });
-  }
-
-  function onLogin(form, block) {
-    userData = {
-      user: form.elements['user'].value,
-      email: form.elements['email'].value,
-    };
-
-    jsLogin.hidden = true;
-    jsChat.hidden = false;
-
-    if (userData.user) {
-      userData.user = filter(userData.user);
-      jsTitle.innerHTML = jsTitle.innerHTML.replace('%username%', userData.user);
-    }
-
-    subscribe();
-  }
-
-  function onChat(form) {
-    const data = {
-      message: form.elements['message'].value,
-      email: userData.email,
-    };
-
-    const result = technolibs.request('/api/messages', data);
-    form.reset();
-  }
-
-  if (typeof exports !== 'object') {
-    window.onLogin = onLogin;
-    window.onChat = onChat;
-  }
-})();
+		loginPage.hidden = false;
+	}
+}());

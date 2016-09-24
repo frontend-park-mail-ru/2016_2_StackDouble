@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "node test.js",
-    "lint": "./node_modules/.bin/eslint ./**/*.js"
+    "lint": "node_modules/eslint/bin/eslint public/main.js"
   },
   "repository": {
     "type": "git",
@@ -17,15 +17,16 @@
   "keywords": [],
   "author": "",
   "dependencies": {
-  "body-parser": "^1.15.*",
-  "express": "^4.14.*",
-  "technologger": "1.0.*",
-  "json-schema-mock": "0.0.8",
-  "techno-gendoc": "0.4.1"
+    "body-parser": "^1.15.*",
+    "express": "^4.14.*",
+    "technologger": "1.0.*",
+    "json-schema-mock": "0.0.8",
+    "techno-gendoc": "0.4.1"
   },
   "devDependencies": {
     "eslint": "^3.5.0",
     "eslint-config-airbnb": "^11.1.0",
+    "eslint-config-google": "^0.6.0",
     "eslint-plugin-import": "^1.15.0",
     "eslint-plugin-jsx-a11y": "^2.2.2",
     "eslint-plugin-react": "^6.2.2"

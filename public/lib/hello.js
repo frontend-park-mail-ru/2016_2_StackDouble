@@ -1,14 +1,14 @@
 (function () {
-  'use strict';
+	'use strict';
 
-  function hello(text) {
-    return 'Привет, ' + text;
-  }
+	function hello(text) {
+		return 'Привет, ' + text;
+	}
 
-  /* *for NodeJS */
-  if (typeof exports === 'object') {
-    exports.hello = hello;
-  } else {
-    window.hello = hello;
-  }
-})();
+	/* *for NodeJS */
+	if (typeof exports === 'object') {
+		exports.hello = hello;
+	} else {
+		window.hello = hello;
+	}
+}());

@@ -3,6 +3,7 @@ body {
 	box-sizing: border-box;
 }
 
+<<<<<<< HEAD
 .chat {
 	height: 50vh;
 	overflow: scroll;
@@ -76,6 +77,39 @@ body {
 	-ms-perspective: 390px;
 	-webkit-perspective: 390px;
 	-moz-perspective: 390px;
+=======
+.cssload-wrap {
+	display: flex;
+		display: -o-flex;
+		display: -ms-flex;
+		display: -webkit-flex;
+		display: -moz-flex;
+	box-pack: center;
+		-o-box-pack: center;
+		-ms-box-pack: center;
+		-webkit-box-pack: center;
+		-moz-box-pack: center;
+	justify-content: center;
+		-o-justify-content: center;
+		-ms-justify-content: center;
+		-webkit-justify-content: center;
+		-moz-justify-content: center;
+	box-align: center;
+		-o-box-align: center;
+		-ms-box-align: center;
+		-webkit-box-align: center;
+		-moz-box-align: center;
+	align-items: center;
+		-o-align-items: center;
+		-ms-align-items: center;
+		-webkit-align-items: center;
+		-moz-align-items: center;
+	perspective: 390px;
+		-o-perspective: 390px;
+		-ms-perspective: 390px;
+		-webkit-perspective: 390px;
+		-moz-perspective: 390px;
+>>>>>>> 36a779ed21996114e1923c87e108f59491b3dbd6
 	height: 100%;
 	overflow: hidden;
 }
@@ -83,6 +117,7 @@ body {
 .cssload-cssload-spinner {
 	position: relative;
 	transform-style: preserve-3d;
+<<<<<<< HEAD
 	-o-transform-style: preserve-3d;
 	-ms-transform-style: preserve-3d;
 	-webkit-transform-style: preserve-3d;
@@ -92,6 +127,17 @@ body {
 	-ms-animation: cssload-wobble 4.59s ease-in-out infinite;
 	-webkit-animation: cssload-wobble 4.59s ease-in-out infinite;
 	-moz-animation: cssload-wobble 4.59s ease-in-out infinite;
+=======
+		-o-transform-style: preserve-3d;
+		-ms-transform-style: preserve-3d;
+		-webkit-transform-style: preserve-3d;
+		-moz-transform-style: preserve-3d;
+	animation: cssload-wobble 4.59s ease-in-out infinite;
+		-o-animation: cssload-wobble 4.59s ease-in-out infinite;
+		-ms-animation: cssload-wobble 4.59s ease-in-out infinite;
+		-webkit-animation: cssload-wobble 4.59s ease-in-out infinite;
+		-moz-animation: cssload-wobble 4.59s ease-in-out infinite;
+>>>>>>> 36a779ed21996114e1923c87e108f59491b3dbd6
 }
 .cssload-cssload-spinner:before, .cssload-cssload-spinner:after {
 	display: block;
@@ -101,10 +147,17 @@ body {
 	border: 44px solid;
 	border-radius: 50%;
 	animation: cssload-spin 1.73s ease-in-out infinite both reverse;
+<<<<<<< HEAD
 	-o-animation: cssload-spin 1.73s ease-in-out infinite both reverse;
 	-ms-animation: cssload-spin 1.73s ease-in-out infinite both reverse;
 	-webkit-animation: cssload-spin 1.73s ease-in-out infinite both reverse;
 	-moz-animation: cssload-spin 1.73s ease-in-out infinite both reverse;
+=======
+		-o-animation: cssload-spin 1.73s ease-in-out infinite both reverse;
+		-ms-animation: cssload-spin 1.73s ease-in-out infinite both reverse;
+		-webkit-animation: cssload-spin 1.73s ease-in-out infinite both reverse;
+		-moz-animation: cssload-spin 1.73s ease-in-out infinite both reverse;
+>>>>>>> 36a779ed21996114e1923c87e108f59491b3dbd6
 }
 .cssload-cssload-spinner:before {
 	border-color: rgb(221,221,221);
@@ -113,10 +166,17 @@ body {
 .cssload-cssload-spinner:after {
 	border-color: black;
 	animation-delay: -0.86s;
+<<<<<<< HEAD
 	-o-animation-delay: -0.86s;
 	-ms-animation-delay: -0.86s;
 	-webkit-animation-delay: -0.86s;
 	-moz-animation-delay: -0.86s;
+=======
+		-o-animation-delay: -0.86s;
+		-ms-animation-delay: -0.86s;
+		-webkit-animation-delay: -0.86s;
+		-moz-animation-delay: -0.86s;
+>>>>>>> 36a779ed21996114e1923c87e108f59491b3dbd6
 }
 
 
