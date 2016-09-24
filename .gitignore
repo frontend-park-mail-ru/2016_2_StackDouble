@@ -1,4 +1,4 @@
 node_modules/
 /.idea/
-/public/api
+/public/api/index.html
 /npm-debug.log
