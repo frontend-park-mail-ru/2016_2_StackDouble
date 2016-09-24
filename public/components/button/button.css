@@ -1,9 +1,6 @@
 .button {
-<<<<<<< HEAD
+
     background-color: #4dca62;
-=======
-	background-color: #4dca62;
->>>>>>> 36a779ed21996114e1923c87e108f59491b3dbd6
     border: .1rem solid #4dca62;
     border-radius: .4rem;
     color: #fff;
@@ -19,8 +16,4 @@
     text-decoration: none;
     text-transform: uppercase;
     white-space: nowrap;
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 36a779ed21996114e1923c87e108f59491b3dbd6
