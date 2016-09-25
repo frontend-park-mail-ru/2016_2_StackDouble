@@ -1,0 +1,23 @@
+{
+  "name": "2016_2_StackDouble",
+  "version": "0.1.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frontend-park-mail-ru/2016_2_StackDouble.git"
+  },
+  "engines": {
+    "node": "6.5.0"
+  },
+  "keywords": [],
+  "author": "",
+  "dependencies": {
+    "body-parser": "^1.15.*",
+    "express": "^4.14.*",
+    "technologger": "1.0.*"
+  }
+}
