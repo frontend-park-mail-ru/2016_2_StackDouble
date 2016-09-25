@@ -1,26 +1,38 @@
+'use strict';
+
 let express = require('express');
-let technologger = require('technologger');
 let parser = require('body-parser');
 let app = express();
-let userslist = new Map();
+let technoDoc = require('techno-gendoc');
+let path = require('path');
 
-app.use('/', express.static('public'));
+let technolibs = require('technolibs');
+
+app.use('/', express.static('public', { maxAge: 1 }));
+
+technoDoc.generate(require('./api'), 'public');
 
 app.use(parser.json());
-app.use(technologger);
+app.use('/libs', express.static('node_modules'));
 
-app.post('/users', (req, res) => {
-    console.log(req.body);
-    // TODO: вернуть количество обращений
-    res.send(String(getnumber(req.body.email)));
+app.get('/api/session', (req, res) => {
+	res.send(technoDoc.mock(require('./api/scheme/Session')))
+});
+
+app.post('/api/messages', (req, res) => {
+	technolibs.publish(req.body).then(body => res.json(req.body));
+});
+
+app.get('/api/messages', function (req, res) {
+	res.send([
+		technoDoc.mock(require('./api/scheme/Message')),
+		technoDoc.mock(require('./api/scheme/Message')),
+		technoDoc.mock(require('./api/scheme/Message')),
+		technoDoc.mock(require('./api/scheme/Message'))
+	])
 });
 
 app.listen(process.env.PORT || 3000, () => {
 	console.log(`App started on port ${process.env.PORT || 3000}`);
 });
 
-function getnumber(email){
-	let value =(userslist.has(email))?userslist.get(email)+1:0;
-	userslist.set(email,value);
-	return value;
-}
