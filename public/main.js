@@ -1,40 +1,66 @@
-'use strict';
-/**
-* @see http://artsiom.mezin.eu/technofront/
-*/
+(function () {
+	'use strict';
 
-function onSubmit (form) {
-	let data = {
-		user: form.elements['user'].value,
-		email: form.elements['email'].value
-	};
-
-	let result = request('/users', data);
-
-	if (result > -1) {
-		form.hidden = true;
-		let text = hello(data.user)+ ". " + plural(result)
-		window.helloWorld.innerHTML = text;
+	if (typeof window !== 'object') {
+		return;
 	}
+	/* * import */
+	const Button = window.Button;
+	const Chat = window.Chat;
+	const Form = window.Form;
 
-	console.log(data, result);
-}
+	const loginPage = document.querySelector('.js-login');
+	const chatPage = document.querySelector('.js-chat');
 
-function hello (text) {
-	return 'Привет, ' + text;
-}
+	const form = new Form({
+		el: document.createElement('div'),
+		data: {
+			title: 'Login',
+			fields: [
+				{
+					name: 'user',
+					type: 'text'
+				},
+				{
+					name: 'email',
+					type: 'email'
+				}
+			],
+			controls: [
+				{
+					text: 'Войти',
+					attrs: {
+						type: 'submit'
+					}
+				}
+			]
+		}
+	});
 
-if (typeof exports === 'object') {
-	exports.hello = hello;
-	exports.plural = plural;
-}
+	const chat = new Chat({
+		el: document.createElement('div'),
+	});
 
-function plural (value){
-	let text = "Вы были на портале " + value +" раз";	
+	form.on('submit', (event) => {
+		event.preventDefault();
 
-	let i=value%100;
-	i=(i<10||i>20)?i%10:0;
-	text+=(i>1 && i<5)?"a.":".";
+		const formData = form.getFormData();
+		technolibs.request('/api/login', formData);
 
-	return text;
-}
+		chat.set({
+			username: formData.user,
+			email: formData.email
+		})
+			.render();
+
+		chat.subscribe();
+
+		loginPage.hidden = true;
+		chatPage.hidden = false;
+	});
+
+	loginPage.appendChild(form.el);
+	chatPage.appendChild(chat.el);
+
+	loginPage.hidden = false;
+}());
