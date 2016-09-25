@@ -2,8 +2,8 @@ module.exports = {
 	'swagger': '2.0',
 	'info': {
 		'version': '0.0.3',
-		'title': 'TechnoChat API',
-		'description': '**ТехноЧат**',
+		'title': 'Stack Double API',
+		'description': 'Карточная игра',
 	},
 	'basePath': '/api',
 	'schemes': ['http'],
