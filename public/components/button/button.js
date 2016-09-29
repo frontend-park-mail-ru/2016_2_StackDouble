@@ -20,10 +20,14 @@
 			this.setAttrs(this.attrs);
 			return this;
 		}
-		
+
 		toString() {
 			return this.el.outerHTML;
 		}
+
+		on(type, callback) {
+			this.el.addEventListener(type, callback);
+		};
 	}
 
 	/* export */

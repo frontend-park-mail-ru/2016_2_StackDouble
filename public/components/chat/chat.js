@@ -5,10 +5,7 @@
 	const Button = window.Button;
 	
 	class Chat {
-		
-		/**
-		 * Конструктор класса Chat
- 		 */
+
 		constructor({ data = {}, el }) {
 			this.data = data;
 			this.el = el;
@@ -19,11 +16,7 @@
 		render() {
 			this._updateHtml();
 		}
-		
-		/**
-		 * Обновить данные компонента
-		 * @param {object} data - данные компонента
-		 */
+
 		set(data) {
 			this.data = data;
 			
