@@ -1,66 +1,135 @@
 (function () {
-	'use strict';
+    'use strict';
 
-	if (typeof window !== 'object') {
-		return;
-	}
-	/* * import */
-	const Button = window.Button;
-	const Chat = window.Chat;
-	const Form = window.Form;
+    if (typeof window !== 'object') {
+        return;
+    }
+    /* import */
+    let Chat = window.Chat;
+    let Form = window.Form;
 
-	const loginPage = document.querySelector('.js-login');
-	const chatPage = document.querySelector('.js-chat');
+    let loginPage = document.querySelector('.js-login');
+    let chatPage = document.querySelector('.js-chat');
+    let regPage = document.querySelector('.js-reg');
 
-	const form = new Form({
-		el: document.createElement('div'),
-		data: {
-			title: 'Login',
-			fields: [
-				{
-					name: 'user',
-					type: 'text'
-				},
-				{
-					name: 'email',
-					type: 'email'
-				}
-			],
-			controls: [
-				{
-					text: 'Войти',
-					attrs: {
-						type: 'submit'
-					}
-				}
-			]
-		}
-	});
+    /* Форма авторизации */
+    let signInForm = new Form({
+        el: document.createElement('div'),
+        data: {
+            title: 'Autorisation',
+            fields: [
+                {
+                    name: 'email',
+                    type: 'text',
+                    placeholder: 'Введите e-mail',
+                    required: true,
+                },
+                {
+                    name: 'password',
+                    type: 'password',
+                    placeholder: 'Введите пароль',
+                    required: true,
+                }
+            ],
+            controls: [
+                {
+                    text: 'Войти',
+                    attrs: {
+                        type: 'submit',
+                        name: 'signIn',
+                    }
+                },
+                {
+                    text: 'Регистрация',
+                    attrs: {
+                        type: 'reset',
+                        name: 'registration',
+                    }
+                },
+            ]
+        },
+    });
 
-	const chat = new Chat({
-		el: document.createElement('div'),
-	});
+    /* Чат */
+    let chat = new Chat({
+        el: document.createElement('div'),
 
-	form.on('submit', (event) => {
-		event.preventDefault();
+    });
 
-		const formData = form.getFormData();
-		technolibs.request('/api/login', formData);
+    signInForm.on('submit', (event) => {
+        event.preventDefault();
 
-		chat.set({
-			username: formData.user,
-			email: formData.email
-		})
-			.render();
+        let formData = signInForm.getFormData();
 
-		chat.subscribe();
+        chat.set({
+            email: formData.email,
+        }).render();
 
-		loginPage.hidden = true;
-		chatPage.hidden = false;
-	});
+        chat.subscribe();
 
-	loginPage.appendChild(form.el);
-	chatPage.appendChild(chat.el);
+        loginPage.hidden = true;
+        chatPage.hidden = false;
+    });
 
-	loginPage.hidden = false;
+    signInForm.on('reset', (event) => {
+        event.preventDefault();
+
+        loginPage.hidden = true;
+        regPage.hidden = false;
+    });
+
+    loginPage.appendChild(signInForm.el);
+    chatPage.appendChild(chat.el);
+
+    loginPage.hidden = false;
+
+    /* Форма регистрации */
+    let formReg = new Form({
+        el: document.createElement('div'),
+        data: {
+            title: 'Регистрация нового пользователя:',
+            fields: [{
+
+                name: 'email',
+                type: 'text',
+                placeholder: 'Введите e-mail',
+                required: true,
+
+            }, {
+                name: 'password',
+                type: 'password',
+                placeholder: 'Введите пароль',
+                required: true,
+            }, {
+
+                name: 'lastpassword',
+                type: 'password',
+                placeholder: 'Повторите пароль',
+                required: true,
+
+            }, ],
+            controls: [{
+                text: 'Зарегистрироваться',
+                attrs: {
+                    type: 'submit',
+                },
+            }, ],
+        },
+    });
+
+    formReg.on('submit', (event) => {
+        event.preventDefault();
+
+        let formData = formReg.getFormData();
+
+/*
+        chat.set({
+            email: formData.email,
+        }).render();
+*/
+        regPage.hidden = true;
+        alert('Регистрация прошла успешно!')
+    });
+    regPage.appendChild(formReg.el);
+
 }());
