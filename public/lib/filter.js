@@ -2,14 +2,13 @@
 	'use strict';
 
 	function filter(str, rules){
-	rules = rules.map(rule => {
+	rules = rules.map((rule) => {
 		return {
 			regexp: RegExp('\\b('+rule+')\\b', 'gi'),
 			length: rule.length
 		};
 
-	}
-	);
+	}));
 
 	rules.forEach(rule => {
 		str = str.replace(rule.regexp, (new Array(rule.length+1)).join('*'));
