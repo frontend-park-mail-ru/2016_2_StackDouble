@@ -1,40 +1,135 @@
-'use strict';
-/**
-* @see http://artsiom.mezin.eu/technofront/
+(function () {
+    'use strict';
+
+    if (typeof window !== 'object') {
+        return;
+    }
+    /* import */
+    let Chat = window.Chat;
+    let Form = window.Form;
+
+    let loginPage = document.querySelector('.js-login');
+    let chatPage = document.querySelector('.js-chat');
+    let regPage = document.querySelector('.js-reg');
+
+    /* Форма авторизации */
+    let signInForm = new Form({
+        el: document.createElement('div'),
+        data: {
+            title: 'Autorisation',
+            fields: [
+                {
+                    name: 'email',
+                    type: 'text',
+                    placeholder: 'Введите e-mail',
+                    required: true,
+                },
+                {
+                    name: 'password',
+                    type: 'password',
+                    placeholder: 'Введите пароль',
+                    required: true,
+                }
+            ],
+            controls: [
+                {
+                    text: 'Войти',
+                    attrs: {
+                        type: 'submit',
+                        name: 'signIn',
+                    }
+                },
+                {
+                    text: 'Регистрация',
+                    attrs: {
+                        type: 'reset',
+                        name: 'registration',
+                    }
+                },
+            ]
+        },
+    });
+
+    /* Чат */
+    let chat = new Chat({
+        el: document.createElement('div'),
+
+    });
+
+    signInForm.on('submit', (event) => {
+        event.preventDefault();
+
+        let formData = signInForm.getFormData();
+
+        chat.set({
+            email: formData.email,
+        }).render();
+
+        chat.subscribe();
+
+        loginPage.hidden = true;
+        chatPage.hidden = false;
+    });
+
+    signInForm.on('reset', (event) => {
+        event.preventDefault();
+
+        loginPage.hidden = true;
+        regPage.hidden = false;
+    });
+
+    loginPage.appendChild(signInForm.el);
+    chatPage.appendChild(chat.el);
+
+    loginPage.hidden = false;
+
+    /* Форма регистрации */
+    let formReg = new Form({
+        el: document.createElement('div'),
+        data: {
+            title: 'Регистрация нового пользователя:',
+            fields: [{
+
+                name: 'email',
+                type: 'text',
+                placeholder: 'Введите e-mail',
+                required: true,
+
+            }, {
+                name: 'password',
+                type: 'password',
+                placeholder: 'Введите пароль',
+                required: true,
+            }, {
+
+                name: 'lastpassword',
+                type: 'password',
+                placeholder: 'Повторите пароль',
+                required: true,
+
+            }, ],
+            controls: [{
+                text: 'Зарегистрироваться',
+                attrs: {
+                    type: 'submit',
+                },
+            }, ],
+        },
+    });
+
+    formReg.on('submit', (event) => {
+        event.preventDefault();
+
+        let formData = formReg.getFormData();
+
+/*
+        chat.set({
+            email: formData.email,
+        }).render();
 */
+        regPage.hidden = true;
+        alert('Регистрация прошла успешно!')
+    });
+    regPage.appendChild(formReg.el);
 
-function onSubmit (form) {
-	let data = {
-		user: form.elements['user'].value,
-		email: form.elements['email'].value
-	};
-
-	let result = request('/users', data);
-
-	if (result > -1) {
-		form.hidden = true;
-		let text = hello(data.user)+ ". " + plural(result)
-		window.helloWorld.innerHTML = text;
-	}
-
-	console.log(data, result);
-}
-
-function hello (text) {
-	return 'Привет, ' + text;
-}
-
-if (typeof exports === 'object') {
-	exports.hello = hello;
-	exports.plural = plural;
-}
-
-function plural (value){
-	let text = "Вы были на портале " + value +" раз";	
-
-	let i=value%100;
-	i=(i<10||i>20)?i%10:0;
-	text+=(i>1 && i<5)?"a.":".";
-
-	return text;
-}
+}());
