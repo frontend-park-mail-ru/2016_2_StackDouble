@@ -14,17 +14,21 @@
 
     /* Форма авторизации */
     let signInForm = new Form({
-        el: document.createElement('div'),
         data: {
             title: 'Autorisation',
+            action: '/',
+            method: 'POST',
             fields: [
                 {
+                  
+                    tabindex: '1',
                     name: 'email',
                     type: 'text',
                     placeholder: 'Введите e-mail',
                     required: true,
                 },
                 {
+                    tabindex: '2',
                     name: 'password',
                     type: 'password',
                     placeholder: 'Введите пароль',
@@ -78,30 +82,32 @@
         regPage.hidden = false;
     });
 
-    loginPage.appendChild(signInForm.el);
-    chatPage.appendChild(chat.el);
+    loginPage.appendChild(signInForm._el);
+    //chatPage.appendChild(chat._el);
 
     loginPage.hidden = false;
 
     /* Форма регистрации */
     let formReg = new Form({
-        el: document.createElement('div'),
         data: {
             title: 'Регистрация нового пользователя:',
+            action: '/',
+            method: 'POST',
             fields: [{
-
+                tabindex: '1',
                 name: 'email',
                 type: 'text',
                 placeholder: 'Введите e-mail',
                 required: true,
 
             }, {
+                tabindex: '2',
                 name: 'password',
                 type: 'password',
                 placeholder: 'Введите пароль',
                 required: true,
             }, {
-
+                tabindex: '3',
                 name: 'lastpassword',
                 type: 'password',
                 placeholder: 'Повторите пароль',
@@ -130,6 +136,6 @@
         regPage.hidden = true;
         alert('Регистрация прошла успешно!')
     });
-    regPage.appendChild(formReg.el);
+   regPage.appendChild(formReg._el);
 
 }());

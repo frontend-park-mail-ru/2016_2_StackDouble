@@ -2,36 +2,43 @@
 	'use strict';
 
 	/* import */
+	const Block = window.Block;
 	const Button = window.Button;
 
-	class Form {
+	class Form extends Block {
 
 		constructor(options = { data: {} }) {
+			super('form', {
+				attrs: {
+					class: 'form',
+					action: options.action,
+					method: options.method
+				}});
 			this.data = options.data;
-			this.el = options.el;
-
 			this.render();
 		}
+
+
 
 		render() {
 			this._updateHtml();
 			this._installControls();
 		}
 
-		_getFields() {
-			const { fields = [] } = this.data;
-			return fields.map((field) => {
-				return `<input ${field.required ? 'required' : ''} placeholder="${field.placeholder}" type="${field.type}" name="${field.name}">`;
-			}).join(' ');
-		}
-
 		_updateHtml() {
-			this.el.innerHTML = `
-				<form action="/" method="POST">
-					<h1>${this.data.title}</h1>
-					<div>${this._getFields()}</div>
-					<div class="js-controls"></div>
-				<form>			`;
+			this.append(new Block('h1'));
+			this._el.querySelector('h1').innerText = this.data.title;
+
+			Object.keys(this.data.fields).forEach((field) => {
+				let atr = {};
+				atr.attrs=this.data.fields[field]
+				this.append(new Block('input', atr));
+			});
+
+			this.append(new Block('div', {
+								attrs: {
+									class: 'js-controls'
+								}}));
 		}
 
 		_installControls() {
@@ -39,16 +46,16 @@
 
 			controls.forEach((data) => {
 				const control = new Button({ text: data.text, attrs: data.attrs }).render();
-				this.el.querySelector('.js-controls').appendChild(control.el);
+				this._el.querySelector('.js-controls').appendChild(control.el);
 			});
 		}
 
         on(type, callback) {
-			this.el.addEventListener(type, callback);
+		this._el.addEventListener(type, callback);
 		}
 
 		getFormData() {
-			const form = this.el.querySelector('form');
+			const form = this._el.querySelector('form');
 			const elements = form.elements;
 			const fields = {};
 
@@ -64,6 +71,15 @@
 			});
 
 			return fields;
+		}
+
+	}
+
+
+	class SinginForm extends Form {
+		constructor(options){
+			super(options);
+
 		}
 
 	}
