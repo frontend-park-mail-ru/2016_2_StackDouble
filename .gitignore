@@ -3,3 +3,4 @@ node_modules/
 /npm-debug.log
 /public/api/
 /public/module.js
+/api.raml
