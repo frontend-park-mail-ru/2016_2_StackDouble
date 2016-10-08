@@ -55,8 +55,7 @@
 		}
 
 		getFormData() {
-			const form = this._el.querySelector('form');
-			const elements = form.elements;
+			const elements = this._el;
 			const fields = {};
 
 			Object.keys(elements).forEach((element) => {
@@ -82,8 +81,15 @@
 
 		}
 
+
+//TODO работа с сервером
+		onSingin(){
+				return this.getFormData();
+		}
+
 	}
 
 	/* export */
 	window.Form = Form;
+	window.SinginForm = SinginForm;
 }());

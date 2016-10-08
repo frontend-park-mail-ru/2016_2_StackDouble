@@ -13,14 +13,14 @@
     let regPage = document.querySelector('.js-reg');
 
     /* Форма авторизации */
-    let signInForm = new Form({
+    let signInForm = new SinginForm({
         data: {
             title: 'Autorisation',
             action: '/',
             method: 'POST',
             fields: [
                 {
-                  
+
                     tabindex: '1',
                     name: 'email',
                     type: 'text',
@@ -63,7 +63,7 @@
     signInForm.on('submit', (event) => {
         event.preventDefault();
 
-        let formData = signInForm.getFormData();
+        let formData = signInForm.onSingin();
 
         chat.set({
             email: formData.email,
@@ -83,7 +83,7 @@
     });
 
     loginPage.appendChild(signInForm._el);
-    //chatPage.appendChild(chat._el);
+    chatPage.appendChild(chat.el);
 
     loginPage.hidden = false;
 
