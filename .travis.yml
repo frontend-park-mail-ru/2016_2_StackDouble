@@ -8,3 +8,4 @@ deploy:
   app: stacktest4
   on:
     repo: glowlex/2016_2_StackDouble
+    branch: master
