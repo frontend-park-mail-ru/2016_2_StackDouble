@@ -4,3 +4,5 @@ node_modules/
 /public/api/
 /public/module.js
 /api.raml
+/public/components/chat/chat.tmpl.js
+/public/components/chat/chat.tmpl.xml

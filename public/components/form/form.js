@@ -3,13 +3,14 @@
 
 	/* import */
 	const Button = window.Button;
-
-	class Form {
-
+	const Block = window.Block;
+	
+	class Form extends Block{
 		constructor(options = { data: {} }) {
+			super('form');
+			this.template = window.fest['form/form.tmpl'];
 			this.data = options.data;
 			this.el = options.el;
-
 			this.render();
 		}
 
@@ -18,33 +19,21 @@
 			this._installControls();
 		}
 
-		_getFields() {
-			const { fields = [] } = this.data;
-			return fields.map((field) => {
-				return `<input ${field.required ? 'required' : ''} placeholder="${field.placeholder}" type="${field.type}" name="${field.name}">`;
-			}).join(' ');
+		reset(){
+			this._el.querySelector('form').reset();
 		}
-
+		
 		_updateHtml() {
-			this.el.innerHTML = `
-				<form action="/" method="POST">
-					<h1>${this.data.title}</h1>
-					<div>${this._getFields()}</div>
-					<div class="js-controls"></div>
-				<form>			`;
+			this.el.innerHTML = this.template(this.data);
 		}
-
+		
 		_installControls() {
 			const { controls = [] } = this.data;
-
+			
 			controls.forEach((data) => {
-				const control = new Button({ text: data.text, attrs: data.attrs }).render();
-				this.el.querySelector('.js-controls').appendChild(control.el);
+				const control = new Button({ text: data.text});
+				this.el.querySelector('.js-controls').appendChild(control._get());
 			});
-		}
-
-        on(type, callback) {
-			this.el.addEventListener(type, callback);
 		}
 
 		getFormData() {
@@ -55,17 +44,13 @@
 			Object.keys(elements).forEach((element) => {
 				const name = elements[element].name;
 				const value = elements[element].value;
-
 				if (!name) {
 					return;
 				}
-
 				fields[name] = value;
 			});
-
 			return fields;
 		}
-
 	}
 
 	/* export */
