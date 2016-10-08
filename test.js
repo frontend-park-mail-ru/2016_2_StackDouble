@@ -3,7 +3,7 @@ const hello = require('./public/lib/hello').hello;
 const filter = require('./public/lib/filter').filter;
 const plural = require('./public/lib/plural').plural;
 
-const badwords = ['orange', 'apple'];
+const badwords = ['orange', 'apple', 'kek'];
 
 assert.equal(hello('Test'), 'Привет, Test');
 
@@ -16,8 +16,7 @@ assert.equal(plural(100), 'Вы были на портале 100 раз.');
 
 assert.equal(hello('Test'), 'Привет, Test');
 /* * TODO: Кейсы для функции filter */
-assert.equal(filter('КЕК'), '***');
+assert.equal(filter('KEK', badwords), '***');
 assert.equal(filter('orange', badwords), '******');
-assert.equal(filter('orange, asasasasa', badwords), '******, asasasasa');
-assert.equal(filter('asasasasa orange', badwords), 'asasasasa ******');
+assert.equal(filter('orange, asasasasa aPpLe', badwords), '******, asasasasa *****');
 assert.equal(filter('asasasasaorange', badwords), 'asasasasaorange');
