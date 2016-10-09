@@ -9,12 +9,11 @@
 			super(options);
 			this._el = document.querySelector('.js-login');
 			this.hide();
-			
 			// TODO: дописать реализацию
 			this.form = new Form({
 				el: document.createElement('div'),
 				data: {
-					title: 'Autorisation',
+					title: 'Authorization',
 					fields: [{
 							name: 'login',
 							type: 'text',
@@ -44,19 +43,20 @@
 					]
 				},
 			});
-			this._el.appendChild(this.form.el);
+			this._el.appendChild(this.form._el);
 		}
 		
 		init(options = {}) {
 			// TODO: дописать реализацию
+			console.log("init mainView");
 			this.form.on('submit', (event) => {
 				event.preventDefault();
+				console.log("go to game");
 				this.router.go('/game');
-				this._el.hidden = true;
 			});
 			this.form.on('reset', (event) => {
 				event.preventDefault();
-				this._el .hidden = true;
+				console.log("go to registration");
 				this.router.go('/registration');
 			});
 		}
