@@ -3,6 +3,7 @@
 	
 	const View = window.View;
 	const Form = window.Form;
+	const request = window.request;
 	
 	class registrationView extends View {
 		constructor(options = {}) {
@@ -20,12 +21,6 @@
 						type: 'text',
 						placeholder: 'Введите login',
 						required: true,
-					}, {
-						name: 'email',
-						type: 'text',
-						placeholder: 'Введите e-mail',
-						required: true,
-						
 					}, {
 						name: 'password',
 						type: 'password',
@@ -53,6 +48,27 @@
 		resume(options = {}) {
 			
 			// TODO: дописать реализацию
+			this.form.on('submit', (event) => {
+				event.preventDefault();
+				
+				const formData = this.form.getFormData();
+				const url = window.baseUrlApp + '/api/user';
+				if (request(url, formData.login,'GET').status !== 200) {
+					if (formData.password === formData.lastpassword) {
+						const resultRequest = request(url , formData);
+						if (resultRequest.status === 200){
+							alert('Регистрация прошла успешно!');
+							console.log("go to game");
+							this.router.go('/game');
+						}
+						alert('Упс что-то пошло не так');
+						console.log("go to registration");
+						this.router.go('/registration');
+					}
+					alert('Пароли не совпадают');
+				}
+				alert('Такой пользователь уже существует!');
+			});
 			this.show();
 		}
 	}

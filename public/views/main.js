@@ -3,6 +3,7 @@
 	
 	const View = window.View;
 	const Form = window.Form;
+	const request = window.request;
 	
 	class MainView extends View {
 		constructor(options = {}) {
@@ -51,8 +52,14 @@
 			console.log("init mainView");
 			this.form.on('submit', (event) => {
 				event.preventDefault();
-				console.log("go to game");
-				this.router.go('/game');
+				const formData = this.form.getFormData();
+				const url = window.baseUrlApp + '/api/session';
+				const resultRequest = request(url, formData);
+				if (resultRequest.status === 200){
+					console.log("go to game");
+					this.router.go('/game');
+				}
+				alert('Неправильный логин/пароль');
 			});
 			this.form.on('reset', (event) => {
 				event.preventDefault();
