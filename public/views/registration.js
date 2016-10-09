@@ -22,6 +22,11 @@
 						placeholder: 'Введите login',
 						required: true,
 					}, {
+						name: 'email',
+						type: 'text',
+						placeholder: 'Введите email',
+						required: true,
+					}, {
 						name: 'password',
 						type: 'password',
 						placeholder: 'Введите пароль',
