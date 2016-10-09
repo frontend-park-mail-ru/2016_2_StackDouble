@@ -55,9 +55,9 @@
 			// TODO: дописать реализацию
 			this.form.on('submit', (event) => {
 				event.preventDefault();
-				
 				const formData = this.form.getFormData();
 				const url = window.baseUrlApp + '/api/user';
+				console.log(formData);
 				if (request(url, formData.login,'GET').status !== 200) {
 					if (formData.password === formData.lastpassword) {
 						const resultRequest = request(url , formData);
