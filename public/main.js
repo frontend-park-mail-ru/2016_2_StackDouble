@@ -11,6 +11,5 @@
 		.addRoute('/game', gameView)
 		.addRoute('/registration', registrationView)
 		.addRoute('/', MainView)
-		.start()
-		.go('/');
+		.start();
 }());
