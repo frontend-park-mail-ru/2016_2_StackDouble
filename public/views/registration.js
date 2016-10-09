@@ -23,7 +23,7 @@
 						required: true,
 					}, {
 						name: 'email',
-						type: 'text',
+						type: 'email',
 						placeholder: 'Введите email',
 						required: true,
 					}, {
@@ -58,7 +58,7 @@
 				const formData = this.form.getFormData();
 				const url = window.baseUrlApp + '/api/user';
 				console.log(formData);
-				if (request(url, formData.login,'GET').status !== 200) {
+				if (request(url, {login:formData.login},'GET').status !== 200) {
 					if (formData.password === formData.lastpassword) {
 						const resultRequest = request(url , formData);
 						if (resultRequest.status === 200){
