@@ -60,14 +60,17 @@
 							alert('Регистрация прошла успешно!');
 							console.log("go to game");
 							this.router.go('/game');
+						}else {
+							alert('Упс что-то пошло не так');
+							console.log("go to registration");
+							this.router.go('/registration');
 						}
-						alert('Упс что-то пошло не так');
-						console.log("go to registration");
-						this.router.go('/registration');
+					}else {
+						alert('Пароли не совпадают');
 					}
-					alert('Пароли не совпадают');
+				}else {
+					alert('Такой пользователь уже существует!');
 				}
-				alert('Такой пользователь уже существует!');
 			});
 			this.show();
 		}
