@@ -5,10 +5,14 @@ let parser = require('body-parser');
 let app = express();
 let technoDoc = require('techno-gendoc');
 let path = require('path');
+let fest = require('fest');
 
 let technolibs = require('technolibs');
 
+fest.compile('./public/components/form/form.tmpl.xml');
+
 app.use('/', express.static('public', { maxAge: 1 }));
+app.use('/registration', express.static('public', { maxAge: 1 }));
 
 technoDoc.generate(require('./api'), 'public');
 
@@ -35,4 +39,3 @@ app.get('/api/messages', function (req, res) {
 app.listen(process.env.PORT || 3000, () => {
 	console.log(`App started on port ${process.env.PORT || 3000}`);
 });
-

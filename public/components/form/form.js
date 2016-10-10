@@ -2,94 +2,57 @@
 	'use strict';
 
 	/* import */
-	const Block = window.Block;
 	const Button = window.Button;
+	const Block = window.Block;
 
-	class Form extends Block {
-
+	class Form extends Block{
 		constructor(options = { data: {} }) {
-			super('form', {
-				attrs: {
-					class: 'form',
-					action: options.action,
-					method: options.method
-				}});
+			super('form');
+			this._el=options.el;
+			this.template = window.fest['form/form.tmpl'];
 			this.data = options.data;
 			this.render();
 		}
-
-
 
 		render() {
 			this._updateHtml();
 			this._installControls();
 		}
 
+		reset(){
+			this._el.querySelector('form').reset();
+		}
+
 		_updateHtml() {
-			this.append(new Block('h1'));
-			this._el.querySelector('h1').innerText = this.data.title;
-
-			Object.keys(this.data.fields).forEach((field) => {
-				let atr = {};
-				atr.attrs=this.data.fields[field]
-				this.append(new Block('input', atr));
-			});
-
-			this.append(new Block('div', {
-								attrs: {
-									class: 'js-controls'
-								}}));
+			this._el.innerHTML = this.template(this.data);
 		}
 
 		_installControls() {
 			const { controls = [] } = this.data;
 
 			controls.forEach((data) => {
-				const control = new Button({ text: data.text, attrs: data.attrs }).render();
-				this._el.querySelector('.js-controls').appendChild(control.el);
+				const control = new Button({ text: data.text, attrs: data.attrs});
+				this._el.querySelector('.js-controls').appendChild(control._get());
 			});
 		}
 
-        on(type, callback) {
-		this._el.addEventListener(type, callback);
-		}
-
 		getFormData() {
-			const elements = this._el;
+			const form = this._el.querySelector('form');
+			const elements = form.elements;
 			const fields = {};
 
 			Object.keys(elements).forEach((element) => {
 				const name = elements[element].name;
 				const value = elements[element].value;
-
 				if (!name) {
 					return;
 				}
-
 				fields[name] = value;
 			});
-
 			return fields;
 		}
-
-	}
-
-
-	class SinginForm extends Form {
-		constructor(options){
-			super(options);
-
-		}
-
-
-//TODO работа с сервером
-		onSingin(){
-				return this.getFormData();
-		}
-
 	}
 
 	/* export */
 	window.Form = Form;
-	window.SinginForm = SinginForm;
 }());

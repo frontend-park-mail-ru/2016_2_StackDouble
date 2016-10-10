@@ -1,0 +1,297 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "StackDouble"
+  },
+  "basePath": "/api",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/user": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "",
+        "description": "Резистрация пользователя\n",
+        "parameters": [
+          {
+            "name": "reg",
+            "in": "body",
+            "description": "The pet JSON you want to post\n",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Registration"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "title": "sessionId",
+              "type": "number",
+              "format": "integer",
+              "minimum": 0
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "",
+        "description": "Получение информации о пользователя  \n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id user",
+            "required": true,
+            "type": "number",
+            "format": "integer",
+            "minimum": 0
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "title": "login",
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "user"
+        ],
+        "summary": "",
+        "description": "Резистрация пользователя\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The pet JSON you want to post\n",
+            "required": true,
+            "type": "number",
+            "format": "integer",
+            "minimum": 0
+          },
+          {
+            "name": "newDate",
+            "in": "body",
+            "description": "The pet JSON you want to post\n",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserUpDate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "title": "sessionId",
+              "type": "number",
+              "format": "integer",
+              "minimum": 0
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      },
+      "delete": {
+        "summary": "",
+        "description": "Метод удаления пользователя\n",
+        "operationId": "deleteUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The pet JSON you want to post",
+            "required": true,
+            "type": "number",
+            "format": "integer",
+            "minimum": 0
+          },
+          {
+            "name": "pass",
+            "in": "body",
+            "description": "The pet JSON you want to post\n",
+            "required": true,
+            "schema": {
+              "title": "password",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "DELETE"
+          },
+          "403": {
+            "description": "ERROR"
+          }
+        }
+      }
+    },
+    "/session": {
+      "post": {
+        "tags": [
+          "session"
+        ],
+        "summary": "",
+        "description": "Резистрация пользователя\n",
+        "parameters": [
+          {
+            "name": "reg",
+            "in": "body",
+            "description": "The pet JSON you want to post\n",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Autorisation"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "title": "sessionId",
+              "type": "number",
+              "format": "integer",
+              "minimum": 0
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "session"
+        ],
+        "summary": "",
+        "description": "Метод получает авторизационную сессию  \n",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Session"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/session/{sessionId}": {
+      "delete": {
+        "summary": "",
+        "description": "Метод разлогирования\n",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "The pet JSON you want to post",
+            "required": true,
+            "type": "number",
+            "format": "integer",
+            "minimum": 0
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "DELETE"
+          },
+          "403": {
+            "description": "ERROR"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Autorisation": {
+      "type": "object",
+      "properties": {
+        "login": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "Registration": {
+      "type": "object",
+      "properties": {
+        "login": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "UserUpDate": {
+      "type": "object",
+      "properties": {
+        "newLogin": {
+          "type": "string",
+          "default": "old login"
+        },
+        "newEmail": {
+          "type": "string",
+          "default": "old email"
+        },
+        "newPassword": {
+          "type": "string"
+        },
+        "oldPassword": {
+          "type": "string"
+        }
+      }
+    },
+    "Session": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "number",
+          "format": "integer"
+        },
+        "userId": {
+          "type": "number",
+          "format": "integer"
+        }
+      }
+    }
+  }
+}
