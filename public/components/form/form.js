@@ -8,7 +8,7 @@
 	class Form extends Block{
 		constructor(options = { data: {} }) {
 			super('form');
-			this._el=options.el;
+			this._el=options.el || document.createElement('div');
 			this.template = window.fest['form/form.tmpl'];
 			this.data = options.data;
 			this.render();

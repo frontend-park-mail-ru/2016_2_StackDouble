@@ -1,8 +1,8 @@
 (function () {
 	'use strict';
-	
+
 	let  id = 0;
-	
+
 	class Route {
 		/**
 		 * Создаёт новый Route - ассоциирует некоторую view с шаблоном пути
@@ -12,7 +12,7 @@
 		 */
 		constructor(pathname, view, options = {}){
 			this.pathToRegex = window.pathToRegex;
-			
+
 			this.id = 'p' + id;
 			id++;
 			this.pathname = pathname;
@@ -20,7 +20,7 @@
 			this.View = view;
 			this.options = options;
 		}
-		
+
 		/**
 		 * Проверяет, соответствует ли переданный pathname текущему Route
 		 * @param {string} pathname - Путь в приложении
@@ -29,7 +29,7 @@
 		match(pathname){
 			return !!this.regex(pathname);
 		}
-		
+
 		/**
 		 * Активирует текущий Route (переходит по нему)
 		 * @param {string} pathname - Путь в приложении
@@ -45,14 +45,14 @@
 			}
 			this._view.resume(Object.assign(state,keys));
 		}
-		
+
 		/**
 		 * Деактивирует текущий Route
 		 */
 		leave(){
 			this._view && this._view.pause();
 		}
-		
+
 		/**
 		 * Устанавливает текущему Route инстанс роутера
 		 * @param {Router} router - Инстанс роутера
@@ -61,7 +61,7 @@
 			this.__router = router;
 		}
 	}
-	
+
 	/* *export */
 	window.Route = Route;
 }());
