@@ -1,10 +1,10 @@
 (function () {
 	'use strict';
-	
+
 	const View = window.View;
 	const Form = window.Form;
 	const request = window.request;
-	
+
 	class MainView extends View {
 		constructor(options = {}) {
 			super(options);
@@ -12,41 +12,49 @@
 			this.hide();
 			// TODO: дописать реализацию
 			this.form = new Form({
-				el: document.createElement('div'),
+				el: this._el,
 				data: {
-					title: 'Authorization',
-					fields: [{
-							name: 'login',
-							type: 'text',
-							placeholder: 'Введите login',
-							required: true,
-						}, {
-							name: 'password',
-							type: 'password',
-							placeholder: 'Введите пароль',
-							required: true,
-						}
-					],
-					controls: [
-						{
-							text: 'Войти',
-							attrs: {
-								type: 'submit',
-								name: 'signIn',
-							}
-						}, {
-							text: 'Регистрация',
-							attrs: {
-								type: 'reset',
-								name: 'registration',
-							}
-						},
-					]
-				},
-			});
-			this._el.appendChild(this.form._el);
+            title: 'Autorisation',
+            action: '/',
+            method: 'POST',
+            fields: [
+                {
+
+                    tabindex: '1',
+                    name: 'email',
+                    type: 'text',
+                    placeholder: 'Введите e-mail',
+                    required: true,
+                },
+                {
+                    tabindex: '2',
+                    name: 'password',
+                    type: 'password',
+                    placeholder: 'Введите пароль',
+                    required: true,
+                }
+            ],
+            controls: [
+                {
+                    text: 'Войти',
+                    attrs: {
+                        type: 'submit',
+                        name: 'signIn',
+                    }
+                },
+                {
+                    text: 'Регистрация',
+                    attrs: {
+                        type: 'reset',
+                        name: 'registration',
+                    }
+                },
+            ]
+        },
+    });
+			//this._el.appendChild(this.form._el);
 		}
-		
+
 		init(options = {}) {
 			// TODO: дописать реализацию
 			console.log("init mainView");
@@ -68,8 +76,8 @@
 			});
 		}
 	}
-	
+
 	// export
 	window.MainView = MainView;
-	
+
 })();

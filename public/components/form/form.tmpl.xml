@@ -1,5 +1,5 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
-    <form>
+    <form class="form" method="{data.method}">
         <h1>
             <fest:value>data.title</fest:value>
         </h1>

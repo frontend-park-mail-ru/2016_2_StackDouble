@@ -1,21 +1,22 @@
 (function () {
 	'use strict';
-	
+
 	const View = window.View;
 	const Form = window.Form;
 	const request = window.request;
-	
+
 	class registrationView extends View {
 		constructor(options = {}) {
 			super(options);
 			this._el = document.querySelector('.js-registration');
 			this.hide();
-			
+
 			// TODO: дописать реализацию
 			this.form = new Form({
-				el: document.createElement('div'),
+				el: this._el,
 				data: {
 					title: 'Регистрация нового пользователя:',
+					method: "POST",
 					fields: [{
 						name: 'login',
 						type: 'text',
@@ -32,12 +33,12 @@
 						placeholder: 'Введите пароль',
 						required: true,
 					}, {
-						
+
 						name: 'lastpassword',
 						type: 'password',
 						placeholder: 'Повторите пароль',
 						required: true,
-						
+
 					}, ],
 					controls: [{
 						text: 'Зарегистрироваться',
@@ -86,3 +87,11 @@
 	window.registrationView = registrationView;
 	
 })();
+======
+
+
+	// export
+	window.registrationView = registrationView;
+
+})();
+>>>>>>> d8e3ae54f0d4cb88833159f65cf35e4e5520db82

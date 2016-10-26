@@ -9,6 +9,7 @@ let path = require('path');
 let technolibs = require('technolibs');
 
 app.use('/', express.static('public', { maxAge: 1 }));
+app.use('/registration', express.static('public', { maxAge: 1 }));
 
 technoDoc.generate(require('./api'), 'public');
 
@@ -35,4 +36,3 @@ app.get('/api/messages', function (req, res) {
 app.listen(process.env.PORT || 3000, () => {
 	console.log(`App started on port ${process.env.PORT || 3000}`);
 });
-
