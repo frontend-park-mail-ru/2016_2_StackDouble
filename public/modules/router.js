@@ -4,19 +4,22 @@
 	const Route = window.Route;
 	
 	class Router {
-		constructor(){
-			if (Route.__instance){
+		/**
+		 * Создаёт новый роутер или возвращает уже созданный инстанс
+		 */
+		constructor() {
+			if (Router.__instance) {
 				return Router.__instance;
 			}
-			
+
 			this.routes = [];
 			this.activeRoute = null;
-			
+
 			this.history = window.history;
-			
-			Route.__instance = this;
+
+			Router.__instance = this;
 		}
-		
+
 		/**
 		 * Добавляет новый Route в роутер
 		 * @param {string} pathname - Шаблон пути
@@ -30,12 +33,12 @@
 			this.routes.push(route);
 			return this;
 		}
-		
+
 		/**
 		 * Запускает роутер и переходит по текущему пути в приложении
 		 * @param {Object} [state={}] - Объект state, который передаётся в первый вызов onroute
 		 */
-		start(state = {}){
+		start(state = {}) {
 			window.onpopstate = function (event) {
 				const state = event.state || {};
 				const pathname = window.location.pathname;
@@ -43,7 +46,7 @@
 			}.bind(this);
 
 			const pathname = window.location.pathname;
-			this.onroute(pathname,state);
+			this.onroute(pathname, state);
 		}
 
 		/**
@@ -51,26 +54,27 @@
 		 * @param {string} pathname - Путь, по которому происходит переход
 		 * @param {Object} [state={}] - Объект state, который передаётся в вызов метода navigate
 		 */
-		onroute(pathname, state = {}){
-			const route = this.routes.find((route)=>route.match(pathname));
+		onroute(pathname, state = {}) {
+			const route = this.routes.find((route) => route.match(pathname));
 			if (!route) {
 				return;
 			}
-			if (this.activeRoute){
+
+			if (this.activeRoute) {
 				this.activeRoute.leave();
 			}
-			this.activeRoute = route;
-			this.activeRoute.navigate(pathname,state);
-		}
 
+			this.activeRoute = route;
+			this.activeRoute.navigate(pathname, state);
+		}
 
 		/**
 		 * Программный переход на новый путь
 		 * @param {string} pathname - Путь
 		 * @param {Object} [state={}] - Объект state, который передаётся в вызов history.pushState
 		 */
-		go(pathname, state = {}){
-			if (window.location.pathname === pathname){
+		go(pathname, state = {}) {
+			if (window.location.pathname === pathname) {
 				return;
 			}
 			this.history.pushState(state, '', pathname);
@@ -81,19 +85,25 @@
 		 * Позволяет установить свою собственную реализацию History API
 		 * @param {Object} history - должен предоставлять реализацию методов back(), forward(), pushState()
 		 */
-		setHistory(history){
+		setHistory(history) {
 			this.history = history;
 		}
 
-		// <-
+		/**
+		 * Возврат на один шаг назад в истории браузера
+		 */
 		static back() {
 			this.history.back();
 		}
-		// ->
-		static forward(){
+
+		/**
+		 * Переход на один шаг вперёд в истории браузера
+		 */
+		static forward() {
 			this.history.forward();
 		}
 	}
+
 
 	/* export */
 	window.Router = Router;
