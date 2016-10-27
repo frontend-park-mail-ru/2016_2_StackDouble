@@ -3,12 +3,12 @@
 
 	// TODO сделать так, чтобы все тесты проходили
 	const pathToRegex = function (pathname) {
-		let keyNames = [];
-		let parts = pathname
+		const keyNames = [];
+		const parts = pathname
 			.split('/')
-			.filter(part => part)
-			.map((part)=>{
-				if (/^:/.exec(part)){
+			.filter((part) => part)
+			.map((part)=> {
+				if (/^:/.exec(part)) {
 					keyNames.push(part.slice(1));
 					return new RegExp(`^\/([^/]+)`, `i`);
 				}
@@ -17,10 +17,9 @@
 
 
 		return function (path) {
-
-			let keys = [];
+			const keys = [];
 			let check = parts.every((regexp, step) => {
-				let tmp = regexp.exec(path);
+				const tmp = regexp.exec(path);
 				if (!tmp) {
 					return false;
 				}
@@ -30,6 +29,10 @@
 				path = path.replace(regexp, '');
 				return true;
 			});
+
+			if (path !== '' && path !== '/') {
+				check = false;
+			}
 
 			if (check) {
 				return keys.reduce((prev, curr, pos) => {
