@@ -48,7 +48,7 @@
 					}, ],
 				},
 			});
-			this._el.appendChild(this.form._el);
+			//this._el.appendChild(this.form._el);
 		}
 		
 		resume(options = {}) {
@@ -65,7 +65,7 @@
 						if (resultRequest.status === 200){
 							alert('Регистрация прошла успешно!');
 							console.log("go to game");
-							this.router.go('/game');
+							this.router.go('/waitingRoom');
 						}else {
 							alert('Упс что-то пошло не так');
 							console.log("go to registration");
@@ -87,11 +87,4 @@
 	window.registrationView = registrationView;
 	
 })();
-======
 
-
-	// export
-	window.registrationView = registrationView;
-
-})();
->>>>>>> d8e3ae54f0d4cb88833159f65cf35e4e5520db82

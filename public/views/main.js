@@ -65,7 +65,7 @@
 				const resultRequest = request(url, formData);
 				if (resultRequest.status === 200){
 					console.log("go to game");
-					this.router.go('/game');
+					this.router.go('/waitingRoom');
 				}
 				alert('Неправильный логин/пароль');
 			});
