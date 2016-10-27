@@ -27,7 +27,7 @@
 		 * @param {Object} [options={}] - Дополнительные параметры, которые будут переданы во view при её создании и инициализации
 		 * @returns {Router}
 		 */
-		addRoute(pathname, view, options = {}){
+		addRoute(pathname, view, options = {}) {
 			const route = new Route(pathname, view, options);
 			route.setRouter(this);
 			this.routes.push(route);
@@ -44,7 +44,7 @@
 				const pathname = window.location.pathname;
 				this.onroute(pathname, state);
 			}.bind(this);
-
+			this.started = true;
 			const pathname = window.location.pathname;
 			this.onroute(pathname, state);
 		}
@@ -74,6 +74,9 @@
 		 * @param {Object} [state={}] - Объект state, который передаётся в вызов history.pushState
 		 */
 		go(pathname, state = {}) {
+			if (!this.started) {
+				return;
+			}
 			if (window.location.pathname === pathname) {
 				return;
 			}
@@ -92,14 +95,14 @@
 		/**
 		 * Возврат на один шаг назад в истории браузера
 		 */
-		static back() {
+		back() {
 			this.history.back();
 		}
 
 		/**
 		 * Переход на один шаг вперёд в истории браузера
 		 */
-		static forward() {
+		forward() {
 			this.history.forward();
 		}
 	}
