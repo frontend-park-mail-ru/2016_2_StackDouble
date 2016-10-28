@@ -10,8 +10,9 @@ let technolibs = require('technolibs');
 
 app.use('/', express.static('public', { maxAge: 1 }));
 app.use('/registration', express.static('public', { maxAge: 1 }));
-app.use('/waitingRoom', express.static('public',{maxAge: 1 }));
+app.use('/waitingroom', express.static('public',{maxAge: 1 }));
 app.use('/topList',express.static('public',{maxAge: 1 }));
+app.use('/game',express.static('public',{maxAge: 1 }));
 
 technoDoc.generate(require('./api'), 'public');
 

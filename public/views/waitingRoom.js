@@ -1,28 +1,26 @@
 (function () {
- 'use strict';
+    'use strict';
 
- const View = window.View;
+    const View = window.View;
 
- class waitingRoomView extends View {
-  constructor(options = {}) {
-   super(options);
-   this._el = document.querySelector('.js-game');
-   this.hide();
-  }
+    class WaitingRoomView extends View {
+        constructor(options = {}) {
+            super(options);
+            this._el = document.querySelector('.js-waitingroom');
+            this.hide();
+        }
 
-  resume(options = {}) {
-   if (!options.username && !options.email) {
-    return this.router.go('/');
-   }
+        resume(options = {}) {
+            if (!options.username && !options.email) {
+                //		return this.router.go('/');
+            }
+            window.location="https://pr.to/BIJ91I/";
+            // TODO: дописать реализацию
 
-   // TODO: дописать реализацию
-
-   this.show();
-  }
- }
-
-
- // export
- window.waitingRoomView = waitingRoomView ;
+            this.show();
+        }
+    }
+    // export
+    window.WaitingRoomView = WaitingRoomView ;
 
 })();

@@ -5,7 +5,7 @@
 	const Form = window.Form;
 	const request = window.request;
 
-	class registrationView extends View {
+	class RegistrationView extends View {
 		constructor(options = {}) {
 			super(options);
 			this._el = document.querySelector('.js-registration');
@@ -84,7 +84,7 @@
 	
 	
 	// export
-	window.registrationView = registrationView;
+	window.RegistrationView = RegistrationView;
 	
 })();
 
