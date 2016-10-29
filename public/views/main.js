@@ -64,10 +64,10 @@
 				const url = window.baseUrlApp + '/api/session';
 				const resultRequest = request(url, formData);
 				if (resultRequest.status === 200){
-					console.log("go to game");
+					console.log("go waitingRoom");
 					this.router.go('/waitingRoom');
-				}
-				alert('Неправильный логин/пароль');
+				}else
+				    alert('Неправильный логин/пароль');
 			});
 			this.form.on('reset', (event) => {
 				event.preventDefault();
