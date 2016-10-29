@@ -9,6 +9,11 @@ let path = require('path');
 let technolibs = require('technolibs');
 
 app.use('/', express.static('public', { maxAge: 1 }));
+
+/*app.use('*', (req, res) => {
+	res.sendFile(path.join(__dirname, 'public/index.html'));
+});
+/*/
 app.use('/registration', express.static('public', { maxAge: 1 }));
 app.use('/waitingroom', express.static('public',{maxAge: 1 }));
 app.use('/topList',express.static('public',{maxAge: 1 }));
@@ -30,3 +35,8 @@ app.post('/api/messages', (req, res) => {
 app.listen(process.env.PORT || 3000, () => {
 	console.log(`App started on port ${process.env.PORT || 3000}`);
 });
+/*
+ app.use('*', (req, res) => {
+ res.sendFile(path.join(__dirname, 'public/index.html'));
+ });
+ */

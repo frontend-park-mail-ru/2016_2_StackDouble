@@ -66,8 +66,9 @@
 				if (resultRequest.status === 200){
 					console.log("go waitingRoom");
 					this.router.go('/waitingRoom');
-				}else
-				    alert('Неправильный логин/пароль');
+				}else {
+                    alert('Неправильный логин/пароль');
+                }
 			});
 			this.form.on('reset', (event) => {
 				event.preventDefault();
