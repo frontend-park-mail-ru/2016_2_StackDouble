@@ -21,7 +21,7 @@
                 {
 
                     tabindex: '1',
-                    name: 'email',
+                    name: 'login',
                     type: 'text',
                     placeholder: 'Введите e-mail',
                     required: true,
