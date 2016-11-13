@@ -23,6 +23,7 @@
   "dependencies": {
     "body-parser": "^1.15.*",
     "express": "^4.14.*",
+    "technologger": "1.0.*",
     "json-schema-mock": "0.0.8",
     "raml-typesystem": "0.0.55",
     "techno-gendoc": "0.4.1",
