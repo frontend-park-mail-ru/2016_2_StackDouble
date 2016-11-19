@@ -57,6 +57,22 @@
 			//this._el.appendChild(this.form._el);
 		}
 
+		pause(options = {}) {
+			this._el = document.querySelector('#js-login');
+			this.hide();
+		}
+
+		resume(options = {}) {
+/*			document.querySelectorAll('div').forEach(function(item, i, arr) {
+				debugger;
+				if (item) {
+					item.hidden = true;
+				}
+});*/
+			this._el = document.querySelector('#js-login');
+			this.show();
+		}
+
 		init(options = {}) {
 			// TODO: дописать реализацию
 			console.log("init mainView");

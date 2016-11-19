@@ -114,7 +114,7 @@ div.rival-info{
   background: skyblue;
 }
 
-div[class$="score-line"]:nth-of-type(even){background: aliceblue;}
+div[class$="score-line"]:nth-of-type(odd){background: aliceblue;}
 
 .score-line:hover{
   transform: translate(0, -3px) scale(1.01, 1.01);

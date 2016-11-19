@@ -20,8 +20,9 @@
           score: "318"
         }
       });
-      this.show();
+
       this._el = document.querySelector('#js-mainmenu');
+      this.hide();
       this.mainmenu = new MainMenu({
         data:{
           buttons: [
@@ -37,7 +38,7 @@
               },
               {
                   tabindex: '3',
-                  id: "btn_score_bord",
+                  id: "btn_top_list",
                   text: "Рейтинг"
               },
               {
@@ -51,37 +52,59 @@
       this._el.appendChild(this.mainmenu._el);
     }
 
+    render(options = {}) {
+    }
 
-    resume(options = {}) {
+    init(options = {}) {
+      this.setAttrs(options.attrs);
+
       console.log("init topmenu");
       this.topmenu._el.querySelector('#top_btn_exit').addEventListener('click', (event)=> {
           event.preventDefault();
-          console.log("exit");
-          //TODO:исправить хуйню
-          this.hide();
           this._el = document.querySelector('#js-topmenu');
-          this.hide();
+          this.remove();
+          this._el = document.querySelector('#js-mainmenu');
+          this.remove();
+          //TODO: пересоздавать вью или как тест пусть будет
+          window.location.reload([true]);
           this.router.go('/');
         });
 
         console.log("init mainmenu");
         this.mainmenu._el.querySelector('#btn_exit').addEventListener('click', (event)=> {
             event.preventDefault();
-            //TODO:исправить хуйню
-            this.hide();
-            this._el = document.querySelector('#js-topmenu');
-            this.hide();
             console.log("exit");
+            this._el = document.querySelector('#js-topmenu');
+            this.remove();
+            this._el = document.querySelector('#js-mainmenu');
+            this.remove();
+            window.location.reload([true]);
             this.router.go('/');
           });
 
+          this.mainmenu._el.querySelector('#btn_top_list').addEventListener('click', (event)=> {
+              event.preventDefault();
+              console.log("go to top list");
+              this.router.go('/toplist');
+            });
+    }
+
+    pause(options = {}) {
+      this._el = document.querySelector('#js-mainmenu');
+      this.hide();
+    }
+
+
+    resume(options = {}) {
       if (!options.username && !options.email) {
         //		return this.router.go('/');
       }
       //window.location.assign(window.location.host+"/waitingroom");
       //window.location.reload([true]);
       // TODO: дописать реализацию
-
+      this._el = document.querySelector('#js-topmenu');
+      this.show();
+      this._el = document.querySelector('#js-mainmenu');
       this.show();
     }
   }
