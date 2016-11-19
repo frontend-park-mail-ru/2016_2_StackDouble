@@ -8,7 +8,7 @@
 	class RegistrationView extends View {
 		constructor(options = {}) {
 			super(options);
-			this._el = document.querySelector('.js-registration');
+			this._el = document.querySelector('#js-registration');
 			this.hide();
 
 			// TODO: дописать реализацию
@@ -44,15 +44,16 @@
 						text: 'Зарегистрироваться',
 						attrs: {
 							type: 'submit',
+							class: "btn btn-success btn-margin",
 						},
 					}, ],
 				},
 			});
 			//this._el.appendChild(this.form._el);
 		}
-		
+
 		resume(options = {}) {
-			
+
 			// TODO: дописать реализацию
 			this.form.on('submit', (event) => {
 				event.preventDefault();
@@ -65,7 +66,7 @@
 						if (resultRequest.status === 200){
 							alert('Регистрация прошла успешно!');
 							console.log("go to game");
-							this.router.go('/waitingRoom');
+							this.router.go('/MainMenu');
 						}else {
 							alert('Упс что-то пошло не так');
 							console.log("go to registration");
@@ -81,10 +82,9 @@
 			this.show();
 		}
 	}
-	
-	
+
+
 	// export
 	window.RegistrationView = RegistrationView;
-	
-})();
 
+})();

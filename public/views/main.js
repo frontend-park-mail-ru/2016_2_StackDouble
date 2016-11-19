@@ -8,7 +8,7 @@
 	class MainView extends View {
 		constructor(options = {}) {
 			super(options);
-			this._el = document.querySelector('.js-login');
+			this._el = document.querySelector('#js-login');
 			this.hide();
 			// TODO: дописать реализацию
 			this.form = new Form({
@@ -40,6 +40,7 @@
                     attrs: {
                         type: 'submit',
                         name: 'signIn',
+												class: "btn btn-success btn-margin",
                     }
                 },
                 {
@@ -47,6 +48,7 @@
                     attrs: {
                         type: 'reset',
                         name: 'registration',
+												class: "btn btn-success btn-margin",
                     }
                 },
             ]
@@ -64,8 +66,8 @@
 				const url = window.baseUrlApp + '/api/session';
 				const resultRequest = request(url, formData);
 				if (resultRequest.status === 200){
-					console.log("go waitingRoom");
-					this.router.go('/waitingRoom');
+					console.log("go MainMenu");
+					this.router.go('/MainMenu');
 				}else {
                     alert('Неправильный логин/пароль');
                 }

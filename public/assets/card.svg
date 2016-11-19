@@ -1,0 +1,27 @@
+<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg">
+ <!-- Generator: Sketch 3.2.2 (9983) - http://www.bohemiancoding.com/sketch -->
+ <title>Cards</title>
+ <desc>Created with Sketch.</desc>
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <g fill-rule="evenodd" fill="none" id="stroked">
+   <g stroke-linejoin="round" stroke-width="2" stroke="#535353" id="Activities">
+    <g id="Cards">
+     <rect rx="3" height="54" width="39" y="3" x="10.5" stroke-linecap="round" id="Rectangle-989"/>
+     <path stroke-linecap="round" id="Path-1949" d="m14.645874,14.230042l4.06189,-7.46109l4.010864,7.396606"/>
+     <path stroke-linecap="square" id="Line" d="m16.5,12l4,0"/>
+     <g transform="rotate(-180, 41, 49.5) translate(-30.5, -46.5) translate(26, 42)" id="Path-1950-+-Line-242">
+      <path stroke-linecap="round" id="Path-1950" d="m41.145874,57.730042l4.06189,-7.46109l4.010864,7.396606"/>
+      <path stroke-linecap="square" id="Line-242" d="m43,55.5l4,0"/>
+     </g>
+     <path stroke-linecap="round" id="Oval-827" d="m23.511383,22.597809c-2.876587,1.660797 -3.323639,4.271881 -0.998505,8.299133c1.873474,3.244995 7.614288,6.858276 7.614288,6.858276c0,0 5.740784,-3.613281 7.614288,-6.858276c2.325134,-4.027252 1.878082,-6.638336 -0.998535,-8.299133c-1.927612,-1.112915 -4.457001,-0.618652 -6.615753,1.040344c-2.158752,-1.658997 -4.688171,-2.153259 -6.615784,-1.040344z"/>
+    </g>
+   </g>
+  </g>
+ </g>
+</svg>

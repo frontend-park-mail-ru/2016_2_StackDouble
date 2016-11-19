@@ -7,7 +7,7 @@
 	class TopListView extends View {
 		constructor(options = {}) {
 			super(options);
-			this._el = document.querySelector('.js-topList');
+			this._el = document.querySelector('#js-topList');
 			this.hide();
 
 		}
@@ -23,7 +23,7 @@
 	}
 	// export
 	window.TopListView = TopListView;
-	
+
 })();
 
 /*
