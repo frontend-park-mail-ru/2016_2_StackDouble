@@ -87,7 +87,7 @@ div.rival-info{
 }
 
 .waiting-sign{
-  position:absolute;
+  position:absolute;;
   height: 50px;
   width: 50px;
   margin:auto;
@@ -95,6 +95,10 @@ div.rival-info{
   bottom:0;
   left:0;
   right:0;
+  animation-name: waiting-sign-animation;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }
 
 @keyframes waiting-sign-animation {
@@ -117,6 +121,10 @@ div.rival-info{
 div[class$="score-line"]:nth-of-type(even){background: aliceblue;}
 
 .score-line:hover{
+  border-style: outset;
+  border-width: 1px;
+  border-color: DodgerBlue;
+  border-radius: 5px;
   transform: translate(0, -3px) scale(1.01, 1.01);
 }
 
@@ -124,7 +132,7 @@ div[class$="score-line"]:nth-of-type(even){background: aliceblue;}
   z-index: 5;
   position: absolute;
   background-color: #d9e6fc;
-  height: 40%;
+  height: 40vh;
   bottom: 3%;
   left:0;
   right: 0;
@@ -138,8 +146,7 @@ div[class$="score-line"]:nth-of-type(even){background: aliceblue;}
   top: 0;
   left: 0;
   z-index: 5;
-  min-height: 80px;
-  height: 120px;
+  height: 16vh;
   width: 14%;
   margin-left: 0px;
   float:right;
@@ -153,9 +160,11 @@ div[class$="score-line"]:nth-of-type(even){background: aliceblue;}
 
 .game-btn {
   position: relative;
-  width: 150px;
-  height: 60px;
+  width: 10vw;
+  min-width: 100px;
+  height: 8vh;
   font-size: 1.5em;
+  margin-bottom: 3vh !important;
 }
 .game-btn:hover{
   transition: all 0.1s linear;
@@ -197,7 +206,7 @@ div[class$="score-line"]:nth-of-type(even){background: aliceblue;}
   z-index: -1;
   position: absolute;;
   background-color: #a1e6fc;
-  height: 30%;
+  height: 12vh;
   width: 90%;
   top: -30%;
   left:0;
@@ -217,7 +226,7 @@ div[class$="score-line"]:nth-of-type(even){background: aliceblue;}
   bottom: 0%;
   z-index: 5;
   min-height: 40px;
-  height: 80px;
+  height: 12vh;
   width: 6.666%;
   float:right;
   background-size: 100% 100%;
@@ -227,7 +236,7 @@ div[class$="score-line"]:nth-of-type(even){background: aliceblue;}
   position: absolute;
   padding: auto;
   margin: auto;
-  right: -1%;
+  right: 0%;
   top: 23%;
   min-height: 60px;
   height: 20%;
@@ -274,7 +283,7 @@ div[class$="score-line"]:nth-of-type(even){background: aliceblue;}
   top: 55%;
   height: auto;;
   width: 100%;
-  font-size: 2em;
+  font-size: 2vw;
   color: black;
   text-align: center;
   vertical-align: middle;
@@ -302,11 +311,11 @@ div[class$="score-line"]:nth-of-type(even){background: aliceblue;}
   margin: auto;
   left: 0%;
   right: 0%;
-  top: 35%;
+  top: 8vh;
   bottom: 0%;
   height: 100%;
   width: 100%;
-  font-size: 420%;
+  font-size: 4vw;
   color: red;
   text-align: center;
   vertical-align: middle;
@@ -316,13 +325,4 @@ div[class$="score-line"]:nth-of-type(even){background: aliceblue;}
   transition: all 1s linear;
   transform: translate(0, 100%);
   visibility: hidden;
-}
-
-#my_text_id {
-  position: relative;;
-  left: 40%;
-  top: 40%;
-  -webkit-transform: translate(10%,40%); /** Safari & Chrome **/
-  -o-transform: translate(0,0); /** Opera **/
-  -moz-transform: translate(0,0); /** Firefox **/
 }

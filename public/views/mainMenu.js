@@ -87,6 +87,19 @@
               console.log("go to top list");
               this.router.go('/toplist');
             });
+
+            this.mainmenu._el.querySelector('#btn_start').addEventListener('click', (event)=> {
+                event.preventDefault();
+                this.mainmenu._el.querySelector('.waiting-sign').hidden = false;
+                //for test
+                setTimeout((function(){
+                  console.log("go to game");
+                  this.router.go('/game');
+                }).bind(this), 2000);
+
+              });
+
+
     }
 
     pause(options = {}) {

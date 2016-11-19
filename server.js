@@ -15,9 +15,7 @@ app.use('/', express.static('public', { maxAge: 1 }));
 });
 /*/
 app.use('/registration/', express.static('public', { maxAge: 1 }));
-app.use('/game', (req, res) => {
-	res.sendFile(path.join(__dirname, 'html/game_window.html'));
-});
+app.use('/game', express.static('public', { maxAge: 1 }));
 app.use('/mainmenu', express.static('public', { maxAge: 1 }));
 app.use('/topList', express.static('public', { maxAge: 1 }));
 

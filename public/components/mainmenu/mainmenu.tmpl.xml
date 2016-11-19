@@ -1,9 +1,11 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
   <div class="container">
     <div class="row">
-      <div class="col-md-12 col-xs-12" style="height:210px"></div>
+      <div class="col-md-12 col-xs-12" style="height:150px"></div>
     </div>
-      <img class="waiting-sign" alt="50x50" src="./assets/stary.svg" hidden="hidden"/>
+    <div class="col-md-12 col-xs-12"  style="height:50px">
+      <img class="waiting-sign" alt="50x50" src="./assets/stary.svg" hidden="true"/>
+    </div>
   </div>
   <div class="col-md-12 col-xs-12"  style="height:20px"></div>
 
