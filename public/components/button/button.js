@@ -1,28 +1,13 @@
 (function () {
 	'use strict';
 
-	class Button {
+	const Block = window.Block;
+
+	class Button extends Block {
 		constructor(options) {
-			this.text = options.text;
-			this.attrs = options.attrs || [];
-			this.el = document.createElement('button');
-		}
-
-		setAttrs(attrs) {
-			Object.keys(attrs).forEach((name) => {
-				this.el.setAttribute(name, attrs[name]);
-			});
-		}
-
-		render() {
-			this.el.innerHTML = this.text;
-			this.el.classList.add('button');
-			this.setAttrs(this.attrs);
-			return this;
-		}
-		
-		toString() {
-			return this.el.outerHTML;
+			super('button', options);
+			this._el.classList.add('button');
+			this._el.innerText = this._options.text || 'Press me';
 		}
 	}
 

@@ -3,3 +3,7 @@ node_modules/
 /npm-debug.log
 /public/api/
 /public/module.js
+/api.raml
+/public/components/chat/chat.tmpl.js
+/public/components/chat/chat.tmpl.xml
+/public/components/userscore/UserScore.html

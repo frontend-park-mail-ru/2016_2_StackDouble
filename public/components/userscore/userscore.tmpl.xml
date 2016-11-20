@@ -1,0 +1,15 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+    <form class="userScore" method="{data.method}">
+        <span class="text_in_user_score piece">
+            <fest:value>data.piece</fest:value>
+        </span>
+        <img class="user_score_image" src="../../resource/image/UserTop.svg"></img>
+        <span class="text_in_user_score nick_name">
+            <fest:value>data.login</fest:value>
+        </span>
+        <img class="user_score_image" src="../../resource/image/Score.svg"></img>
+        <span class="text_in_user_score user_score">
+            <fest:value>data.score</fest:value>
+        </span>
+    </form>
+</fest:template>

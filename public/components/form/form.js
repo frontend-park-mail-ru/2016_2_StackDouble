@@ -3,46 +3,41 @@
 
 	/* import */
 	const Button = window.Button;
+	const Block = window.Block;
 
-	class Form {
+	class Form extends Block {
 
 		/**
 		 * Конструктор класса Form
 		 */
-		constructor(options = { data: {} }) {
+		constructor(options = {data: {}}) {
+			super('form');
+			this.template = window.fest['form/form.tmpl'];
 			this.data = options.data;
-			this.el = options.el;
-
+			this._el = options.el;
 			this.render();
 		}
 
+		/**
+		 * Обновляем HTML
+		 */
 		render() {
 			this._updateHtml();
 			this._installControls();
 		}
 
 		/**
-		 * Вернуть поля формы
-		 * @return {string}
+		 * Обнуляем форму
 		 */
-		_getFields() {
-			const { fields = [] } = this.data;
-			return fields.map((field) => {
-				return `<input type="text" name="${field.name}">`;
-			}).join(' ');
+		reset() {
+			this._el.querySelector('form').reset();
 		}
 
 		/**
 		 * Обновить html компонента
 		 */
 		_updateHtml() {
-			this.el.innerHTML = `
-				<form>
-					<h1>${this.data.title}</h1>
-					<div>${this._getFields()}</div>
-					<div class="js-controls"></div>
-				<form>
-			`;
+			this._el.innerHTML = this.template(this.data);
 		}
 
 		/**
@@ -52,18 +47,9 @@
 			const { controls = [] } = this.data;
 
 			controls.forEach((data) => {
-				const control = new Button({ text: data.text }).render();
-				this.el.querySelector('.js-controls').appendChild(control.el);
+				const control = new Button({ text: data.text, attrs: data.attrs});
+				this._el.querySelector('.js-controls').appendChild(control._get());
 			});
-		}
-
-		/**
-		 * Подписка на событие
-		 * @param {string} type - имя события
-		 * @param {function} callback - коллбек
-		 */
-		on(type, callback) {
-			this.el.addEventListener(type, callback);
 		}
 
 		/**
@@ -71,14 +57,13 @@
 		 * @return {object}
 		 */
 		getFormData() {
-			const form = this.el.querySelector('form');
+			const form = this._el.querySelector('form');
 			const elements = form.elements;
 			const fields = {};
 
 			Object.keys(elements).forEach((element) => {
 				const name = elements[element].name;
 				const value = elements[element].value;
-
 				if (!name) {
 					return;
 				}

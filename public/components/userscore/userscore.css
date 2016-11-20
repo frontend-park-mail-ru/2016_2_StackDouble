@@ -1,0 +1,26 @@
+.userScore {
+    max-width: 100%;
+    min-width: 100%;
+    margin: auto;
+    background-color: #f3ff34;
+}
+.text_in_user_score{
+    font-size: 3.5em;
+    border: none;
+    padding: 0px;
+    margin: 0px;
+}
+.piece{
+    width: 3200px;
+}
+.nick_name{
+    width: 1500px;
+}
+.user_score{
+    width: 1500px;
+}
+.user_score_image{
+    width: 5%;
+    height: 5%;
+    vertical-align: -10px;
+}
