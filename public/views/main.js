@@ -88,7 +88,7 @@
 					console.log("go MainMenu");
 					this.router.go('/MainMenu');
 				}else {
-                    alert('Неправильный логин/пароль');
+                    alert('Неправильный логин/пароль');}
 
 			});
 			this.form.on('reset', (event) => {
