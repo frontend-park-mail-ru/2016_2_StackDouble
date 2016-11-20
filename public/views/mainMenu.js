@@ -110,7 +110,7 @@
 
     resume(options = {}) {
       if (!options.username && !options.email) {
-        //		return this.router.go('/');
+        		return this.router.go('/');
       }
       //window.location.assign(window.location.host+"/waitingroom");
       //window.location.reload([true]);

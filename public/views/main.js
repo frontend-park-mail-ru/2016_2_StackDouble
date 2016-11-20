@@ -78,9 +78,9 @@
 			console.log("init mainView");
 			this.form.on('submit', (event) => {
 				event.preventDefault();
-				console.log("go MainMenu");
-				this.router.go('/MainMenu');//на время теста
-			/*
+			/*				console.log("go MainMenu");
+				this.router.go('/MainMenu');//на время теста}*/
+
 				const formData = this.form.getFormData();
 				const url = window.baseUrlApp + '/api/session';
 				const resultRequest = request(url, formData);
@@ -89,7 +89,7 @@
 					this.router.go('/MainMenu');
 				}else {
                     alert('Неправильный логин/пароль');
-                }*/
+
 			});
 			this.form.on('reset', (event) => {
 				event.preventDefault();
