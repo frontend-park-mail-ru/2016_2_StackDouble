@@ -12,7 +12,6 @@
       this._el = document.querySelector('#js-topmenu');
       this.hide();
       this.topmenu = new TopMenu({
-        el:this._el,
         data:{
           //TODO:передавать инфу игрока
           nick: "Amadeus",
@@ -20,6 +19,7 @@
           score: "318"
         }
       });
+      this._el.appendChild(this.topmenu._el);
 
       this._el = document.querySelector('#js-mainmenu');
       this.hide();
@@ -53,6 +53,7 @@
     }
 
     render(options = {}) {
+
     }
 
     init(options = {}) {
@@ -110,12 +111,14 @@
 
     resume(options = {}) {
       if (!options.username && !options.email) {
-        		return this.router.go('/');
+        //		return this.router.go('/');
       }
       //window.location.assign(window.location.host+"/waitingroom");
       //window.location.reload([true]);
       // TODO: дописать реализацию
+
       this._el = document.querySelector('#js-topmenu');
+      //this._el.appendChild(this.topmenu._el);
       this.show();
       this._el = document.querySelector('#js-mainmenu');
       this.show();

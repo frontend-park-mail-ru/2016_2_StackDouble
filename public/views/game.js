@@ -55,7 +55,7 @@
 
 		resume(options = {}) {
 			if (!options.username && !options.email) {
-		     return this.router.go('/');
+		//		return this.router.go('/');
 			}
 			this.show();
 

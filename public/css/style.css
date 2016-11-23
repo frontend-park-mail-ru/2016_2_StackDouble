@@ -5770,19 +5770,6 @@ button.close {
   padding: 0 !important;
   margin: 0 !important; }
 
-img.avatar {
-  position: relative;
-  z-index: 1;
-  height: 100px;
-  width: 100px; }
-
-div.rival-info {
-  width: 200px;
-  height: 120px;
-  padding: 5px;
-  background-color: #d9e6fc;
-  border-radius: 10px; }
-
 .rival-info > .avatar {
   position: relative;
   z-index: 1;
@@ -5794,7 +5781,7 @@ div.rival-info {
 .rival-info > .avatar-star {
   position: relative;
   z-index: 10;
-  top: 0px;
+  top: 0;
   height: 24px;
   width: 24px; }
 
@@ -5805,13 +5792,13 @@ div.rival-info {
   z-index: 2;
   height: 90px;
   width: 90px;
-  margin-left: 0px;
+  margin-left: 0;
   float: right;
   background-size: 100% 100%; }
   .rival-info > .card > .num-cards {
     position: absolute;
     top: 15%;
-    left: 0%;
+    left: 0;
     z-index: 3;
     height: 100%;
     width: 100%;
@@ -5821,12 +5808,6 @@ div.rival-info {
     vertical-align: bottom; }
 
 .rival-info:hover {
-  -webkit-transform: scale(1.05, 1.05);
-          transform: scale(1.05, 1.05); }
-
-.card:hover {
-  -webkit-transition: all 0.1s linear;
-  transition: all 0.1s linear;
   -webkit-transform: scale(1.05, 1.05);
           transform: scale(1.05, 1.05); }
 
@@ -5845,22 +5826,6 @@ div.rival-info {
   100% {
     -webkit-transform: rotate(360deg) scale(1.3, 1.3);
             transform: rotate(360deg) scale(1.3, 1.3); } }
-
-.avatar-star:hover {
-  -webkit-animation-name: rotation-star;
-          animation-name: rotation-star;
-  -webkit-animation-duration: 2s;
-          animation-duration: 2s;
-  -webkit-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
-  -webkit-animation-timing-function: linear;
-          animation-timing-function: linear; }
-
-.avatar:hover {
-  -webkit-transition: all 0.1s linear;
-  transition: all 0.1s linear;
-  -webkit-transform: scale(1.05, 1.05);
-          transform: scale(1.05, 1.05); }
 
 .waiting-sign {
   position: absolute;
@@ -5913,17 +5878,13 @@ div.rival-info {
 
 .score-line {
   background: skyblue; }
-
-div[class$="score-line"]:nth-of-type(even) {
-  background: aliceblue; }
-
-.score-line:hover {
-  border-style: outset;
-  border-width: 1px;
-  border-color: DodgerBlue;
-  border-radius: 5px;
-  -webkit-transform: translate(0, -3px) scale(1.01, 1.01);
-          transform: translate(0, -3px) scale(1.01, 1.01); }
+  .score-line:hover {
+    border-style: outset;
+    border-width: 1px;
+    border-color: DodgerBlue;
+    border-radius: 5px;
+    -webkit-transform: translate(0, -3px) scale(1.01, 1.01);
+            transform: translate(0, -3px) scale(1.01, 1.01); }
 
 .player-desk {
   z-index: 5;
@@ -5937,18 +5898,6 @@ div[class$="score-line"]:nth-of-type(even) {
   padding-top: 1%;
   border-radius: 10px; }
 
-.player-deck > .card {
-  position: relative;
-  top: 0;
-  left: 0;
-  z-index: 5;
-  height: 16vh;
-  width: 14%;
-  margin-left: 0px;
-  float: right;
-  margin-bottom: 3%;
-  background-size: 100% 100%; }
-
 .game-btn {
   position: relative;
   width: 10vw;
@@ -5961,35 +5910,6 @@ div[class$="score-line"]:nth-of-type(even) {
     transition: all 0.1s linear;
     -webkit-transform: scale(1.05, 1.05);
             transform: scale(1.05, 1.05); }
-
-.player-deck > .card > .num-cards {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  bottom: -2%;
-  right: 12%;
-  background-color: green;
-  text-align: center;
-  color: yellow;
-  border-style: solid;
-  border-width: 1px;
-  border-color: black;
-  border-radius: 3px; }
-
-.player-deck > .card > .num-new-cards {
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  top: -8%;
-  left: 4%;
-  background-color: yellow;
-  text-align: center;
-  font-size: 2em;
-  color: red;
-  border-style: solid;
-  border-width: 1px;
-  border-color: red;
-  border-radius: 20px; }
 
 .player-desk-drawer {
   z-index: -1;
@@ -6009,8 +5929,8 @@ div[class$="score-line"]:nth-of-type(even) {
     margin: auto;
     left: 0;
     right: 0;
-    top: 0%;
-    bottom: 0%;
+    top: 0;
+    bottom: 0;
     z-index: 5;
     min-height: 40px;
     height: 12vh;
@@ -6022,7 +5942,7 @@ div[class$="score-line"]:nth-of-type(even) {
   position: absolute;
   padding: auto;
   margin: auto;
-  right: 0%;
+  right: 0;
   top: 23%;
   min-height: 60px;
   height: 20%;
@@ -6040,11 +5960,25 @@ div[class$="score-line"]:nth-of-type(even) {
             animation-iteration-count: infinite;
     -webkit-animation-timing-function: linear;
             animation-timing-function: linear; }
+  .deck > .num-cards {
+    position: absolute;
+    padding: auto;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 8vh;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    font-size: 4vw;
+    color: red;
+    text-align: center;
+    vertical-align: middle; }
 
 @-webkit-keyframes deck-animation {
   0% {
-    -webkit-transform: rotateY(0) translate(0%, 0%);
-            transform: rotateY(0) translate(0%, 0%); }
+    -webkit-transform: rotateY(0) translate(0%, 0);
+            transform: rotateY(0) translate(0%, 0); }
   10% {
     -webkit-transform: rotateY(0) translate(3%, 6%);
             transform: rotateY(0) translate(3%, 6%); }
@@ -6055,13 +5989,13 @@ div[class$="score-line"]:nth-of-type(even) {
     -webkit-transform: rotateY(0) translate(3%, 5%);
             transform: rotateY(0) translate(3%, 5%); }
   100% {
-    -webkit-transform: rotateY(0) translate(0%, 0%);
-            transform: rotateY(0) translate(0%, 0%); } }
+    -webkit-transform: rotateY(0) translate(0%, 0);
+            transform: rotateY(0) translate(0%, 0); } }
 
 @keyframes deck-animation {
   0% {
-    -webkit-transform: rotateY(0) translate(0%, 0%);
-            transform: rotateY(0) translate(0%, 0%); }
+    -webkit-transform: rotateY(0) translate(0%, 0);
+            transform: rotateY(0) translate(0%, 0); }
   10% {
     -webkit-transform: rotateY(0) translate(3%, 6%);
             transform: rotateY(0) translate(3%, 6%); }
@@ -6072,8 +6006,8 @@ div[class$="score-line"]:nth-of-type(even) {
     -webkit-transform: rotateY(0) translate(3%, 5%);
             transform: rotateY(0) translate(3%, 5%); }
   100% {
-    -webkit-transform: rotateY(0) translate(0%, 0%);
-            transform: rotateY(0) translate(0%, 0%); } }
+    -webkit-transform: rotateY(0) translate(0%, 0);
+            transform: rotateY(0) translate(0%, 0); } }
 
 .timer {
   position: absolute;
@@ -6086,19 +6020,6 @@ div[class$="score-line"]:nth-of-type(even) {
   width: 20%;
   float: right;
   background-size: 100% 100%; }
-  .timer > .time {
-    position: relative;
-    padding: auto;
-    margin: auto;
-    left: 3%;
-    right: 0%;
-    top: 55%;
-    height: auto;
-    width: 100%;
-    font-size: 2vw;
-    color: black;
-    text-align: center;
-    vertical-align: middle; }
   .timer:hover {
     -webkit-transform-style: preserve-3d;
             transform-style: preserve-3d;
@@ -6110,6 +6031,19 @@ div[class$="score-line"]:nth-of-type(even) {
             animation-iteration-count: infinite;
     -webkit-animation-timing-function: linear;
             animation-timing-function: linear; }
+  .timer > .time {
+    position: relative;
+    padding: auto;
+    margin: auto;
+    left: 3%;
+    right: 0;
+    top: 55%;
+    height: auto;
+    width: 100%;
+    font-size: 2vw;
+    color: black;
+    text-align: center;
+    vertical-align: middle; }
 
 @-webkit-keyframes clock-animation {
   0% {
@@ -6133,20 +6067,82 @@ div[class$="score-line"]:nth-of-type(even) {
     -webkit-transform: rotateY(0);
             transform: rotateY(0); } }
 
-.deck > .num-cards {
-  position: absolute;
-  padding: auto;
-  margin: auto;
-  left: 0%;
-  right: 0%;
-  top: 8vh;
-  bottom: 0%;
-  height: 100%;
-  width: 100%;
-  font-size: 4vw;
-  color: red;
-  text-align: center;
-  vertical-align: middle; }
+img.avatar {
+  position: relative;
+  z-index: 1;
+  height: 100px;
+  width: 100px; }
+
+div.rival-info {
+  width: 200px;
+  height: 120px;
+  padding: 5px;
+  background-color: #d9e6fc;
+  border-radius: 10px; }
+
+.card:hover {
+  -webkit-transition: all 0.1s linear;
+  transition: all 0.1s linear;
+  -webkit-transform: scale(1.05, 1.05);
+          transform: scale(1.05, 1.05); }
+
+.avatar-star:hover {
+  -webkit-animation-name: rotation-star;
+          animation-name: rotation-star;
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear; }
+
+.avatar:hover {
+  -webkit-transition: all 0.1s linear;
+  transition: all 0.1s linear;
+  -webkit-transform: scale(1.05, 1.05);
+          transform: scale(1.05, 1.05); }
+
+div[class$="score-line"]:nth-of-type(even) {
+  background: aliceblue; }
+
+.player-deck > .card {
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  height: 16vh;
+  width: 14%;
+  margin-left: 0;
+  float: right;
+  margin-bottom: 3%;
+  background-size: 100% 100%; }
+  .player-deck > .card > .num-cards {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    bottom: -2%;
+    right: 12%;
+    background-color: green;
+    text-align: center;
+    color: yellow;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    border-radius: 3px; }
+  .player-deck > .card > .num-new-cards {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: -8%;
+    left: 4%;
+    background-color: yellow;
+    text-align: center;
+    font-size: 2em;
+    color: red;
+    border-style: solid;
+    border-width: 1px;
+    border-color: red;
+    border-radius: 20px; }
 
 .player-desk1:hover {
   -webkit-transition: all 1s linear;

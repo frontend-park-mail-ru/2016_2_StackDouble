@@ -4,12 +4,20 @@
 	const View = window.View;
 	const Form = window.Form;
 	const request = window.request;
+	const UserModel = window.UserModel;
 
 	class MainView extends View {
 		constructor(options = {}) {
 			super(options);
 			this._el = document.querySelector('#js-login');
 			this.hide();
+
+/*			debugger;
+				const test = window.GamePlayer;
+				var t = new test();
+				t = t.total_cards;*/
+
+
 			// TODO: дописать реализацию
 			this.form = new Form({
 				el: this._el,
@@ -78,9 +86,17 @@
 			console.log("init mainView");
 			this.form.on('submit', (event) => {
 				event.preventDefault();
-			/*				console.log("go MainMenu");
-				this.router.go('/MainMenu');//на время теста}*/
+			console.log("go MainMenu");
+//TODO: переделать в
+/*
+var user = new UserModel();
+user.singin(this.form.getFormData());
+localStorage.setItem("User", user);
+*/
 
+
+				this.router.go('/MainMenu');//на время теста
+			/*
 				const formData = this.form.getFormData();
 				const url = window.baseUrlApp + '/api/session';
 				const resultRequest = request(url, formData);
@@ -89,7 +105,7 @@
 					this.router.go('/MainMenu');
 				}else {
                     alert('Неправильный логин/пароль');}
-
+                }*/
 			});
 			this.form.on('reset', (event) => {
 				event.preventDefault();
