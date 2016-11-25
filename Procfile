@@ -1,2 +1,2 @@
-web: npm run fest && npm run css && node server.js
+web: npm run deploy
 
