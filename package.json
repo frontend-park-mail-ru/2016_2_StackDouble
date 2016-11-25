@@ -34,7 +34,7 @@
     "node-sass": "^3.13.0",
     "bootstrap-sass": "3.3.7",
     "gulp": "^3.9.1",
-    "gulp-postcss": "^6.2.0",
+    "gulp-postcss": "^6.2.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.5.3",
