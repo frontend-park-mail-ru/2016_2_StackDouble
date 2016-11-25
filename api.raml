@@ -1,0 +1,145 @@
+#%RAML 1.0
+title: Stack Double
+version: 1
+mediaType: application/json
+types:
+  User:
+    type: object
+    properties:
+      userId: integer
+      login: string
+      email: string
+      password: string
+  Session:
+    type: object
+    properties:
+      sessionId: integer
+      userId: integer
+/api/user:
+  get:
+    description: "Возращает имя пользователя"
+    body:
+      application/json:
+        properties:
+          userId:
+            type: integer
+            required: true
+    responses:
+      200:
+        description: "Nickname"
+        body:
+          application/json:
+            properties:
+              login:
+                type: string
+      401:
+        description: "Ошибка при выполнении запроса"
+  post:
+    description: "Метод создания пользователя, регистрация"
+    body:
+      application/json:
+        properties:
+          login:
+            type: string
+            required: true
+          email:
+            type: string
+            required: true
+          password:
+            type: string
+            required: true
+    responses:
+      200:
+        description: "Id session"
+        body:
+          application/json:
+            type: Session
+      400:
+        description: "Ошибка при выполнении запроса"
+  delete:
+    description: "Метод удаления пользователя"
+    body:
+      application/json:
+        properties:
+          userId:
+            type: integer
+            required: true
+    responses:
+      200:
+        description: "Успешный запрос"
+      401:
+        description: "Ошибка при выполнении запроса"
+  patch:
+    description: "Метод изменения данных пользователя"
+    body:
+      application/json:
+        properties:
+          type: Session
+          newLogin:
+            type: string
+            default: "old login"
+            required: true
+          newEmail:
+            type: string
+            default: "old email"
+            required: true
+          newPassword:
+            type: string
+            required: true
+          oldPassword:
+            type: string
+            required: true
+    responses:
+      200:
+        description: "Успешно"
+      403:
+        description: "Ошибка при выполнении запроса"
+/api/user/{userId}:
+  get:
+    responses:
+      200:
+        description: "Nickname"
+        body:
+          application/json:
+            properties:
+              login:
+                type: string
+      401:
+        description: "Ошибка при выполнении запроса"
+/api/session:
+  post:
+    description: "Метод создания сессии, авторизация"
+    body:
+      application/json:
+        properties:
+          login:
+            type: string
+            required: true
+          password:
+            type: string
+            required: true
+    responses:
+      200:
+        description: "Id сессии"
+        body:
+          application/json:
+            type: Session
+      400:
+        description: "Ошибка при выполнении запроса"
+  get:
+    description: "Метод получает авторизационную сессию"
+    responses:
+      200:
+        description: "Id сессии"
+        body:
+          application/json:
+            type: Session
+      401:
+        description: "Ошибка"
+  delete:
+    description: "Метод логаута пользователя"
+    responses:
+      200:
+        description: "Успешный запрос"
+      400:
+        description: "Ошибка при выполнении запроса"
