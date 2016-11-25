@@ -24,6 +24,7 @@
   "author": "",
   "dependencies": {
     "body-parser": "^1.15.*",
+    "fest": "^0.12.1",
     "express": "^4.14.*",
     "technologger": "1.0.*",
     "json-schema-mock": "0.0.8",
