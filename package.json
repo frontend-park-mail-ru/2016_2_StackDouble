@@ -10,7 +10,7 @@
     "karma:start": "karma start",
     "karma:run": "karma run",
     "start": "node server.js",
-    "css": "node-sass ./public/sass/style.sass ./public/css/style.css && gulp css"
+    "css": "node-sass ./public/sass/style.sass ./public/css/style.css && gulp css",
     "deploy": "npm run fest && npm run css && npm run start"
   },
   "repository": {
