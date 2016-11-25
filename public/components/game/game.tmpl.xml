@@ -1,0 +1,58 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+  <div class="col-md-12" style="height:50px;"></div>
+  <div class="row-fluid container-fluid" style="padding-top:60px   min-width:1200px">
+    <div class="col-md-2"></div>
+    <fest:for iterate="data.rivals" index="i" value="rival">
+      <div class="col-md-2 col-sm-3">
+        <div class="rival-info center-block">
+          <div class="avatar" alt="100x100" align="right" style="background-image: url({rival.avatar});">
+            <fest:if test="rival.has_star">
+              <img class="avatar-star" alt="24x24" src="./assets/stary.svg"/>
+            </fest:if>
+          </div>
+          <div class="card" alt="100x100"  style="background-image: url(./assets/card.svg);">
+            <span class="nopadding num-cards">7</span>
+          </div>
+          <h3 class="nopadding" style="width:100px" align="center"><fest:value>rival.nick</fest:value></h3>
+        </div>
+      </div>
+    </fest:for>
+
+  </div>
+
+  <div class="col-md-12" style="height:50px;"></div>
+
+  <div class="container player-desk">
+    <div class="row">
+      <div class="col-md-10 player-deck">
+      <fest:for iterate="data.types" index="i" value="type">
+        <div id="card_{i}" class="card" style="background-image: url({type.image});">
+          <div class="nopadding num-new-cards" hidden="hidden">5</div>
+          <span class="nopadding num-cards">1</span>
+        </div>
+    </fest:for>
+
+      </div>
+      <div class="col-md-2"  align="center">
+        <button id="btn_start" type="button" class="btn game-btn btn-success" >Обменять</button>
+        <br></br>
+        <button id="btn_totorial" type="button" class="btn game-btn btn-success" >Комбо</button>
+        <br></br>
+        <button id="btn_score_bord" type="button" class="btn game-btn btn-success" >Сброс</button>
+      </div>
+      <div class="player-desk-drawer" >
+              <fest:for from="1"  to="data.capacity_of_drawer" index="i">
+        <div id="card_drawer_{i}" class="card"  style="background-image: url(./assets/card.svg);"></div>
+            </fest:for>
+      </div>
+    </div>
+  </div>
+
+  <div class="deck" style="background-image: url(./assets/card.svg);"></div>
+  <div class="deck" style="background-image: url(./assets/card.svg);">
+    <div class="num-cards"><fest:value>data.deck</fest:value></div>
+  </div>
+  <div class="timer" style="background-image: url(./assets/clock.svg);">
+    <div class="time">1:20</div>
+  </div>
+</fest:template>

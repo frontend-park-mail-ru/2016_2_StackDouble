@@ -1,0 +1,32 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+  <div class="col-md-10 col-xs-12 col-md-offset-1">
+    <h1 style="text-align:center"> Таблица лидеров </h1>
+    <div class="list-group">
+    <fest:for iterate="data" index="i" value="field">
+      <div id="{field.id}" class="row list-group-item score-line">
+      <div class="col-md-1 col-xs-1">
+        <h4 name="position"><fest:value>field.position</fest:value></h4>
+      </div>
+      <div class="col-md-1 col-xs-1">
+        <a name="refrence" href="#">
+          <img class="media-object img-rounded" alt="40x40" src="{field.avatar}"/>
+        </a>
+      </div>
+
+      <div class="col-md-4 col-xs-4">
+        <h4 name="name"><fest:value>field.nick</fest:value></h4>
+      </div>
+      <div class="col-md-1 col-xs-1">
+        <img class="media-object img-rounded" alt="40x40" height="40" src="./assets/goblet.svg"/>
+      </div>
+      <div class="col-md-4 col-xs-4">
+        <h4 name="score"><fest:value>field.score</fest:value></h4>
+      </div>
+    </div>
+        </fest:for>
+  </div>
+</div>
+<div class="col-md-1">
+<button id="btn_back" type="button" class="btn btn-default dropdown-toggle btn-success"  style=" position: fixed; top: 7%; width:100px"> Назад </button>
+</div>
+</fest:template>

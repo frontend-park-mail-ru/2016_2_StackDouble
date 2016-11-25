@@ -4,81 +4,105 @@
 	const View = window.View;
 	const Form = window.Form;
 	const request = window.request;
+	const UserModel = window.UserModel;
 
 	class MainView extends View {
 		constructor(options = {}) {
 			super(options);
-			this._el = document.querySelector('.js-login');
+			this._el = document.querySelector('#js-login');
 			this.hide();
 			// TODO: дописать реализацию
 			this.form = new Form({
 				el: this._el,
 				data: {
-            title: 'Autorisation',
-            action: '/',
-            method: 'POST',
-            fields: [
-                {
+					title: 'Authorization',
+					action: '/',
+					method: 'POST',
+					fields: [
+						{
 
-                    tabindex: '1',
-                    name: 'login',
-                    type: 'text',
-                    placeholder: 'Введите e-mail',
-                    required: true,
-                },
-                {
-                    tabindex: '2',
-                    name: 'password',
-                    type: 'password',
-                    placeholder: 'Введите пароль',
-                    required: true,
-                }
-            ],
-            controls: [
-                {
-                    text: 'Войти',
-                    attrs: {
-                        type: 'submit',
-                        name: 'signIn',
-                    }
-                },
-                {
-                    text: 'Регистрация',
-                    attrs: {
-                        type: 'reset',
-                        name: 'registration',
-                    }
-                },
-            ]
-        },
-    });
+							tabindex: '1',
+							name: 'login',
+							type: 'text',
+							placeholder: 'Введите e-mail',
+							required: true,
+						},
+						{
+							tabindex: '2',
+							name: 'password',
+							type: 'password',
+							placeholder: 'Введите пароль',
+							required: true,
+						}
+					],
+					controls: [
+						{
+							text: 'Войти',
+							attrs: {
+								type: 'submit',
+								name: 'signIn',
+								class: "btn btn-success btn-margin",
+							}
+						},
+						{
+							text: 'Регистрация',
+							attrs: {
+								type: 'reset',
+								name: 'registration',
+								class: "btn btn-success btn-margin",
+							}
+						},
+					]
+				},
+			});
 			//this._el.appendChild(this.form._el);
 		}
 
-		init(options = {}) {
-			// TODO: дописать реализацию
-			console.log("init mainView");
-			this.form.on('submit', (event) => {
-				event.preventDefault();
-				const formData = this.form.getFormData();
-				const url = window.baseUrlApp + '/api/session';
-				const resultRequest = request(url, formData);
-				if (resultRequest.status === 200){
-					console.log("go waitingRoom");
-					this.router.go('/waitingRoom');
-				}else {
-                    alert('Неправильный логин/пароль');
-                }
-			});
-			this.form.on('reset', (event) => {
-				event.preventDefault();
-				console.log("go to registration");
-				this.router.go('/registration');
-			});
+		pause(options = {}) {
+			this._el = document.querySelector('#js-login');
+			this.hide();
 		}
-	}
 
-	// export
-	window.MainView = MainView;
+		resume(options = {}) {
+	this._el = document.querySelector('#js-login');
+	this.show();
+}
+
+init(options = {}) {
+	// TODO: дописать реализацию
+	console.log("init mainView");
+	this.form.on('submit', (event) => {
+		event.preventDefault();
+		console.log("go MainMenu");
+		//TODO: переделать в
+		/*
+		var user = new UserModel();
+		user.singin(this.form.getFormData());
+		localStorage.setItem("User", user);
+		*/
+
+		/*
+		this.router.go('/MainMenu');//на время теста
+		*/
+		const formData = this.form.getFormData();
+		const url = window.baseUrlApp + '/api/session';
+		const resultRequest = request(url, formData);
+		if (resultRequest.status === 200){
+			console.log("go MainMenu");
+			this.router.go('/MainMenu');
+		}else {
+			alert('Неправильный логин/пароль');
+		}
+	});
+	this.form.on('reset', (event) => {
+		event.preventDefault();
+		console.log("go to registration");
+		this.router.go('/registration');
+	});
+}
+}
+
+// export
+window.MainView = MainView;
 
 })();
