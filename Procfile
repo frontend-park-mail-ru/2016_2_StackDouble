@@ -1,4 +1,2 @@
-web: npm run fest
-web: npm run css
-web: node server.js
+web: npm run fest && npm run css && node server.js
 
