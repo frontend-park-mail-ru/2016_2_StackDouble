@@ -32,7 +32,9 @@
     "technolibs": "1.1.0",
     "fest": "^0.12.1",
     "node-sass": "^3.13.0",
-    "bootstrap-sass": "3.3.7"
+    "bootstrap-sass": "3.3.7",
+    "gulp": "^3.9.1",
+    "gulp-postcss": "^6.2.0",
   },
   "devDependencies": {
     "autoprefixer": "^6.5.3",
