@@ -11,13 +11,6 @@
 			super(options);
 			this._el = document.querySelector('#js-login');
 			this.hide();
-
-/*			debugger;
-				const test = window.GamePlayer;
-				var t = new test();
-				t = t.total_cards;*/
-
-
 			// TODO: дописать реализацию
 			this.form = new Form({
 				el: this._el,
@@ -94,9 +87,9 @@ user.singin(this.form.getFormData());
 localStorage.setItem("User", user);
 */
 
-
+/*
 				this.router.go('/MainMenu');//на время теста
-			/*
+			*/
 				const formData = this.form.getFormData();
 				const url = window.baseUrlApp + '/api/session';
 				const resultRequest = request(url, formData);
@@ -104,8 +97,8 @@ localStorage.setItem("User", user);
 					console.log("go MainMenu");
 					this.router.go('/MainMenu');
 				}else {
-                    alert('Неправильный логин/пароль');}
-                }*/
+                    alert('Неправильный логин/пароль');
+                }
 			});
 			this.form.on('reset', (event) => {
 				event.preventDefault();
