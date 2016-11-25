@@ -5,5 +5,4 @@ node_modules/
 /public/module.js
 /api.raml
 *.tmpl.js
-/public/components/userscore/UserScore.html
 /.sass-cache
