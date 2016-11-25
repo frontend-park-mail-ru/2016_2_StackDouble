@@ -2,42 +2,41 @@
 	'use strict';
 
 	const View = window.View;
-	const TopList = window.TopList;
+	const UserScoreTop = window.UserScoreTop;
 
 	class TopListView extends View {
 		constructor(options = {}) {
 			super(options);
-			this._el = document.querySelector('#js-topList');
+			this._el = document.querySelector('.js-topList');
 			this.hide();
-			var data = new Array(40);
-			for(var i=0; i<data.length; i++){
-				data[i]={
-					nick: "player_" + (i+1),
-					id: i,
-					avatar: "http://lorempixel.com/40/40",
-					score: 367853-3447*i,
-					position: i+1,
-				};
-			};
 
-			this.toplist = new TopList({
-				el:this._el,
-				data:data,
-			});
 		}
+		resume(options = {}) {
+			if (!options.username && !options.email) {
+				//		return this.router.go('/');
+			}
 
+			// TODO: дописать реализацию
 
-		init(options = {}) {
-			this.setAttrs(options.attrs);
-				console.log("init toplist");
-				this.toplist._el.querySelector('#btn_back').addEventListener('click', (event)=> {
-						event.preventDefault();
-						console.log("back from toplist");
-						this.router.back();
-					});
+			this.show();
 		}
-}
+	}
 	// export
 	window.TopListView = TopListView;
-
+	
 })();
+
+/*
+ this.form = new UserScoreTop({
+ el: this._el,
+ data: {
+ title: 'TopList',
+ action: '/',
+ method: 'GET',
+
+ piece: 100,
+ login: "Nick Name",
+ score: 100000
+ }
+ })
+ */

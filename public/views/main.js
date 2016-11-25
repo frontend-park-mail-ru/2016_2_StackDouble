@@ -4,12 +4,11 @@
 	const View = window.View;
 	const Form = window.Form;
 	const request = window.request;
-	const UserModel = window.UserModel;
 
 	class MainView extends View {
 		constructor(options = {}) {
 			super(options);
-			this._el = document.querySelector('#js-login');
+			this._el = document.querySelector('.js-login');
 			this.hide();
 			// TODO: дописать реализацию
 			this.form = new Form({
@@ -41,7 +40,6 @@
                     attrs: {
                         type: 'submit',
                         name: 'signIn',
-												class: "btn btn-success btn-margin",
                     }
                 },
                 {
@@ -49,7 +47,6 @@
                     attrs: {
                         type: 'reset',
                         name: 'registration',
-												class: "btn btn-success btn-margin",
                     }
                 },
             ]
@@ -58,44 +55,17 @@
 			//this._el.appendChild(this.form._el);
 		}
 
-		pause(options = {}) {
-			this._el = document.querySelector('#js-login');
-			this.hide();
-		}
-
-		resume(options = {}) {
-/*			document.querySelectorAll('div').forEach(function(item, i, arr) {
-				debugger;
-				if (item) {
-					item.hidden = true;
-				}
-});*/
-			this._el = document.querySelector('#js-login');
-			this.show();
-		}
-
 		init(options = {}) {
 			// TODO: дописать реализацию
 			console.log("init mainView");
 			this.form.on('submit', (event) => {
 				event.preventDefault();
-			console.log("go MainMenu");
-//TODO: переделать в
-/*
-var user = new UserModel();
-user.singin(this.form.getFormData());
-localStorage.setItem("User", user);
-*/
-
-/*
-				this.router.go('/MainMenu');//на время теста
-			*/
 				const formData = this.form.getFormData();
 				const url = window.baseUrlApp + '/api/session';
 				const resultRequest = request(url, formData);
 				if (resultRequest.status === 200){
-					console.log("go MainMenu");
-					this.router.go('/MainMenu');
+					console.log("go waitingRoom");
+					this.router.go('/waitingRoom');
 				}else {
                     alert('Неправильный логин/пароль');
                 }
