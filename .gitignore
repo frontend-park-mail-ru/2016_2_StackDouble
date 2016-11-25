@@ -4,6 +4,6 @@ node_modules/
 /public/api/
 /public/module.js
 /api.raml
-/public/components/*/*.tmpl.js
+*.tmpl.js
 /public/components/userscore/UserScore.html
 /.sass-cache
