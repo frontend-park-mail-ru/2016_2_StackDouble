@@ -10,7 +10,8 @@
     "karma:start": "karma start",
     "karma:run": "karma run",
     "start": "node server.js",
-    "css": "node-sass ./public/sass/style.sass ./public/css/style.css && gulp css"
+    "css": "node-sass ./public/sass/style.sass ./public/css/style.css && gulp css",
+    "postinstall": "npm run fest && npm run css"
   },
   "repository": {
     "type": "git",
@@ -28,7 +29,13 @@
     "json-schema-mock": "0.0.8",
     "raml-typesystem": "0.0.55",
     "techno-gendoc": "0.4.1",
-    "technolibs": "1.1.0"
+    "technolibs": "1.1.0",
+    "fest": "^0.12.1",
+    "node-sass": "^3.13.0",
+    "bootstrap-sass": "3.3.7",
+    "gulp": "^3.9.1",
+    "gulp-postcss": "^6.2.0",
+    "autoprefixer": "^6.5.3"
   },
   "devDependencies": {
     "autoprefixer": "^6.5.3",
@@ -39,6 +46,7 @@
     "eslint-plugin-jsx-a11y": "^2.2.2",
     "eslint-plugin-react": "^6.2.2",
     "fest": "^0.12.1",
+    "node-sass": "^3.13.0",
     "gulp": "^3.9.1",
     "gulp-postcss": "^6.2.0",
     "jasmine": "^2.5.2",
