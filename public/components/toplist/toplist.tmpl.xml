@@ -1,0 +1,40 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+  <div class="col-md-10 col-xs-12 col-md-offset-1">
+    <h1 style="text-align:center"> Таблица лидеров </h1>
+    <div class="list-group">
+      <fest:for iterate="data" index="i" value="field">
+        <div id="{field.id}" class="row list-group-item top-list-score-line">
+          <div class="col-md-1 col-xs-1">
+            <h4 name="position"><fest:value>field.position</fest:value></h4>
+          </div>
+          <div class="col-md-1 col-xs-1">
+            <a name="refrence" href="#">
+              <img class="media-object img-rounded" alt="40x40" src="{field.avatar}"/>
+            </a>
+          </div>
+
+          <div class="col-md-4 col-xs-4">
+            <h4 name="name"><fest:value>field.nick</fest:value></h4>
+          </div>
+          <div class="col-md-1 col-xs-1">
+            <img class="media-object img-rounded top-list__goblet" alt="40x40"/>
+          </div>
+          <div class="col-md-4 col-xs-4">
+            <h4 name="score"><fest:value>field.score</fest:value></h4>
+          </div>
+        </div>
+      </fest:for>
+    </div>
+    <ul class="pagination">
+
+      <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">pr</span></a></li>
+      <li class="active"><a href="#">1 <span class="sr-only"></span></a></li>
+      <li><a href="#">2 <span class="sr-only">)</span></a></li>
+      <li><a href="#">3 <span class="sr-only"></span></a></li>
+      <li ><a href="#" aria-label="Next"><span aria-hidden="true">nx</span></a></li>
+    </ul>
+  </div>
+  <div class="col-md-1">
+    <button id="btn_back" type="button" class="btn btn-default dropdown-toggle btn-success top-list__fixed-btn"> Назад </button>
+  </div>
+</fest:template>

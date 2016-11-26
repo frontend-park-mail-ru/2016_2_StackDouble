@@ -1,0 +1,58 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+  <div class="col-md-12 blank_50"></div>
+  <div class="row-fluid container-fluid">
+    <div class="col-md-2"></div>
+    <fest:for iterate="data.rivals" index="i" value="rival">
+      <div class="col-md-2 col-sm-3">
+        <div class="rival-info center-block">
+          <div class="rival-info__avatar" alt="100x100" align="right" style="background-image: url({rival.avatar});">
+            <fest:if test="rival.has_star">
+              <img class="rival-info__avatar-star" alt="24x24"/>
+            </fest:if>
+          </div>
+          <div class="rival-info__card" alt="100x100">
+            <span class="nopadding rival-info__card__num-cards">7</span>
+          </div>
+          <h3 class="nopadding rival-info__nick"><fest:value>rival.nick</fest:value></h3>
+        </div>
+      </div>
+    </fest:for>
+
+  </div>
+
+  <div class="col-md-12 blank_50"></div>
+
+  <div class="container player-desk">
+    <div class="row">
+      <div class="col-md-10 player-deck">
+      <fest:for iterate="data.types" index="i" value="type">
+        <div id="card_{i}" class="player-deck__card player-deck__card_type-{type.image}">
+          <div class="nopadding player-deck__card__num-new-cards" hidden="hidden">5</div>
+          <span class="nopadding player-deck__card__num-cards">1</span>
+        </div>
+    </fest:for>
+
+      </div>
+      <div class="col-md-2"  align="center">
+        <button id="btn_start" type="button" class="btn game-btn btn-success" >Обменять</button>
+        <br></br>
+        <button id="btn_totorial" type="button" class="btn game-btn btn-success" >Комбо</button>
+        <br></br>
+        <button id="btn_score_bord" type="button" class="btn game-btn btn-success" >Сброс</button>
+      </div>
+      <div class="player-desk-drawer" >
+              <fest:for from="1"  to="data.capacity_of_drawer" index="i">
+        <div id="card_drawer_{i}" class="player-desk-drawer__card"></div>
+            </fest:for>
+      </div>
+    </div>
+  </div>
+
+  <div class="deck"></div>
+  <div class="deck">
+    <div class="deck__num-cards"><fest:value>data.deck</fest:value></div>
+  </div>
+  <div class="timer">
+    <div class="timer__time">0:00</div>
+  </div>
+</fest:template>
