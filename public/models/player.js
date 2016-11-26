@@ -4,18 +4,18 @@
 	class Player {
 		/**
 		 * Создаёт нового пользователя
-		 * @param {string} username - имя пользователя
+		 * @param {string} login - имя пользователя
      * @param {string} avatar - аватар пользователя
-		 * @param {string} score - очки пользователя
+		 * @param {number} score - очки пользователя
 		 */
 		constructor(data = {}) {
-			this.username = data.username;
+			this.username = data.login;
 			this.avatar = data.avatar;
       this.score = data.score;
 		}
 
 		set_player(data){
-			this.username = data.username;
+			this.username = data.login;
 			this.avatar = data.avatar;
 			this.score = data.score;
 		}
@@ -50,7 +50,7 @@
 		 */
 		get json() {
 			return {
-				username: this.username,
+				username: this.login,
         avatar: this.avatar,
 				email: this.email
 			};

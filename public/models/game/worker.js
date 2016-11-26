@@ -10,16 +10,23 @@
     * Создаёт новую игру
     * @param {socket} socket - имя пользователя
     * @param {User} user - объект пользователя
+    * @param {number=} nrivals - число соперников
+    * @param {number} status - прогресс выполнения
     */
-    constructor(user, rivals=4) {
+    constructor(user, nrivals=4) {
       this.status = 0;//socket opened =1, поиск игроков, игра создана, игра окончена
+      this.nrivals = nrivals;
       this.user = user;
       this.desk = new Desk();
       this.rivals = new Rivals();
       this.player = new Player(user);
     }
 
-    setconnection(){
+    /**
+    * установка и нстройка соединения
+    * @private
+    */
+    private setconnection(){
       //TODO:только установка соединения
       // Выбираем по какому протоколу будет производиться соединение
       const protocol = window.location.protocol === 'https:' ?
@@ -61,7 +68,8 @@
       this.setconnection();
       //TODO:запрос на поиск игроков и начало игры
       //TODO:вызов апдейтов стола, игрока и соперников
-      this.startLoop();
+      //TODO: проверка игрока и переправка серверу/переделать в лисен объекта?
+      this.intervalId= setInterval(()=>{this.checkPlayer.call(this);}, 300)
     }
 
     isStopped() {
@@ -69,15 +77,13 @@
     }
 
     /**
-    * Начинаем крутить петлю
+    * отправка действия игрока
+    * @private
+    * @param {string} action - действие пользователя
+    * @param {Card[].type} data - номиналы карт
+    * @return {textstatus} - status
     */
-    startLoop() {
-      //TODO: проверка игрока и переправка серверу
-      this.intervalId= setInterval(()=>{this.checkPlayer.call(this);}, 300)
-    }
-
-    //отправка действия игрока
-    send(action, data){
+    private send(action, data){
       var msg ={
         action: action,
         data:data
@@ -96,7 +102,11 @@
 
     }
 
-    //колбек на сообщения сокета. вызывает апдейты
+    /**
+    * колбек на сообщения сокета. вызывает апдейты
+    * @callback receiver
+    * @param {Card[]} hand - колода игрока
+    */
     receiver(event){
       var msg = JSON.parse(event.data);
 
@@ -115,7 +125,11 @@
 
     }
 
-    checkPlayer() {
+    /**
+    * проверка сделал ли игрок действие и вызов его отправки
+    * @private
+    */
+    private checkPlayer() {
       var t = this.player.checkPlayer();
       if(t.action !== false){
         //отправка действия и списка карт

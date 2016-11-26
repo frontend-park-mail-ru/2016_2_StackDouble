@@ -3,13 +3,19 @@
 
 	const Player = window.PlayerModel;
 
-	class User extends Player {
+	/**
+	 * Создаёт нового пользователя
+	 * @param {string} login - имя пользователя
+	 * @param {string} avatar - аватар пользователя
+	 * @param {number} score - очки пользователя
+	 */
+	class UserProfile extends Player {
 		constructor(data = {}) {
       super(data);
 		}
 
 		singin(data){
-			
+
 		}
 
 		/**
@@ -51,5 +57,5 @@
 	}
 
 	//export
-	window.UserModel = User;
+	window.UserModel = UserProfile;
 })();

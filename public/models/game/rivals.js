@@ -3,6 +3,11 @@
 const Player = window.PlayerModel;
 
   class Rival extends Player{
+    /**
+     * Создаёт соперника
+     * @param {boolean} his_turn - показывает чей ход
+     * @param {number} total_cards - количество карт
+     */
     constructor(){
       super();
       this.his_turn = false;
@@ -10,6 +15,9 @@ const Player = window.PlayerModel;
     }
   }
 
+/**
+* класс контейнер Rivals
+*/
   class Rivals {
     constructor() {
 

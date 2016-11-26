@@ -3,7 +3,7 @@
 
 	class Desk {
 		/**
-		 * Создаёт нового пользователя
+		 * Создаёт стол
 		 * @param {number} deck - осталось карт
      * @param {time} timer - время
 		 */
@@ -12,6 +12,11 @@
       this.timer = 0;
 		}
 
+		/**
+		 * обновляет поля 
+		 * @param {number} deck - осталось карт
+     * @param {time} timer - время
+		 */
     update(data){
       this.deck = data.deck;
       this.timer = data.time;
