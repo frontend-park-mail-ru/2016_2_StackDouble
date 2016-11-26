@@ -38,9 +38,8 @@
 					],
 					deck: 112,
 					types: [
-						{image:"./assets/card.svg",},{image:"./assets/card.svg",},{image:"./assets/card.svg",},{image:"./assets/card.svg",},{image:"./assets/card.svg",},{image:"./assets/card.svg",},
-						{image:"./assets/card.svg",},{image:"./assets/card.svg",},{image:"./assets/card.svg",},{image:"./assets/card.svg",},{image:"./assets/card.svg",},{image:"./assets/card.svg",},
-						{image:"./assets/card.svg",},{image:"./assets/card.svg",},
+						{image:"ace",},{image:"ace",},{image:"ace",},{image:"ace",},{image:"ace",},{image:"ace",},{image:"ace",},
+						{image:"ace",},{image:"ace",},{image:"ace",},{image:"ace",},{image:"ace",},{image:"ace",},{image:"ace",},
 					],
 					capacity_of_drawer: 15,
 				},
