@@ -7,13 +7,13 @@
 		 * @param {number} deck - осталось карт
      * @param {time} timer - время
 		 */
-		constructor() {
-      this.deck = 0;
-      this.timer = 0;
+		constructor(data) {
+      this.deck = data.deck;
+      this.timer = data.timer;
 		}
 
 		/**
-		 * обновляет поля 
+		 * обновляет поля
 		 * @param {number} deck - осталось карт
      * @param {time} timer - время
 		 */

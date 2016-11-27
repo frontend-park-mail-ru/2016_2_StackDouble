@@ -78,7 +78,7 @@
 				/*
 				var user = new UserModel();
 				user.singin(this.form.getFormData());
-				localStorage.setItem("User", user);
+				localStorage.setItem("UserProfile", user);
 				*/
 
 				/*

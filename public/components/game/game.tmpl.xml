@@ -2,7 +2,7 @@
   <div class="col-md-12 blank_50"></div>
   <div class="row-fluid container-fluid">
     <div class="col-md-2"></div>
-    <fest:for iterate="data.rivals" index="i" value="rival">
+    <fest:for iterate="data.rivals.list" index="i" value="rival">
       <div class="col-md-2 col-sm-3">
         <div class="rival-info center-block">
           <div class="rival-info__avatar" alt="100x100" align="right" style="background-image: url({rival.avatar});">
@@ -11,9 +11,9 @@
             </fest:if>
           </div>
           <div class="rival-info__card" alt="100x100">
-            <span class="nopadding rival-info__card__num-cards">7</span>
+            <span class="nopadding rival-info__card__num-cards"><fest:value>rival.total_cards</fest:value></span>
           </div>
-          <h3 class="nopadding rival-info__nick"><fest:value>rival.nick</fest:value></h3>
+          <h3 class="nopadding rival-info__nick"><fest:value>rival.login</fest:value></h3>
         </div>
       </div>
     </fest:for>
@@ -25,20 +25,20 @@
   <div class="container player-desk">
     <div class="row">
       <div class="col-md-10 player-deck">
-      <fest:for iterate="data.types" index="i" value="type">
-        <div id="card_{i}" class="player-deck__card player-deck__card_type-{type.image}">
-          <div class="nopadding player-deck__card__num-new-cards" hidden="hidden">5</div>
-          <span class="nopadding player-deck__card__num-cards">1</span>
+      <fest:for iterate="data.player.hand" index="i" value="card">
+        <div id="card_{i}" class="player-deck__card player-deck__card_type-{card.type}">
+          <div class="nopadding player-deck__card__num-new-cards" hidden="hidden"><fest:value>card.new_cards</fest:value></div>
+          <span class="nopadding player-deck__card__num-cards"><fest:value>card.total_cards</fest:value></span>
         </div>
     </fest:for>
 
       </div>
       <div class="col-md-2"  align="center">
-        <button id="btn_start" type="button" class="btn game-btn btn-success" >Обменять</button>
+        <button id="btn_start" type="button" class="btn game-btn btn-success" disabled="disabled">Обменять</button>
         <br></br>
-        <button id="btn_totorial" type="button" class="btn game-btn btn-success" >Комбо</button>
+        <button id="btn_totorial" type="button" class="btn game-btn btn-success" disabled="disabled">Комбо</button>
         <br></br>
-        <button id="btn_score_bord" type="button" class="btn game-btn btn-success" >Сброс</button>
+        <button id="btn_score_bord" type="button" class="btn game-btn btn-success" disabled="disabled">Сброс</button>
       </div>
       <div class="player-desk-drawer" >
               <fest:for from="1"  to="data.capacity_of_drawer" index="i">
@@ -50,9 +50,9 @@
 
   <div class="deck"></div>
   <div class="deck">
-    <div class="deck__num-cards"><fest:value>data.deck</fest:value></div>
+    <div class="deck__num-cards"><fest:value>data.desk.deck</fest:value></div>
   </div>
   <div class="timer">
-    <div class="timer__time">0:00</div>
+    <div class="timer__time"><fest:value>data.desk.timer</fest:value></div>
   </div>
 </fest:template>

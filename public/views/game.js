@@ -13,38 +13,7 @@
 			this.hide();
 			this.game = new Game({
 				el:this._el,
-				data: {
-					rivals: [
-						{
-							nick: 'Stalin',
-							avatar: "./assets/avatar.svg",
-							has_star: true,
-						},
-						{
-							nick: 'Beria',
-							avatar: "./assets/avatar.svg",
-							has_star: false,
-						},
-						{
-							nick: 'Hitler',
-							avatar: "./assets/avatar.svg",
-							has_star: true,
-						},
-						{
-							nick: 'Goebbels',
-							avatar: "./assets/avatar.svg",
-							has_star: false,
-						},
-					],
-					deck: 112,
-					types: [
-						{image:"ace",},{image:"ace",},{image:"ace",},{image:"ace",},{image:"ace",},{image:"ace",},{image:"ace",},
-						{image:"ace",},{image:"ace",},{image:"ace",},{image:"ace",},{image:"ace",},{image:"ace",},{image:"ace",},
-					],
-					capacity_of_drawer: 15,
-				},
-			});
-
+				data: window.gamesession});
 		}
 
 		pause(options = {}) {

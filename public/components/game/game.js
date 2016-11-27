@@ -12,6 +12,8 @@
         }
 
         render() {
+          //исправить
+          this.data.capacity_of_drawer= 15;
             this._el.innerHTML = this.template(this.data);
         }
     }

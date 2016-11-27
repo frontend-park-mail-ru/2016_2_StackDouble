@@ -5,9 +5,6 @@
 
 	/**
 	 * Создаёт нового пользователя
-	 * @param {string} login - имя пользователя
-	 * @param {string} avatar - аватар пользователя
-	 * @param {number} score - очки пользователя
 	 */
 	class UserProfile extends Player {
 		constructor(data = {}) {

@@ -8,10 +8,16 @@ const Player = window.PlayerModel;
      * @param {boolean} his_turn - показывает чей ход
      * @param {number} total_cards - количество карт
      */
-    constructor(){
-      super();
-      this.his_turn = false;
-      this.total_cards = 0;
+    constructor(data){
+      super(data);
+      this.has_star = data.has_star;
+      this.his_turn = data.his_turn;
+      this.total_cards = data.total_cards;
+    }
+
+    update(data){
+      this.his_turn = data.his_turn;
+      this.total_cards = data.total_cards;
     }
   }
 
@@ -19,12 +25,21 @@ const Player = window.PlayerModel;
 * класс контейнер Rivals
 */
   class Rivals {
-    constructor() {
-
+    constructor(data) {
+      this.list = [];
+      data.forEach(function(item, i, data){
+        this.list.push(new Rival(item));
+      }.bind(this));
     }
 
-    update(rivals){
-      this.rivals = rivals;
+    update(data){
+      data.forEach(function(item, i, data){
+        this.list[i].update(item);
+      }.bind(this));
+    }
+
+    get function(){
+      return this.list;
     }
   }
 

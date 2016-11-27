@@ -9,7 +9,7 @@
 		 * @param {number} score - очки пользователя
 		 */
 		constructor(data = {}) {
-			this.username = data.login;
+			this.login = data.login;
 			this.avatar = data.avatar;
       this.score = data.score;
 		}
