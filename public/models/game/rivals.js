@@ -1,13 +1,13 @@
 (function () {
   'use strict';
-const Player = window.PlayerModel;
+  const Player = window.PlayerModel;
 
   class Rival extends Player{
     /**
-     * Создаёт соперника
-     * @param {boolean} his_turn - показывает чей ход
-     * @param {number} total_cards - количество карт
-     */
+    * Создаёт соперника
+    * @param {boolean} his_turn - показывает чей ход
+    * @param {number} total_cards - количество карт
+    */
     constructor(data){
       super(data);
       this.has_star = data.has_star;
@@ -21,9 +21,9 @@ const Player = window.PlayerModel;
     }
   }
 
-/**
-* класс контейнер Rivals
-*/
+  /**
+  * класс контейнер Rivals
+  */
   class Rivals {
     constructor(data) {
       this.list = [];
@@ -34,7 +34,11 @@ const Player = window.PlayerModel;
 
     update(data){
       data.forEach(function(item, i, data){
-        this.list[i].update(item);
+        for(var j=0; j<this.list.length; j++){
+          if(this.list[j].login === item.login){
+            this.list[j].update(item);
+          }
+        }
       }.bind(this));
     }
 
@@ -44,6 +48,6 @@ const Player = window.PlayerModel;
   }
 
 
-//export
-window.GameRivals = Rivals;
+  //export
+  window.GameRivals = Rivals;
 })();

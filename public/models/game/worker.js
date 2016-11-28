@@ -34,6 +34,16 @@
 
     }
 
+    finish(){
+      //TODO:допаботать
+      this.status = null;
+      this.nrivals = null;
+      this.desk = null;
+      this.user = null;
+      this.rivals = null;
+      this.player = null;
+    }
+
 
     /**
     * установка и нстройка соединения
@@ -86,52 +96,13 @@
 
       //test
       var event = new CustomEvent("onmessage");
-      event.data = JSON.stringify({action: 'game_start', data: {
-        rivals: [
-          {
-            login: 'Stalin',
-            avatar: "./assets/avatar.svg",
-            has_star: true,
-            his_turn: true,
-            score: 500,
-            total_cards: 7,
-          },
-          {
-            login: 'Beria',
-            avatar: "./assets/avatar.svg",
-            has_star: false,
-            his_turn: false,
-            total_cards: 3,
-          },
-          {
-            login: 'Hitler',
-            avatar: "./assets/avatar.svg",
-            has_star: true,
-            his_turn: false,
-            total_cards: 0,
-          },
-          {
-            login: 'Goebbels',
-            avatar: "./assets/avatar.svg",
-            has_star: false,
-            his_turn: false,
-            total_cards: 0,
-          },
-        ],
-        desk:{
-        deck: 112,
-        timer: "1:20",
-      },
-        player:{
-          his_turn: false,
-          hand: [
-            {type:"ace", total_cards: 1, new_cards: 1},{type:"ace", total_cards: 1, new_cards: 1},{type:"ace", total_cards: 6, new_cards: 1},
-            {type:"ace", total_cards: 5, new_cards: 1},{type:"ace", total_cards: 4, new_cards: 1},{type:"ace", total_cards: 4, new_cards: 1},
-            {type:"ace", total_cards: 3, new_cards: 1},{type:"ace", total_cards: 1, new_cards: 1},{type:"ace", total_cards: 2, new_cards: 1},
-            {type:"ace", total_cards: 4, new_cards: 2},{type:"ace", total_cards: 4, new_cards: 1},{type:"ace", total_cards: 1, new_cards: 1},
-            {type:"ace", total_cards: 4, new_cards: 1},{type:"ace", total_cards: 4, new_cards: 1},
-        ]},
-      }});
+      event.data = JSON.stringify(window.TestInfo.data['game_start']);
+      this.receiver(event);
+      event.data = JSON.stringify(window.TestInfo.data['change_player']);
+      this.receiver(event);
+      event.data = JSON.stringify(window.TestInfo.data['change_rivals']);
+      this.receiver(event);
+      event.data = JSON.stringify(window.TestInfo.data['next_round']);
       this.receiver(event);
 
       //TODO:запрос на поиск игроков и начало игры
@@ -185,14 +156,18 @@
         this.player = new Player(msg.data.player);
         break;
         case "game_end"://коректно завершаем
+        this.finish();
         break;
         case "change_player": //новые карты от обмена, колво очков от комбо
+        this.player.update(msg.data.player);
         break;
         case "change_rivals"://инфа о ид делающего ход, ид предыдущего и его действие
+        this.rivals.update(msg.data.rivals);
         break;
         case "next_round": //ап колоды игрока, инфы о соперниках(сколько карт), колоды на столе
         this.rivals.update(msg.data.rivals);
-
+        this.desk.update(msg.data.desk);
+        this.player.update(msg.data.player);
         break;
       }
 

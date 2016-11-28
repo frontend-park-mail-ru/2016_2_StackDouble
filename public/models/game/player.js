@@ -20,31 +20,44 @@
       }.bind(this));
       this.has_new_action = false;
       this.action = {action:false, cards:[]};
-      this.his_turn = false;
-      this.update([{type:"ace"},{type:"ace"}]);
+      this.his_turn = data.his_turn;
+      this.drawer = [];
     }
+
+//TODO: сделать колоду ассоциативным массивом?
+    get_card(str){
+      for(var j=0; j<this.hand.length; j++){
+        if(str === this.hand[j].type) {
+          return this.hand[j];
+        }}
+    }
+
 
     //TODO: выбрать реализацию в зависимости от инфы от сервера
     /**
     * апдейт колоды игрока
     * @param {Card[]} hand - колода игрока
     */
-    update(cards){
+    update(data){
       //переписать
+      this.his_turn = data.his_turn;
       this.hand.forEach(function(item, i, hand){
         item.new_cards =0;
         for(var j=0; j<this.length; j++){
           if(item.type === this[j].type) {
-            item.total_cards++;
-            item.new_cards++;
+            item.total_cards+=this[j].total_cards;
+            item.new_cards=this[j].total_cards;
+            break;
           }
         }
-      }.bind(cards));
+      }.bind(data.hand));
     }
 
     /**
-    * апдейт колоды игрока
+    * действие игрока
     * @returns {object} action - колода игрока
+    * @returns {string} action.action - название дейстия
+    * @returns {Card[]} action.cards - название дейстия
     */
     get_action(){
       if(this.action.action !== true){
@@ -69,6 +82,8 @@
 
     /**
     * фиксирует действие для отправки на сервер
+    * @param {string} action - комбо|обмен
+    * @param {Card[]} cards - список карт над которыми сделать действие
     * @returns {statusText}
     */
     do_action(action, cards){

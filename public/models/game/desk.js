@@ -19,7 +19,7 @@
 		 */
     update(data){
       this.deck = data.deck;
-      this.timer = data.time;
+      this.timer = data.timer;
     }
 
 	}

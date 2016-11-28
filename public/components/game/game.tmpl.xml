@@ -26,19 +26,19 @@
     <div class="row">
       <div class="col-md-10 player-deck">
       <fest:for iterate="data.player.hand" index="i" value="card">
-        <div id="card_{i}" class="player-deck__card player-deck__card_type-{card.type}">
+        <div id="{card.type}" type="{card.type}" class="player-deck__card player-deck__card_type-{card.type}">
           <div class="nopadding player-deck__card__num-new-cards" hidden="hidden"><fest:value>card.new_cards</fest:value></div>
           <span class="nopadding player-deck__card__num-cards"><fest:value>card.total_cards</fest:value></span>
         </div>
     </fest:for>
 
       </div>
-      <div class="col-md-2"  align="center">
-        <button id="btn_start" type="button" class="btn game-btn btn-success" disabled="disabled">Обменять</button>
+      <div class="col-md-2 player-desk__btns"  align="center">
+        <button id="btn_exchange" type="button" class="btn game-btn btn-success" disabled="disabled">Обменять</button>
         <br></br>
-        <button id="btn_totorial" type="button" class="btn game-btn btn-success" disabled="disabled">Комбо</button>
+        <button id="btn_combo" type="button" class="btn game-btn btn-success" disabled="disabled">Комбо</button>
         <br></br>
-        <button id="btn_score_bord" type="button" class="btn game-btn btn-success" disabled="disabled">Сброс</button>
+        <button id="btn_reset" type="button" class="btn game-btn btn-success" disabled="disabled">Сброс</button>
       </div>
       <div class="player-desk-drawer" >
               <fest:for from="1"  to="data.capacity_of_drawer" index="i">
@@ -48,10 +48,15 @@
     </div>
   </div>
 
-  <div class="deck"></div>
   <div class="deck">
+    <div class="deck__top">
+    <div class="deck__top_back">
     <div class="deck__num-cards"><fest:value>data.desk.deck</fest:value></div>
   </div>
+  <div class="deck__top_front">
+</div>
+</div>
+</div>
   <div class="timer">
     <div class="timer__time"><fest:value>data.desk.timer</fest:value></div>
   </div>

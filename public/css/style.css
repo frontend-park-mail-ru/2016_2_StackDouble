@@ -5875,7 +5875,7 @@ button.close {
   margin-left: 0;
   float: right;
   background-size: 100% 100%;
-  background-image: url("../assets/card.svg"); }
+  background-image: url("../assets/deck/deck.svg"); }
 
 .rival-info__card__num-cards {
   position: absolute;
@@ -5890,6 +5890,7 @@ button.close {
   vertical-align: bottom; }
 
 .player-desk-drawer {
+  display: table;
   z-index: -1;
   position: absolute;
   background-color: #a1e6fc;
@@ -5903,20 +5904,55 @@ button.close {
   border-top-left-radius: 5px; }
 
 .player-desk-drawer__card {
-  position: relative;
-  padding: auto;
-  margin: auto;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+  display: table-cell;
   z-index: 5;
   min-height: 40px;
-  height: 12vh;
-  width: 6.666%;
-  float: right;
+  height: 10vh;
+  width: 6%;
   background-size: 100% 100%;
   background-image: url("../assets/card.svg"); }
+
+.player-desk-drawer__card_type-ace {
+  background-image: url("../assets/deck/ace.svg"); }
+
+.player-desk-drawer__card_type-king {
+  background-image: url("../assets/deck/king.svg"); }
+
+.player-desk-drawer__card_type-queen {
+  background-image: url("../assets/deck/queen.svg"); }
+
+.player-desk-drawer__card_type-jack {
+  background-image: url("../assets/deck/jack.svg"); }
+
+.player-desk-drawer__card_type-joker {
+  background-image: url("../assets/deck/joker.svg"); }
+
+.player-desk-drawer__card_type-ten {
+  background-image: url("../assets/deck/ten.svg"); }
+
+.player-desk-drawer__card_type-nine {
+  background-image: url("../assets/deck/nine.svg"); }
+
+.player-desk-drawer__card_type-eight {
+  background-image: url("../assets/deck/eight.svg"); }
+
+.player-desk-drawer__card_type-seven {
+  background-image: url("../assets/deck/seven.svg"); }
+
+.player-desk-drawer__card_type-six {
+  background-image: url("../assets/deck/six.svg"); }
+
+.player-desk-drawer__card_type-five {
+  background-image: url("../assets/deck/five.svg"); }
+
+.player-desk-drawer__card_type-four {
+  background-image: url("../assets/deck/four.svg"); }
+
+.player-desk-drawer__card_type-three {
+  background-image: url("../assets/deck/three.svg"); }
+
+.player-desk-drawer__card_type-two {
+  background-image: url("../assets/deck/two.svg"); }
 
 .deck {
   position: absolute;
@@ -5929,38 +5965,64 @@ button.close {
   width: 20%;
   float: right;
   background-size: 100% 100%;
-  background-image: url("../assets/card.svg"); }
-  .deck:hover {
+  background-image: url("../assets/deck/deck.svg");
+  z-index: 1; }
+
+.deck__top {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 5;
+  perspective: 1000; }
+  .deck__top:hover {
     transform-style: preserve-3d;
     animation-name: deck-animation;
     animation-duration: 5s;
     animation-iteration-count: infinite;
     animation-timing-function: linear; }
 
-.deck__num-cards {
+.deck__top_front {
   position: absolute;
+  height: 100%;
+  width: 100%;
+  background-size: 100% 100%;
+  transform: rotateY(180deg);
+  background-image: url("../assets/deck/deck_face.svg");
+  backface-visibility: hidden; }
+
+.deck__top_back {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-size: 100% 100%;
+  background-image: url("../assets/deck/deck.svg");
+  backface-visibility: hidden; }
+
+.deck__num-cards {
+  position: relative;
   padding: auto;
   margin: auto;
   left: 0;
   right: 0;
-  top: 8vh;
+  top: 15%;
   bottom: 0;
   height: 100%;
   width: 100%;
-  font-size: 4vw;
+  font-size: 6em;
   color: red;
   text-align: center;
-  vertical-align: middle; }
+  vertical-align: middle;
+  backface-visibility: hidden; }
 
 @keyframes deck-animation {
   0% {
     transform: rotateY(0) translate(0%, 0); }
   10% {
-    transform: rotateY(0) translate(3%, 6%); }
+    transform: rotateY(0) translate(-3%, 6%); }
   50% {
-    transform: rotateY(180deg) translate(3%, 6%); }
+    transform: rotateY(180deg) translate(-3%, 6%); }
   90% {
-    transform: rotateY(0) translate(3%, 5%); }
+    transform: rotateY(0) translate(-3%, 5%); }
   100% {
     transform: rotateY(0) translate(0%, 0); } }
 .timer {
@@ -6023,30 +6085,34 @@ button.close {
   height: 16vh;
   width: 14%;
   margin-left: 0;
-  float: right;
+  float: left;
   margin-bottom: 3%;
   background-size: 100% 100%; }
 
-.player-deck__card__num-cards {
+.player-deck__card__num-cards, .player-deck__card__num-cards_zero {
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   bottom: -2%;
-  right: 12%;
+  left: 12%;
   background-color: green;
   text-align: center;
+  font-size: 1.5em;
   color: yellow;
   border-style: solid;
   border-width: 1px;
   border-color: black;
   border-radius: 3px; }
 
+.player-deck__card__num-cards_zero {
+  background-color: red; }
+
 .player-deck__card__num-new-cards {
   position: absolute;
   width: 40px;
   height: 40px;
   top: -8%;
-  left: 4%;
+  right: 4%;
   background-color: yellow;
   text-align: center;
   font-size: 2em;
@@ -6057,7 +6123,46 @@ button.close {
   border-radius: 20px; }
 
 .player-deck__card_type-ace {
-  background-image: url("../assets/card.svg"); }
+  background-image: url("../assets/deck/ace.svg"); }
+
+.player-deck__card_type-king {
+  background-image: url("../assets/deck/king.svg"); }
+
+.player-deck__card_type-queen {
+  background-image: url("../assets/deck/queen.svg"); }
+
+.player-deck__card_type-jack {
+  background-image: url("../assets/deck/jack.svg"); }
+
+.player-deck__card_type-joker {
+  background-image: url("../assets/deck/joker.svg"); }
+
+.player-deck__card_type-ten {
+  background-image: url("../assets/deck/ten.svg"); }
+
+.player-deck__card_type-nine {
+  background-image: url("../assets/deck/nine.svg"); }
+
+.player-deck__card_type-eight {
+  background-image: url("../assets/deck/eight.svg"); }
+
+.player-deck__card_type-seven {
+  background-image: url("../assets/deck/seven.svg"); }
+
+.player-deck__card_type-six {
+  background-image: url("../assets/deck/six.svg"); }
+
+.player-deck__card_type-five {
+  background-image: url("../assets/deck/five.svg"); }
+
+.player-deck__card_type-four {
+  background-image: url("../assets/deck/four.svg"); }
+
+.player-deck__card_type-three {
+  background-image: url("../assets/deck/three.svg"); }
+
+.player-deck__card_type-two {
+  background-image: url("../assets/deck/two.svg"); }
 
 .game-btn {
   position: relative;
@@ -6071,7 +6176,8 @@ button.close {
     transform: scale(1.05, 1.05); }
 
 .main-menu__btn {
-  width: 16vw; }
+  width: 16vw;
+  min-width: 150px; }
 
 .top-list-score-line {
   background: skyblue; }

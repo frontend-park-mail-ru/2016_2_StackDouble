@@ -13,7 +13,8 @@
 
         render() {
           //исправить
-          this.data.capacity_of_drawer= 15;
+          this.data.capacity_of_drawer= 0;
+          window.capacity_of_drawer= 15;
             this._el.innerHTML = this.template(this.data);
         }
     }
