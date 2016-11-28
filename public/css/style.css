@@ -5890,7 +5890,8 @@ button.close {
   vertical-align: bottom; }
 
 .player-desk-drawer {
-  display: table;
+  display: flex;
+  justify-content: center;
   z-index: -1;
   position: absolute;
   background-color: #a1e6fc;
@@ -5904,55 +5905,69 @@ button.close {
   border-top-left-radius: 5px; }
 
 .player-desk-drawer__card {
-  display: table-cell;
   z-index: 5;
   min-height: 40px;
-  height: 10vh;
   width: 6%;
+  margin-right: 0.5%;
+  margin-left: 0.5%;
   background-size: 100% 100%;
   background-image: url("../assets/card.svg"); }
 
+.player-desk-drawer__card_type-joker {
+  background-image: url("../assets/deck/joker.svg");
+  order: 1; }
+
 .player-desk-drawer__card_type-ace {
-  background-image: url("../assets/deck/ace.svg"); }
+  background-image: url("../assets/deck/ace.svg");
+  order: 2; }
 
 .player-desk-drawer__card_type-king {
-  background-image: url("../assets/deck/king.svg"); }
+  background-image: url("../assets/deck/king.svg");
+  order: 3; }
 
 .player-desk-drawer__card_type-queen {
-  background-image: url("../assets/deck/queen.svg"); }
+  background-image: url("../assets/deck/queen.svg");
+  order: 4; }
 
 .player-desk-drawer__card_type-jack {
-  background-image: url("../assets/deck/jack.svg"); }
-
-.player-desk-drawer__card_type-joker {
-  background-image: url("../assets/deck/joker.svg"); }
+  background-image: url("../assets/deck/jack.svg");
+  order: 5; }
 
 .player-desk-drawer__card_type-ten {
-  background-image: url("../assets/deck/ten.svg"); }
+  background-image: url("../assets/deck/ten.svg");
+  order: 6; }
 
 .player-desk-drawer__card_type-nine {
-  background-image: url("../assets/deck/nine.svg"); }
+  background-image: url("../assets/deck/nine.svg");
+  order: 7; }
 
 .player-desk-drawer__card_type-eight {
-  background-image: url("../assets/deck/eight.svg"); }
+  background-image: url("../assets/deck/eight.svg");
+  order: 8; }
 
 .player-desk-drawer__card_type-seven {
-  background-image: url("../assets/deck/seven.svg"); }
+  background-image: url("../assets/deck/seven.svg");
+  order: 9; }
 
 .player-desk-drawer__card_type-six {
-  background-image: url("../assets/deck/six.svg"); }
+  background-image: url("../assets/deck/six.svg");
+  order: 10; }
 
 .player-desk-drawer__card_type-five {
-  background-image: url("../assets/deck/five.svg"); }
+  background-image: url("../assets/deck/five.svg");
+  order: 11; }
 
 .player-desk-drawer__card_type-four {
-  background-image: url("../assets/deck/four.svg"); }
+  background-image: url("../assets/deck/four.svg");
+  order: 12; }
 
 .player-desk-drawer__card_type-three {
-  background-image: url("../assets/deck/three.svg"); }
+  background-image: url("../assets/deck/three.svg");
+  order: 13; }
 
 .player-desk-drawer__card_type-two {
-  background-image: url("../assets/deck/two.svg"); }
+  background-image: url("../assets/deck/two.svg");
+  order: 14; }
 
 .deck {
   position: absolute;
@@ -6000,18 +6015,11 @@ button.close {
 
 .deck__num-cards {
   position: relative;
-  padding: auto;
-  margin: auto;
-  left: 0;
-  right: 0;
   top: 15%;
   bottom: 0;
-  height: 100%;
-  width: 100%;
   font-size: 6em;
   color: red;
   text-align: center;
-  vertical-align: middle;
   backface-visibility: hidden; }
 
 @keyframes deck-animation {
@@ -6077,14 +6085,18 @@ button.close {
   padding-top: 1%;
   border-radius: 10px; }
 
+.player-deck {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap; }
+
 .player-deck__card {
   position: relative;
-  top: 0;
-  left: 0;
   z-index: 5;
   height: 16vh;
   width: 14%;
-  margin-left: 0;
   float: left;
   margin-bottom: 3%;
   background-size: 100% 100%; }
@@ -6122,47 +6134,61 @@ button.close {
   border-color: red;
   border-radius: 20px; }
 
+.player-deck__card_type-joker {
+  background-image: url("../assets/deck/joker.svg");
+  order: 1; }
+
 .player-deck__card_type-ace {
-  background-image: url("../assets/deck/ace.svg"); }
+  background-image: url("../assets/deck/ace.svg");
+  order: 2; }
 
 .player-deck__card_type-king {
-  background-image: url("../assets/deck/king.svg"); }
+  background-image: url("../assets/deck/king.svg");
+  order: 3; }
 
 .player-deck__card_type-queen {
-  background-image: url("../assets/deck/queen.svg"); }
+  background-image: url("../assets/deck/queen.svg");
+  order: 4; }
 
 .player-deck__card_type-jack {
-  background-image: url("../assets/deck/jack.svg"); }
-
-.player-deck__card_type-joker {
-  background-image: url("../assets/deck/joker.svg"); }
+  background-image: url("../assets/deck/jack.svg");
+  order: 5; }
 
 .player-deck__card_type-ten {
-  background-image: url("../assets/deck/ten.svg"); }
+  background-image: url("../assets/deck/ten.svg");
+  order: 6; }
 
 .player-deck__card_type-nine {
-  background-image: url("../assets/deck/nine.svg"); }
+  background-image: url("../assets/deck/nine.svg");
+  order: 7; }
 
 .player-deck__card_type-eight {
-  background-image: url("../assets/deck/eight.svg"); }
+  background-image: url("../assets/deck/eight.svg");
+  order: 8; }
 
 .player-deck__card_type-seven {
-  background-image: url("../assets/deck/seven.svg"); }
+  background-image: url("../assets/deck/seven.svg");
+  order: 9; }
 
 .player-deck__card_type-six {
-  background-image: url("../assets/deck/six.svg"); }
+  background-image: url("../assets/deck/six.svg");
+  order: 10; }
 
 .player-deck__card_type-five {
-  background-image: url("../assets/deck/five.svg"); }
+  background-image: url("../assets/deck/five.svg");
+  order: 11; }
 
 .player-deck__card_type-four {
-  background-image: url("../assets/deck/four.svg"); }
+  background-image: url("../assets/deck/four.svg");
+  order: 12; }
 
 .player-deck__card_type-three {
-  background-image: url("../assets/deck/three.svg"); }
+  background-image: url("../assets/deck/three.svg");
+  order: 13; }
 
 .player-deck__card_type-two {
-  background-image: url("../assets/deck/two.svg"); }
+  background-image: url("../assets/deck/two.svg");
+  order: 14; }
 
 .game-btn {
   position: relative;

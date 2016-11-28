@@ -8,6 +8,13 @@
 
 	class GameView extends View {
 		constructor(options = {}) {
+			//for test
+			var user = new window.UserModel({login: 'MeMyself&I',
+									avatar: "./assets/avatar.svg",});
+			localStorage.setItem("UserProfile", JSON.stringify(user));
+			window.gamesession = new GameWorker(JSON.parse(localStorage.getItem('UserProfile')));
+
+
 			super(options);
 			this._el = document.querySelector('#js-game');
 			this.hide();
