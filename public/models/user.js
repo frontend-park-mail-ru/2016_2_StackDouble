@@ -38,7 +38,7 @@
 					if (this.status !== 201) {
 						return reject(this.statusText);
 					}
-					var ans = JSON.parse(json);
+					let ans = JSON.parse(json);
 					this.set_player(ans);
 					resolve(JSON.parse(json));
 				};

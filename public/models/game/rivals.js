@@ -1,8 +1,8 @@
 (function () {
   'use strict';
-  const Player = window.PlayerModel;
+  const PlayerModel = window.PlayerModel;
 
-  class Rival extends Player{
+  class Rival extends PlayerModel{
     /**
     * Создаёт соперника
     * @param {boolean} his_turn - показывает чей ход
@@ -10,14 +10,16 @@
     */
     constructor(data){
       super(data);
-      this.has_star = data.has_star;
-      this.his_turn = data.his_turn;
-      this.total_cards = data.total_cards;
+      this.has_star = data.has_star || false;
+      this.his_turn = data.his_turn  || false;
+      this.total_cards = data.total_cards || 0;
+      this.onchange = function(){};
     }
 
     update(data){
       this.his_turn = data.his_turn;
       this.total_cards = data.total_cards;
+      this.onchange();
     }
   }
 
@@ -34,7 +36,7 @@
 
     update(data){
       data.forEach(function(item, i, data){
-        for(var j=0; j<this.list.length; j++){
+        for(let j=0; j<this.list.length; j++){
           if(this.list[j].login === item.login){
             this.list[j].update(item);
           }

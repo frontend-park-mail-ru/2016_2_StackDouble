@@ -1,9 +1,15 @@
+var g_deck = [{type:"ace"},{type:"king"},{type:"queen"},{type:"jack"},{type:"joker"},
+{type:"ten"},{type:"nine"},{type:"eight"},{type:"seven"},{type:"six"},
+{type:"five"},{type:"four"},{type:"three"},{type:"two"}];
+
 (function () {
   'use strict';
+
 
   const Desk = window.GameDesk;
   const Rivals = window.GameRivals;
   const Player = window.GamePlayer;
+  const SinglePlayer = window.SinglePlayer;
 
 //test
   class Fakesocket{
@@ -16,26 +22,33 @@
   class Worker {
     /**
     * Создаёт новую игру
-    * @param {socket} socket - имя пользователя
+    * @param {WebSocket} socket - имя пользователя
     * @param {User} user - объект пользователя
     * @param {number=} nrivals - число соперников
     * @param {number} status - прогресс выполнения
     */
     constructor(user, nrivals=4) {
-      this.status = 0;//socket opened =1, поиск игроков, игра создана, игра окончена
+      this.status_pr = 0;//socket opened =1, поиск игроков, игра создана, игра окончена
       this.nrivals = nrivals;
       this.desk;
       this.user = user;
       this.rivals;
       this.player;
+      this.single;
+      this.onstatuschange = function(){};
+    }
 
-      //test
-      this.start()
+    set status(number){
+      this.status_pr = number;
+      this.onstatuschange();
+    }
 
+    get status(){
+      return this.status_pr;
     }
 
     finish(){
-      //TODO:допаботать
+      //TODO:доработать
       this.status = null;
       this.nrivals = null;
       this.desk = null;
@@ -62,6 +75,8 @@
       //this.socket = new WebSocket(address);
       this.socket = new Fakesocket();
 
+      //TODO:  если не удалось установить соединение, то сохдать SingePlayer
+      this.single = new SinglePlayer(this);
       //TODO: отправка сешн ид для установки/восстановления соединения
 
       this.socket.onopen = function (event) {
@@ -85,7 +100,7 @@
       };
 
       this.socket.onmessage = this.receiver.bind(this, event);
-
+      this.status = 2;
     }
 
     /**
@@ -95,7 +110,7 @@
       this.setconnection();
 
       //test
-      var event = new CustomEvent("onmessage");
+/*      let event = new CustomEvent("onmessage");
       event.data = JSON.stringify(window.TestInfo.data['game_start']);
       this.receiver(event);
       event.data = JSON.stringify(window.TestInfo.data['change_player']);
@@ -103,12 +118,12 @@
       event.data = JSON.stringify(window.TestInfo.data['change_rivals']);
       this.receiver(event);
       event.data = JSON.stringify(window.TestInfo.data['next_round']);
-      this.receiver(event);
+      this.receiver(event);*/
 
       //TODO:запрос на поиск игроков и начало игры
       //TODO:вызов апдейтов стола, игрока и соперников
       //TODO: проверка игрока и переправка серверу/переделать в лисен объекта?
-      this.intervalId= setInterval(()=>{this.checkPlayer.call(this);}, 300)
+      //this.intervalId= setInterval(function(){this.checkPlayer();}.bind(this), 300);
     }
 
     isStopped() {
@@ -123,7 +138,7 @@
     * @return {textstatus} - status
     */
    send(action, data){
-      var msg ={
+      let msg ={
         action: action,
         data:data
       };
@@ -143,17 +158,18 @@
 
     /**
     * колбек на сообщения сокета. вызывает апдейты
-    * @callback receiver
+    * @callback WebSocket-onmessage
     * @param {Card[]} hand - колода игрока
     */
     receiver(event){
-      var msg = JSON.parse(event.data);
+      let msg = JSON.parse(event.data);
 
       switch(msg.action) {
         case "game_start"://апдейт игрока, соперников, стола
         this.rivals = new Rivals(msg.data.rivals);
         this.desk = new Desk(msg.data.desk);
         this.player = new Player(msg.data.player);
+        this.status = 3;
         break;
         case "game_end"://коректно завершаем
         this.finish();
@@ -178,7 +194,7 @@
     * @private
     */
     checkPlayer() {
-      var t = this.player.get_action();
+      let t = this.player.get_action();
       if(t.action !== false){
         //отправка действия и списка карт
         this.send(t.action, t.cards);

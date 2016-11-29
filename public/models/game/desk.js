@@ -10,6 +10,7 @@
 		constructor(data) {
       this.deck = data.deck;
       this.timer = data.timer;
+			this.onchange = function(){};
 		}
 
 		/**
@@ -20,6 +21,7 @@
     update(data){
       this.deck = data.deck;
       this.timer = data.timer;
+			this.onchange();
     }
 
 	}

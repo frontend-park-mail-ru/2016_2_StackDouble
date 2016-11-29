@@ -33,12 +33,19 @@
     </fest:for>
 
       </div>
-      <div class="col-md-2 player-desk__btns"  align="center">
-        <button id="btn_exchange" type="button" class="btn game-btn btn-success" disabled="disabled">Обменять</button>
+      <div class="col-md-2 player-desk__btns hidden-sm hidden-xs"  align="center">
+        <button id="btn_exchange" type="button" class="btn player-desk__btns__game-btn btn-success" disabled="disabled">Обменять</button>
         <br></br>
-        <button id="btn_combo" type="button" class="btn game-btn btn-success" disabled="disabled">Комбо</button>
+        <button id="btn_combo" type="button" class="btn player-desk__btns__game-btn btn-success" disabled="disabled">Комбо</button>
         <br></br>
-        <button id="btn_reset" type="button" class="btn game-btn btn-success" disabled="disabled">Сброс</button>
+        <button id="btn_reset" type="button" class="btn player-desk__btns__game-btn btn-success" disabled="disabled">Сброс</button>
+      </div>
+      <div class="col-sm-12 player-desk__btns-horizontal hidden-md hidden-lg"  align="center">
+        <button id="btn_exchange" type="button" class="btn player-desk__btns__game-btn btn-success" disabled="disabled">Обменять</button>
+        <br></br>
+        <button id="btn_combo" type="button" class="btn player-desk__btns__game-btn btn-success" disabled="disabled">Комбо</button>
+        <br></br>
+        <button id="btn_reset" type="button" class="btn player-desk__btns__game-btn btn-success" disabled="disabled">Сброс</button>
       </div>
       <div class="player-desk-drawer" >
               <fest:for from="1"  to="data.capacity_of_drawer" index="i">

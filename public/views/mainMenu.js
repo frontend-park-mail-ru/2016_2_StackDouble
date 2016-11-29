@@ -82,19 +82,16 @@
       this.mainmenu._el.querySelector('#btn_start').addEventListener('click', (event)=> {
         event.preventDefault();
         this.mainmenu._el.querySelector('.waiting-sign').hidden = false;
-        
-        //for test
-        var user = new window.UserModel({login: 'MeMyself&I',
-                    avatar: "./assets/avatar.svg",});
-        localStorage.setItem("UserProfile", JSON.stringify(user));
+
         window.gamesession = new GameWorker(JSON.parse(localStorage.getItem('UserProfile')));
-        setTimeout((function(){
+        window.gamesession.onstatuschange = function(){
+          if(window.gamesession.status === 3){
           console.log("go to game");
           this.router.go('/game');
-        }).bind(this), 200);
-
+        }
+      }.bind(this);
+      window.gamesession.start();
       });
-
 
     }
 
