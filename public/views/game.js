@@ -48,7 +48,7 @@
 				this.tmp = document.querySelectorAll('#btn_exchange');
 				this.tmp.forEach(function(tmp){
 					tmp.addEventListener("click", (event)=>{
-						if(window.gamesession.player.do_action("exchange", window.drawer)=="ok"){
+						if(window.gamesession.player.do_action(g_action_name__exchange, window.drawer)=="ok"){
 							this.update_player_desk();
 						}
 					});
@@ -57,7 +57,7 @@
 				this.tmp = document.querySelectorAll('#btn_combo');
 				this.tmp.forEach(function(tmp){
 					tmp.addEventListener("click", (event)=>{
-						if(window.gamesession.player.do_action("combo", window.drawer)=="ok"){
+						if(window.gamesession.player.do_action(g_action_name__combo, window.drawer)=="ok"){
 							this.update_player_desk();
 						}
 					});

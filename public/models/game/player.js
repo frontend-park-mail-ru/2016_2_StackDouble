@@ -14,6 +14,12 @@
     */
     constructor(data) {
       super(data);
+      this.has_new_action = false;
+      this.action = {action:false, cards:[]};
+      this.his_turn = data.his_turn || false;
+      this.drawer = [];
+      this.onchange = function(){};
+
       this.hand = [];
       if(data.hand){
       data.hand.forEach(function(item){
@@ -24,11 +30,7 @@
       this.hand.push(new Card(item));
       }.bind(this));
     }
-      this.has_new_action = false;
-      this.action = {action:false, cards:[]};
-      this.his_turn = data.his_turn || false;
-      this.drawer = [];
-      this.onchange = function(){};
+    
     }
 
 //TODO: сделать колоду ассоциативным массивом?
@@ -68,6 +70,7 @@
     * @returns {string} action.action - название дейстия
     * @returns {Card[]} action.cards - название дейстия
     */
+    //не нужна?
     get_action(){
       if(this.action.action !== true){
         this.has_new_action = false;

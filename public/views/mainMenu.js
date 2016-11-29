@@ -11,13 +11,15 @@
       super(options);
       this._el = document.querySelector('#js-topmenu');
       this.hide();
+
+      //test
+      if (localStorage.getItem('UserProfile')) {
+            window.UserProfile= JSON.parse(localStorage.getItem('UserProfile'));
+      }
+
+
       this.topmenu = new TopMenu({
-        data:{
-          //TODO:передавать инфу игрока
-          nick: "Amadeus",
-          avatar: "http://lorempixel.com/40/40",
-          score: "318"
-        }
+        data: window.UserProfile
       });
       this._el.appendChild(this.topmenu._el);
 
@@ -62,6 +64,10 @@
       console.log("init topmenu");
       this.topmenu._el.querySelector('#top_btn_exit').addEventListener('click', (event)=> {
         event.preventDefault();
+        this._el = document.querySelector('#js-topmenu');
+        this.hide();
+        //TODO: доделать выход
+        localStorage.removeItem('UserProfile');
         //TODO: пересоздавать вью или как тест пусть будет
         this.router.go('/');
       });
@@ -69,7 +75,11 @@
       console.log("init mainmenu");
       this.mainmenu._el.querySelector('#btn_exit').addEventListener('click', (event)=> {
         event.preventDefault();
-        console.log("exit");
+        this._el = document.querySelector('#js-topmenu');
+        this.hide();
+        //TODO: доделать выход
+        localStorage.removeItem('UserProfile');
+        //TODO: пересоздавать вью или как тест пусть будет
         this.router.go('/');
       });
 
@@ -105,8 +115,14 @@
       if (!options.username && !options.email) {
         //		return this.router.go('/');
       }
-      //window.location.assign(window.location.host+"/waitingroom");
-      //window.location.reload([true]);
+//test
+
+if (!localStorage.getItem('UserProfile')) {
+  		return this.router.go('/');
+}
+
+
+
       // TODO: дописать реализацию
 
       this._el = document.querySelector('#js-topmenu');

@@ -2,8 +2,8 @@
   <div class="row top-menu">
     <div class="col-md-2 col-xs-3">
       <img name="avatar" class="media-object img-rounded top-menu__avatar" alt="40x40" src="{data.avatar}"/>
-      <h4 name="nick">
-        <fest:value>data.nick</fest:value></h4>
+      <h4 name="login">
+        <fest:value>data.login</fest:value></h4>
       </div>
 
       <div class="col-md-2 col-xs-3">

@@ -17,10 +17,23 @@
       this.deck =[];
       this.players = [];
       this.his_turn = 0;
+      this.gamesession.send = this.onsend;
 
       this.fill_deck();
       this.fill_players();
       this.start();
+    }
+
+    /**
+    * колбек на send GameWorker
+    * @callback
+    * @param {Card[]} hand - колода игрока
+    */
+    onsend(msg){
+debugger;
+switch(msg.action) {
+  
+}
     }
 
     start(){

@@ -2,6 +2,10 @@ var g_deck = [{type:"ace"},{type:"king"},{type:"queen"},{type:"jack"},{type:"jok
 {type:"ten"},{type:"nine"},{type:"eight"},{type:"seven"},{type:"six"},
 {type:"five"},{type:"four"},{type:"three"},{type:"two"}];
 
+var g_action_name__combo = "combo",
+g_action_name__exchange = "exchange";
+
+
 (function () {
   'use strict';
 
@@ -123,7 +127,11 @@ var g_deck = [{type:"ace"},{type:"king"},{type:"queen"},{type:"jack"},{type:"jok
       //TODO:запрос на поиск игроков и начало игры
       //TODO:вызов апдейтов стола, игрока и соперников
       //TODO: проверка игрока и переправка серверу/переделать в лисен объекта?
-      //this.intervalId= setInterval(function(){this.checkPlayer();}.bind(this), 300);
+      this.intervalId= setInterval(function(){
+        if(this.player.has_new_action === true){
+          this.send(this.player.action);
+        }
+      }.bind(this), 500);
     }
 
     isStopped() {
@@ -137,11 +145,7 @@ var g_deck = [{type:"ace"},{type:"king"},{type:"queen"},{type:"jack"},{type:"jok
     * @param {Card[].type} data - номиналы карт
     * @return {textstatus} - status
     */
-   send(action, data){
-      let msg ={
-        action: action,
-        data:data
-      };
+   send(msg){
       try {
         this.socket.send(JSON.stringify(msg));
 
