@@ -11,7 +11,7 @@
 			//for test
 			window.gamesession = new GameWorker(JSON.parse(localStorage.getItem('UserProfile')));
 			window.gamesession.start();
-
+window.UserProfile = new UserModel(JSON.parse(localStorage.getItem('UserProfile')));
 
 			super(options);
 			this._el = document.querySelector('#js-game');
@@ -32,7 +32,7 @@
 						tmp.forEach((b)=>{b.disabled = false;});
 						tmp = document.querySelectorAll('.player-desk__btns-horizontal > button');
 						tmp.forEach((b)=>{b.disabled = false;});
-						let card = window.gamesession.player.get_card(event.target.id);
+						let card = window.gamesession.player.hand[event.target.id];
 						//TODO: переделать
 						if(event.target.querySelector('span').innerText>0 && window.capacity_of_drawer > window.drawer.length){
 							window.drawer.push(card);
@@ -59,7 +59,10 @@
 					tmp.addEventListener("click", (event)=>{
 						if(window.gamesession.player.do_action(g_action_name__combo, window.drawer)=="ok"){
 							this.update_player_desk();
+							this._el = document.querySelector('#js-topmenu');
+							//this._el.querySelector(name="score").innerText = window.UserProfile.score;
 						}
+						document.querySelector('#btn_reset').click();
 					});
 				}.bind(this));
 
@@ -94,16 +97,16 @@
 				let tmp = document.querySelectorAll('.player-deck__card');
 				for(let j=0; j<tmp.length; j++){
 					let t = tmp[j].querySelector(".player-deck__card__num-cards");
-					t.innerText = window.gamesession.player.hand[j].total_cards;
-					if( window.gamesession.player.hand[j].total_cards===0){
+					t.innerText = window.gamesession.player.hand[tmp[j].id].total_cards;
+					if( window.gamesession.player.hand[tmp[j].id].total_cards===0){
 						t.classList.add("player-deck__card__num-cards_zero");
 					}else{
 						t.classList.remove("player-deck__card__num-cards_zero");
 					}
 
 					t = tmp[j].querySelector(".player-deck__card__num-new-cards");
-					t.innerText = window.gamesession.player.hand[j].new_cards;
-					if( window.gamesession.player.hand[j].new_cards!==0){
+					t.innerText = window.gamesession.player.hand[tmp[j].id].new_cards;
+					if( window.gamesession.player.hand[tmp[j].id].new_cards!==0){
 						t.hidden=false;
 					}else{
 						t.hidden=true;

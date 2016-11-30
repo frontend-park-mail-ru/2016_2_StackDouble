@@ -1,6 +1,18 @@
-var g_deck = [{type:"ace"},{type:"king"},{type:"queen"},{type:"jack"},{type:"joker"},
-{type:"ten"},{type:"nine"},{type:"eight"},{type:"seven"},{type:"six"},
-{type:"five"},{type:"four"},{type:"three"},{type:"two"}];
+var g_deck = {ace:{type:"ace"}, king:{type:"king"}, queen:{type:"queen"},jack:{type:"jack"},joker:{type:"joker"},
+ten:{type:"ten"},nine:{type:"nine"},eight:{type:"eight"},seven:{type:"seven"},six:{type:"six"},
+five:{type:"five"},four:{type:"four"},three:{type:"three"},two:{type:"two"}};
+
+//или так с точным опредом карт?
+/*let deck1 = [{type:"ace", total_cards: 4},{type:"king", total_cards: 4},{type:"queen", total_cards: 4},{type:"jack", total_cards: 4},{type:"joker", total_cards: 4},
+{type:"ten", total_cards: 4},{type:"nine", total_cards: 4},{type:"eight", total_cards: 4},{type:"seven", total_cards: 4},{type:"six", total_cards: 4},
+{type:"five", total_cards: 4},{type:"four", total_cards: 4},{type:"three", total_cards: 4},{type:"two", total_cards: 4}];*/
+
+const pair = {notype:2, score: 10};
+const set = {notype:3, score: 16};
+const square = {notype:4, score: 25};
+const long_combo_1 = {notype:4, type:{joker:2,}, score: 50};
+
+g_combinations = {pair:pair, set:set, square:square, long_combo_1:long_combo_1}
 
 var g_action_name__combo = "combo",
 g_action_name__exchange = "exchange";
@@ -130,6 +142,7 @@ g_action_name__exchange = "exchange";
       this.intervalId= setInterval(function(){
         if(this.player.has_new_action === true){
           this.send(this.player.action);
+          this.player.has_new_action = false;
         }
       }.bind(this), 500);
     }
@@ -179,6 +192,7 @@ g_action_name__exchange = "exchange";
         this.finish();
         break;
         case "change_player": //новые карты от обмена, колво очков от комбо
+        this.user.score += msg.data.player.score || 0;
         this.player.update(msg.data.player);
         break;
         case "change_rivals"://инфа о ид делающего ход, ид предыдущего и его действие

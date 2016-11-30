@@ -5,6 +5,7 @@
   const TopMenu = window.TopMenu;
   const request = window.request;
   const MainMenu = window.MainMenu;
+  const UserModel = window.UserModel;
 
   class MainMenuView extends View {
     constructor(options = {}) {
@@ -93,7 +94,9 @@
         event.preventDefault();
         this.mainmenu._el.querySelector('.waiting-sign').hidden = false;
 
-        window.gamesession = new GameWorker(JSON.parse(localStorage.getItem('UserProfile')));
+
+        window.UserProfile = new UserModel(JSON.parse(localStorage.getItem('UserProfile')));
+        window.gamesession = new GameWorker(window.UserProfile);
         window.gamesession.onstatuschange = function(){
           if(window.gamesession.status === 3){
           console.log("go to game");

@@ -72,7 +72,7 @@
 			let user= localStorage.getItem('UserProfile');
 			if(user){
 				user =JSON.parse(localStorage.getItem('UserProfile'));
-				window.UserProfile = user;
+				window.UserProfile = new UserModel(user);
 				console.log("go MainMenu");
 				this.router.go('/MainMenu');
 			}
