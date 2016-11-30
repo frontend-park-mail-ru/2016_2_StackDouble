@@ -8,7 +8,7 @@
 
       <div class="col-md-2 col-xs-3">
         <img name="score_img" class="media-object img-rounded top-menu__score" alt="40x40"/>
-        <h4 name="score">
+        <h4 id="score">
           <fest:value>data.score</fest:value>
       </h4>
       </div>

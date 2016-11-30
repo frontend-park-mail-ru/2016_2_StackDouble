@@ -44,7 +44,6 @@
 */
 
 update(data){
-  debugger;
   //переписать
   this.his_turn = data.his_turn || this.his_turn;
   if(data.hand){

@@ -192,7 +192,7 @@ g_action_name__exchange = "exchange";
         this.finish();
         break;
         case "change_player": //новые карты от обмена, колво очков от комбо
-        this.user.score += msg.data.player.score || 0;
+        window.UserProfile.score += msg.data.player.score || 0;
         this.player.update(msg.data.player);
         break;
         case "change_rivals"://инфа о ид делающего ход, ид предыдущего и его действие

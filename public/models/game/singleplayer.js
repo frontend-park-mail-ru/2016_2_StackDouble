@@ -3,7 +3,7 @@
   const shuffle_times =[700, 1400];
   const Player = window.GamePlayer;
   const Card = window.GameCard;
-  const value_deal_cards = 5;
+  const value_deal_cards = 36;
   class SinglePlayer{
     /**
     * Создаёт сингл игру
@@ -272,7 +272,7 @@
         //создать колоду и перетасовать
         fill_deck(){
           for(let card in g_deck){
-            for(let i= 8; i>0; i--){
+            for(let i= 24; i>0; i--){
               this.deck.push(new Card({type:card, total_cards: 1}));
             }
           }

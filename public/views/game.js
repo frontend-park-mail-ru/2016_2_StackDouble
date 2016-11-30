@@ -59,8 +59,7 @@ window.UserProfile = new UserModel(JSON.parse(localStorage.getItem('UserProfile'
 					tmp.addEventListener("click", (event)=>{
 						if(window.gamesession.player.do_action(g_action_name__combo, window.drawer)=="ok"){
 							this.update_player_desk();
-							this._el = document.querySelector('#js-topmenu');
-							//this._el.querySelector(name="score").innerText = window.UserProfile.score;
+							document.querySelector("#score").innerText = window.UserProfile.score;
 						}
 						document.querySelector('#btn_reset').click();
 					});
