@@ -5,8 +5,6 @@
     /**
     * Создаёт нового игрока
     * @param {Card[]} hand - колода игрока
-    * @param {string} action - действие игрока
-    * @param {boolean} has_new_action - наличие нового действия
     * @param {boolean} his_turn - ход игрока
     * @param {object} action
     * @param {boolean} action.action
@@ -14,14 +12,14 @@
     */
     constructor(data) {
       super(data);
-      this.has_new_action = false;
       this.action = {action:false, cards:[]};
       this.his_turn = data.his_turn || false;
       this.drawer = [];
       this.onchange = function(){};
+      this.onaction = function(){};
       this.hand = {};
       //TODO: исправить
-      this.new_cards = 2;
+      this.new_cards = data.new_cards;
       data.hand = data.hand || g_deck;
       for(let card in data.hand){
         this.hand[card] = new Card(data.hand[card]);
@@ -45,6 +43,7 @@
 
 update(data){
   //переписать
+
   this.his_turn = data.his_turn || this.his_turn;
   if(data.hand){
   this.new_cards = data.hand.length;
@@ -96,11 +95,10 @@ get total_cards(){
 * @returns {statusText}
 */
 do_action(action, cards){
-
   if(action == g_action_name__exchange && this.new_cards != cards.length){
     return "error";
   }
-
+  cards = JSON.parse(JSON.stringify(cards));
   let backup  = JSON.parse(JSON.stringify(this.hand));
   cards.forEach(function(item, i, cards){
     this.hand[item.type].total_cards--;
@@ -110,7 +108,7 @@ do_action(action, cards){
     }
   }.bind(this));
 
-  if(this.check_combo(cards)===0){
+  if( action == g_action_name__combo && this.check_combo(cards)===0){
     this.hand=backup;
     return "error";
   }
@@ -118,11 +116,14 @@ do_action(action, cards){
   if(cards.length !==0 ){
     this.action.cards = cards;
     this.action.action = action;
-    this.has_new_action = true;
   }
+  //так или ждать ответа серва?
   this.his_turn = false;
+  this.onaction();
   return "ok";
 }
+
+
 
 check_combo(cards){
   let hand = {};

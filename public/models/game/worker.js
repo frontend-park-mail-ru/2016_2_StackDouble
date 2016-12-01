@@ -139,13 +139,17 @@ g_action_name__exchange = "exchange";
       //TODO:запрос на поиск игроков и начало игры
       //TODO:вызов апдейтов стола, игрока и соперников
       //TODO: проверка игрока и переправка серверу/переделать в лисен объекта?
-      this.intervalId= setInterval(function(){
+      /*this.intervalId= setInterval(function(){
         if(this.player.has_new_action === true){
           this.send(this.player.action);
           this.player.has_new_action = false;
         }
-      }.bind(this), 500);
-    }
+      }.bind(this), 500);*/
+
+      this.player.onaction = function(){
+          this.send(this.player.action);
+    }.bind(this);
+  }
 
     isStopped() {
       return this._stopped;

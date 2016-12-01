@@ -14,6 +14,7 @@
             <span class="nopadding rival-info__card__num-cards"><fest:value>rival.total_cards</fest:value></span>
           </div>
           <h3 class="nopadding rival-info__nick"><fest:value>rival.login</fest:value></h3>
+          <h3 class="nopadding rival-info__score"><fest:value>rival.score</fest:value></h3>
         </div>
       </div>
     </fest:for>
@@ -34,14 +35,16 @@
 
       </div>
       <div class="col-md-2 player-desk__btns hidden-sm hidden-xs"  align="center">
-        <button id="btn_exchange" type="button" class="btn player-desk__btns__game-btn btn-success" disabled="disabled">Обменять</button>
+        <button id="btn_exchange" type="button" class="btn player-desk__btns__game-btn btn-success" disabled="disabled"><span>Обменять</span>
+        <span class="player-desk__btns__game-btn__num"><fest:value>data.player.new_cards</fest:value></span></button>
         <br></br>
         <button id="btn_combo" type="button" class="btn player-desk__btns__game-btn btn-success" disabled="disabled">Комбо</button>
         <br></br>
         <button id="btn_reset" type="button" class="btn player-desk__btns__game-btn btn-success" disabled="disabled">Сброс</button>
       </div>
       <div class="col-sm-12 player-desk__btns-horizontal hidden-md hidden-lg"  align="center">
-        <button id="btn_exchange" type="button" class="btn player-desk__btns__game-btn btn-success" disabled="disabled">Обменять</button>
+        <button id="btn_exchange" type="button" class="btn player-desk__btns__game-btn btn-success" disabled="disabled"><span>Обменять</span>
+        <span class="player-desk__btns__game-btn__num"><fest:value>data.player.new_cards</fest:value></span></button>
         <br></br>
         <button id="btn_combo" type="button" class="btn player-desk__btns__game-btn btn-success" disabled="disabled">Комбо</button>
         <br></br>

@@ -3,7 +3,7 @@
   const shuffle_times =[700, 1400];
   const Player = window.GamePlayer;
   const Card = window.GameCard;
-  const value_deal_cards = 36;
+  const value_deal_cards = 5;
   class SinglePlayer{
     /**
     * Создаёт сингл игру
@@ -18,7 +18,7 @@
       this.players = [];
       this.his_turn = 0;
       this.gamesession.send = this.onsend.bind(this);
-      this.previous_thrown_cards = 2;
+      this.previous_thrown_cards = 1;
 
       this.fill_deck();
       this.fill_players();
@@ -60,8 +60,9 @@
       start(){
         this.deal_cards();
         this.players.forEach((item)=>{
-          item.new_cards=2;
+          item.new_cards=0;
         });
+        this.players[0].new_cards=this.previous_thrown_cards;
         let event = new CustomEvent("onmessage");
         let data = {action: 'game_start', data:{
           rivals: this.prepared_rivals(),
@@ -79,14 +80,21 @@
       make_turn(){
         let rivals =this.players.slice(1, this.players.length);
         for(let i=0; i<rivals.length; i++){
+          let n=i+1;
+          //симуляция для отображения хода
+          if(n>rivals.length-1){
+            n=0;
+          }
+          rivals[n].his_turn = true;
           rivals[i].update({hand:this.take_deck_cards(this.previous_thrown_cards)});
-          let exchange, combo = this.pick_combo(rivals[i]);
+          let exchange, combo = this.pick_combo(rivals[i].hand);
           if(combo){
             rivals[i].score += g_combinations[combo].score;
             this.previous_thrown_cards = 2;
           }else{
             exchange = this.pick_exchange(rivals[i]);
             this.put_deck_cards(exchange);
+            this.previous_thrown_cards++;
           }
 
           let event = new CustomEvent("onmessage");
@@ -94,6 +102,8 @@
             rivals: this.prepared_rivals() }};
             event.data = JSON.stringify(data);
             this.gamesession.receiver(event);
+
+            rivals[n].his_turn = false;
           }
 
           let event = new CustomEvent("onmessage");
@@ -124,10 +134,10 @@
           for(let comb in g_combinations){
             if(g_combinations[comb].notype){
               for(let card in hand){
-                if(hand[card].total_cards>g_combinations[comb].notype && g_combinations[comb].score>best){
+                if(hand[card].total_cards>=g_combinations[comb].notype && g_combinations[comb].score>best){
                   if(g_combinations[comb].type){
                     for(let scard in hand){
-                      if(scand in g_combinations[comb].type && hand[scard].total_cards>g_combinations[comb].type[scard] && g_combinations[comb].score>best){
+                      if(scard in g_combinations[comb].type && hand[scard].total_cards>=g_combinations[comb].type[scard] && g_combinations[comb].score>best){
                         best=g_combinations[comb].score;
                         bestcomb = comb;
                         notype_card_name = card;
@@ -141,21 +151,21 @@
               }
             }else{
               for(let scard in hand){
-                if(scand in g_combinations[comb].type && hand[scard].total_cards>g_combinations[comb].type && g_combinations[comb].score>best){
+                if(scand in g_combinations[comb].type && hand[scard].total_cards>=g_combinations[comb].type && g_combinations[comb].score>best){
                   best=g_combinations[comb].score;
                   bestcomb = comb;
                 }
               }
             }
           }
-
           if(bestcomb){
+            if(notype_card_name){
             hand[notype_card_name].total_cards -= g_combinations[bestcomb].notype;
+          }
             for(let card in g_combinations[bestcomb].type){
               hand[card].total_cards -= g_combinations[bestcomb].type[card];
             }
           }
-
           return bestcomb;
         }
 
@@ -213,7 +223,11 @@
         }
 
         put_deck_cards(cards){
-          this.deck = [].concat(this.deck, cards);
+          let e_deck=[];
+          for(let i=0; i<cards.length; i++){
+                e_deck.push(new Card({type:cards[i].type, total_cards:1}));
+          }
+          this.deck = [].concat(this.deck, e_deck);
         }
 
         //перетасовать колоду
@@ -235,7 +249,7 @@
             has_star: true,
             his_turn: false,
             total_cards:0,
-            score: 500,
+            score: 0,
           },
           {
             login: 'Beria',
@@ -243,7 +257,7 @@
             has_star: false,
             his_turn: false,
             total_cards:0,
-            score: 500,
+            score: 0,
           },
           {
             login: 'Hitler',
@@ -251,7 +265,7 @@
             has_star: true,
             his_turn: false,
             total_cards:0,
-            score: 500,
+            score: 0,
           },
           {
             login: 'Goebbels',
@@ -259,7 +273,7 @@
             his_turn: false,
             has_star: false,
             total_cards:0,
-            score: 500,
+            score: 0,
           },];
 
           this.players.push(new Player(JSON.parse(localStorage.getItem('UserProfile'))));
@@ -272,7 +286,7 @@
         //создать колоду и перетасовать
         fill_deck(){
           for(let card in g_deck){
-            for(let i= 24; i>0; i--){
+            for(let i= 16; i>0; i--){
               this.deck.push(new Card({type:card, total_cards: 1}));
             }
           }

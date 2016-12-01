@@ -6,5 +6,6 @@ node_modules/
 /api.raml
 *.tmpl.js
 /.sass-cache
+/public/css/*
 !/public/css/style.css
-!/public/css/style.map
+!/public/css/style.css.map

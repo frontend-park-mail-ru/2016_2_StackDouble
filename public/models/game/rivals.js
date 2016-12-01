@@ -13,13 +13,12 @@
       this.has_star = data.has_star || false;
       this.his_turn = data.his_turn  || false;
       this.total_cards = data.total_cards || 0;
-      this.onchange = function(){};
     }
 
     update(data){
       this.his_turn = data.his_turn;
       this.total_cards = data.total_cards;
-      this.onchange();
+      this.score = data.score;
     }
   }
 
@@ -32,6 +31,7 @@
       data.forEach(function(item, i, data){
         this.list.push(new Rival(item));
       }.bind(this));
+      this.onchange = function(){};
     }
 
     update(data){
@@ -42,6 +42,7 @@
           }
         }
       }.bind(this));
+      this.onchange();
     }
 
     get function(){

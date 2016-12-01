@@ -23,12 +23,19 @@ $path: "../assets/"
 
 .rival-info
 	width: 200px
-	height: 120px
 	padding: 5px
 	background-color: #d9e6fc
 	border-radius: 10px
 	&:hover
 		transform: scale(1.05, 1.05)
+
+.rival-info_his-turn
+	transition: all 0.1s linear
+	transform: scale(1.05, 1.05)
+	border-style: solid
+	border-color: gold
+	border-width: 5px
+
 
 .rival-info__avatar
 	position: relative
@@ -43,6 +50,12 @@ $path: "../assets/"
 .rival-info__nick
 	width: 90px
 	text-align: center
+	left: 0
+
+.rival-info__score
+	width: 90px
+	text-align: center
+	right: 0
 
 .rival-info__avatar-star
 	position: relative
@@ -328,6 +341,7 @@ $suit_list: joker ace king queen jack ten nine eight seven six five four three t
 	display: flex
 	justify-content: center
 	flex-direction: column
+	padding-left: 0
 
 .player-desk__btns__game-btn
 	position: relative
@@ -342,12 +356,29 @@ $suit_list: joker ace king queen jack ten nine eight seven six five four three t
 		transition: all 0.1s linear
 		transform: scale(1.05, 1.05)
 
+.player-desk__btns__game-btn__num
+	position: absolute
+	width: 30px
+	height: 30px
+	right: -15px
+	background-color: yellow
+	text-align: center
+	color: red
+	border-style: solid
+	border-width: 1px
+	border-color: red
+	border-radius: 20px
+	&::selection
+		background: transparent
+
 .player-desk__btns-horizontal
 	@extend .player-desk__btns
 	flex-direction: row
 	justify-content: space-between
 	margin-left: 1%
-	margin-right: 1%
+	margin-right: 15px
+
+
 
 .main-menu__btn
 	width: 16vw
