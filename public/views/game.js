@@ -72,7 +72,7 @@
 				window.gamesession.rivals.onchange = this.update_rivals;
 				window.gamesession.onendgame = function(){
 					//TODO: написать завершение игры
-					document.querySelector('.end_game').innerText = "YOU DIED";
+					document.querySelector('.end_game').innerText = "YOU DIED!";
 					document.querySelector('.end_game').hidden = false;
 					clearInterval(this.timerId);
 				}
