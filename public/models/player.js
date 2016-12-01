@@ -11,7 +11,7 @@
 		constructor(data = {}) {
 			this.login = data.login;
 			this.avatar = data.avatar;
-      this.score = data.score;
+      this.score = data.score || 0;
 		}
 
 		set_player(data){

@@ -98,7 +98,7 @@
         window.UserProfile = new UserModel(JSON.parse(localStorage.getItem('UserProfile')));
         window.gamesession = new GameWorker(window.UserProfile);
         window.gamesession.onstatuschange = function(){
-          if(window.gamesession.status === 3){
+        if(window.gamesession.status === 3){
           console.log("go to game");
           this.router.go('/game');
         }

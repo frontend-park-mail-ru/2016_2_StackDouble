@@ -13,12 +13,14 @@
       this.has_star = data.has_star || false;
       this.his_turn = data.his_turn  || false;
       this.total_cards = data.total_cards || 0;
+      this.out_of_game = data.out_of_game || false;
     }
 
     update(data){
       this.his_turn = data.his_turn;
       this.total_cards = data.total_cards;
       this.score = data.score;
+      this.out_of_game = data.out_of_game;
     }
   }
 

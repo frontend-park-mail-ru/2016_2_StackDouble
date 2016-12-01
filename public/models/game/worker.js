@@ -17,6 +17,8 @@ g_combinations = {pair:pair, set:set, square:square, long_combo_1:long_combo_1}
 var g_action_name__combo = "combo",
 g_action_name__exchange = "exchange";
 
+var g_min_combo = 2;
+
 
 (function () {
   'use strict';
@@ -52,6 +54,7 @@ g_action_name__exchange = "exchange";
       this.player;
       this.single;
       this.onstatuschange = function(){};
+      this.onendgame = function(){};
     }
 
     set status(number){
@@ -147,6 +150,7 @@ g_action_name__exchange = "exchange";
       }.bind(this), 500);*/
 
       this.player.onaction = function(){
+        this.desk.timer = 0;
           this.send(this.player.action);
     }.bind(this);
   }
@@ -193,10 +197,13 @@ g_action_name__exchange = "exchange";
         this.status = 3;
         break;
         case "game_end"://коректно завершаем
+        this.player.update(msg.data.player);
+        this.rivals.update(msg.data.rivals);
+        this.onendgame();
         this.finish();
         break;
         case "change_player": //новые карты от обмена, колво очков от комбо
-        window.UserProfile.score += msg.data.player.score || 0;
+        this.user.score = msg.data.player.score;
         this.player.update(msg.data.player);
         break;
         case "change_rivals"://инфа о ид делающего ход, ид предыдущего и его действие

@@ -3,7 +3,8 @@
   const shuffle_times =[700, 1400];
   const Player = window.GamePlayer;
   const Card = window.GameCard;
-  const value_deal_cards = 5;
+  const value_deal_cards = 5; //число раздаваемых в начале карт
+  const speed_move = 500; //время между ходами
   class SinglePlayer{
     /**
     * Создаёт сингл игру
@@ -19,6 +20,8 @@
       this.his_turn = 0;
       this.gamesession.send = this.onsend.bind(this);
       this.previous_thrown_cards = 1;
+      this.queue = 0;
+      this.intervalId;
 
       this.fill_deck();
       this.fill_players();
@@ -35,7 +38,19 @@
         case "combo":
         let combo = this.players[0].check_combo(msg.cards);
         if (combo!==0) {
-          this.players[0].do_action("combo", msg.cards);
+          let hand={};
+          msg.cards.forEach(function(item, i, cards){
+            if(item.type in hand){
+              this[item.type].total_cards+=1;
+            }else{
+              this[item.type] = {total_cards:1};
+            }
+          }.bind(hand));
+          for (let item in hand){
+            this.players[0].hand[item].total_cards -= hand[item].total_cards;
+          }
+
+
           this.players[0].score+= g_combinations[combo].score;
           let event = new CustomEvent("onmessage");
           let data = {action: 'change_player', data:{
@@ -50,10 +65,21 @@
           break;
 
           case "exchange":
+          let hand={};
+          msg.cards.forEach(function(item, i, cards){
+            if(item.type in hand){
+              this[item.type].total_cards+=1;
+            }else{
+              this[item.type] = {total_cards:1};
+            }
+          }.bind(hand));
+          for (let item in hand){
+            this.players[0].hand[item].total_cards -= hand[item].total_cards;
+          }
           this.put_deck_cards(msg.cards);
           break;
         }
-        this.make_turn();
+        this.next_round();
       }
 
       //подать сигнал о нчале игры
@@ -63,12 +89,13 @@
           item.new_cards=0;
         });
         this.players[0].new_cards=this.previous_thrown_cards;
+        this.players[0].his_turn = true;
         let event = new CustomEvent("onmessage");
         let data = {action: 'game_start', data:{
           rivals: this.prepared_rivals(),
           desk:{
             deck: this.deck.length,
-            time: 80},
+            timer: 80},
             player: this.players[0]
           }
         };
@@ -77,227 +104,293 @@
       }
 
       //соперники делают ход и отправка даннах
-      make_turn(){
-        let rivals =this.players.slice(1, this.players.length);
-        for(let i=0; i<rivals.length; i++){
-          let n=i+1;
-          //симуляция для отображения хода
-          if(n>rivals.length-1){
-            n=0;
-          }
-          rivals[n].his_turn = true;
-          rivals[i].update({hand:this.take_deck_cards(this.previous_thrown_cards)});
-          let exchange, combo = this.pick_combo(rivals[i].hand);
+      next_round(){
+        //1 т.к. 0 это пользователь
+        this.players[1].his_turn = true;
+        this.send_change_rivals();
+        this.players[1].his_turn = false;
+        this.queue = 1;
+        this.intervalId =  setInterval(this.make_move.bind(this), speed_move);
+
+
+      }
+
+
+      //сделать ход игроку
+      make_move(){
+          console.log("make_move");
+        let i = this.queue, player = this.players[i];
+
+        if(!player.out_of_game){
+          let cards = this.take_deck_cards(this.previous_thrown_cards);
+          player.update({hand:cards});
+          let exchange, combo = this.pick_combo(player.hand);
           if(combo){
-            rivals[i].score += g_combinations[combo].score;
+            player.score += g_combinations[combo].score;
+            this.previous_thrown_cards = 1;
+            exchange = this.pick_exchange(player);
+            this.put_deck_cards(exchange);
             this.previous_thrown_cards = 2;
           }else{
-            exchange = this.pick_exchange(rivals[i]);
+            exchange = this.pick_exchange(player);
             this.put_deck_cards(exchange);
             this.previous_thrown_cards++;
           }
-
-          let event = new CustomEvent("onmessage");
-          let data = {action: 'change_rivals', data:{
-            rivals: this.prepared_rivals() }};
-            event.data = JSON.stringify(data);
-            this.gamesession.receiver(event);
-
-            rivals[n].his_turn = false;
+          //если карты кончились вывести из игры, следующий игрок передаст только 1 карту, так как ничего не получит
+          //длина колоды, чтобы быстро не выходили из игры пока
+          if(player.total_cards===0 && this.deck.length===0){
+            player.out_of_game = true;
+            this.previous_thrown_cards=1;
           }
+        }
 
+
+        let n=i+1;
+        //симуляция для отображения хода. информация о картах не достоверна
+        if(n>this.players.length-1){
+          n=1;
+        }
+        this.players[n].his_turn = true;
+        this.send_change_rivals();
+        this.players[n].his_turn = false;
+
+        this.queue++;
+        if(this.queue>this.players.length-1){
+          clearInterval(this.intervalId);
           let event = new CustomEvent("onmessage");
-
+          let cards = this.take_deck_cards(this.previous_thrown_cards);
+          if(cards.length===0 && this.players[0].total_cards===0){
+            this.players[0].out_of_game=true;
+          }
+          this.players[0].update({hand:cards});
           let  data = {action: 'next_round', data:{
             rivals: this.prepared_rivals(),
             desk:{
               deck: this.deck.length,
-              time: 80},
+              timer: 80},
               player: {
                 his_turn: true,
-                hand: this.take_deck_cards(this.previous_thrown_cards),
+                hand: cards,
               }
             }
           };
           event.data = JSON.stringify(data);
           this.gamesession.receiver(event);
+
+          let end = this.players.filter(function(player) {
+            return !player.out_of_game;
+          });
+          if(end.length===0){
+            let event = new CustomEvent("onmessage");
+            let data = {action: 'game_end', data:{
+              rivals: this.prepared_rivals(),
+              player: {
+                score: this.players[0].score,
+                out_of_game: this.players[0].out_of_game,
+              }}};
+              event.data = JSON.stringify(data);
+              this.gamesession.receiver(event);
+            }
+          }
+          console.log("make_move");
         }
 
-        /**
-        * выбирает комбо
-        * @return {string} name - имя комбинации
-        */
-        pick_combo(hand){
-          let best = 0;
-          let bestcomb, notype_card_name;
+        send_change_rivals(){
+          let event = new CustomEvent("onmessage");
+          let data = {action: 'change_rivals', data:{
+            rivals: this.prepared_rivals() }};
+            event.data = JSON.stringify(data);
+            this.gamesession.receiver(event);
+          }
 
-          for(let comb in g_combinations){
-            if(g_combinations[comb].notype){
-              for(let card in hand){
-                if(hand[card].total_cards>=g_combinations[comb].notype && g_combinations[comb].score>best){
-                  if(g_combinations[comb].type){
-                    for(let scard in hand){
-                      if(scard in g_combinations[comb].type && hand[scard].total_cards>=g_combinations[comb].type[scard] && g_combinations[comb].score>best){
-                        best=g_combinations[comb].score;
-                        bestcomb = comb;
-                        notype_card_name = card;
+          /**
+          * выбирает комбо
+          * @return {string} name - имя комбинации
+          */
+          pick_combo(hand){
+            console.log("pick_combo");
+            let best = 0;
+            let bestcomb, notype_card_name;
+
+            for(let comb in g_combinations){
+              if(g_combinations[comb].notype){
+                for(let card in hand){
+                  if(hand[card].total_cards>=g_combinations[comb].notype && g_combinations[comb].score>best){
+                    if(g_combinations[comb].type){
+                      for(let scard in hand){
+                        if(scard in g_combinations[comb].type && hand[scard].total_cards>=g_combinations[comb].type[scard] && g_combinations[comb].score>best){
+                          best=g_combinations[comb].score;
+                          bestcomb = comb;
+                          notype_card_name = card;
+                        }
                       }
+                    }else{
+                      best=g_combinations[comb].score;
+                      notype_card_name = card;
+                      bestcomb = comb;
                     }
-                  }else{
+                  }
+                }
+              }else{
+                for(let scard in hand){
+                  if(scand in g_combinations[comb].type && hand[scard].total_cards>=g_combinations[comb].type && g_combinations[comb].score>best){
                     best=g_combinations[comb].score;
                     bestcomb = comb;
                   }
                 }
               }
-            }else{
-              for(let scard in hand){
-                if(scand in g_combinations[comb].type && hand[scard].total_cards>=g_combinations[comb].type && g_combinations[comb].score>best){
-                  best=g_combinations[comb].score;
-                  bestcomb = comb;
+            }
+            if(bestcomb){
+              if(notype_card_name){
+                hand[notype_card_name].total_cards -= g_combinations[bestcomb].notype;
+              }
+              for(let card in g_combinations[bestcomb].type){
+                hand[card].total_cards -= g_combinations[bestcomb].type[card];
+              }
+            }
+            console.log("pick_combo");
+            return bestcomb;
+          }
+
+          //случайно выбираем карты на обмен
+          pick_exchange(player){
+                        console.log("pick_exchange");
+            //пока так
+            let i =player.new_cards, j=10, cards =[];
+            if(i>player.total_cards){i=player.total_cards;}
+            while(i>0){
+              for(let card in player.hand){
+                if((getRandomInt(1, 5)==3 || j<0) && player.hand[card].total_cards>0 && i>0){
+                  player.hand[card].total_cards--;
+                  cards.push(new Card({type:player.hand[card].type, total_cards: 1}));
+                  i--;
+                  if(i===0){
+
+                    break;
+                  }
                 }
               }
+              j--;
             }
+                        console.log("pick_exchange");
+            return cards;
           }
-          if(bestcomb){
-            if(notype_card_name){
-            hand[notype_card_name].total_cards -= g_combinations[bestcomb].notype;
-          }
-            for(let card in g_combinations[bestcomb].type){
-              hand[card].total_cards -= g_combinations[bestcomb].type[card];
-            }
-          }
-          return bestcomb;
-        }
 
-        pick_exchange(player){
-          //пока так
-          let i =player.new_cards, j=100, cards =[];
-          while(i>0){
-            for(let card in player.hand){
-              if((getRandomInt(1, 10)==5 && player.hand[card].total_cards>0) || j<0){
-                player.hand[card].total_cards--;
-                cards.push(new Card({type:player.hand[card].type, total_cards: 1}));
-                i--;
+          //передать обрезаную версию игрока, как соперников
+          prepared_rivals(beg=1, end=this.players.length){
+            if(end>this.players.length){
+              end-=this.players.length;
+              beg+=this.players.length;
+            }
+            let tmp, rivals =this.players.slice(beg, end);
+            tmp = JSON.stringify(rivals);
+            tmp = JSON.parse(tmp);
+            tmp.forEach(function(item, i){
+              item.deck = null;
+              item.total_cards = rivals[i].total_cards;
+            }.bind(this));
+            return tmp;
+          }
+
+          //раздать карты
+          deal_cards(){
+            this.players.forEach(function(item){
+              let hand=[];
+              for(let i=0; i<value_deal_cards; i++){
+                hand.push(this.deck.pop());
               }
-            }
-            j--;
-          }
-          return cards;
-        }
+              item.update({hand:hand});
+            }.bind(this));
 
-        //передать обрезаную версию игрока, как соперников
-        prepared_rivals(beg=1, end=this.players.length){
-          if(end>this.players.length){
-            end-=this.players.length;
-            beg+=this.players.length;
           }
-          let tmp, rivals =this.players.slice(beg, end);
-          tmp = JSON.stringify(rivals);
-          tmp = JSON.parse(tmp);
-          tmp.forEach(function(item, i){
-            item.deck = null;
-            item.total_cards = rivals[i].total_cards;
-          }.bind(this));
-          return tmp;
-        }
 
-        //раздать карты
-        deal_cards(){
-          this.players.forEach(function(item){
-            let hand=[];
-            for(let i=0; i<value_deal_cards; i++){
+          //взять из колоды карты
+          take_deck_cards(number){
+            let hand = [];
+            for(let i= 0; i<number && this.deck.length>0; i++){
               hand.push(this.deck.pop());
             }
-            item.update({hand:hand});
-          }.bind(this));
-
-        }
-
-        //взять из колоды карты
-        take_deck_cards(number){
-          let hand = [];
-          for(let i= 0; i<number; i++){
-            hand.push(this.deck.pop());
+            return hand;
           }
-          return hand;
-        }
 
-        put_deck_cards(cards){
-          let e_deck=[];
-          for(let i=0; i<cards.length; i++){
-                e_deck.push(new Card({type:cards[i].type, total_cards:1}));
+          //положить карты в колоду
+          put_deck_cards(cards){
+            let e_deck=[];
+            for(let i=0; i<cards.length; i++){
+              e_deck.push(new Card({type:cards[i].type, total_cards:1}));
+            }
+            this.deck = [].concat(this.deck, e_deck);
           }
-          this.deck = [].concat(this.deck, e_deck);
-        }
 
-        //перетасовать колоду
-        shuffle_deck(min=shuffle_times[0], max=shuffle_times[1]){
-          let length = this.deck.length;
-          for(let pos1, pos2, tmp, i=getRandomInt(min, max); i>0; i--){
-            pos1 = getRandomInt(0, length);
-            pos2 = getRandomInt(0, length);
-            tmp = this.deck[pos1];
-            this.deck[pos1] = this.deck[pos2];
-            this.deck[pos2] = tmp;
-          }
-        }
-
-        fill_players(){
-          let data = [{
-            login: 'Stalin',
-            avatar: "./assets/avatar.svg",
-            has_star: true,
-            his_turn: false,
-            total_cards:0,
-            score: 0,
-          },
-          {
-            login: 'Beria',
-            avatar: "./assets/avatar.svg",
-            has_star: false,
-            his_turn: false,
-            total_cards:0,
-            score: 0,
-          },
-          {
-            login: 'Hitler',
-            avatar: "./assets/avatar.svg",
-            has_star: true,
-            his_turn: false,
-            total_cards:0,
-            score: 0,
-          },
-          {
-            login: 'Goebbels',
-            avatar: "./assets/avatar.svg",
-            his_turn: false,
-            has_star: false,
-            total_cards:0,
-            score: 0,
-          },];
-
-          this.players.push(new Player(JSON.parse(localStorage.getItem('UserProfile'))));
-          data.forEach(function(item){
-            this.players.push(new Player(item));
-          }.bind(this));
-
-        }
-
-        //создать колоду и перетасовать
-        fill_deck(){
-          for(let card in g_deck){
-            for(let i= 16; i>0; i--){
-              this.deck.push(new Card({type:card, total_cards: 1}));
+          //перетасовать колоду
+          shuffle_deck(min=shuffle_times[0], max=shuffle_times[1]){
+            let length = this.deck.length;
+            for(let pos1, pos2, tmp, i=getRandomInt(min, max); i>0; i--){
+              pos1 = getRandomInt(0, length);
+              pos2 = getRandomInt(0, length);
+              tmp = this.deck[pos1];
+              this.deck[pos1] = this.deck[pos2];
+              this.deck[pos2] = tmp;
             }
           }
-          this.shuffle_deck();
+
+          //создать всех игроков
+          fill_players(){
+            let data = [{
+              login: 'Stalin',
+              avatar: "./assets/avatar.svg",
+              has_star: true,
+              his_turn: false,
+              total_cards:0,
+              score: 0,
+            },
+            {
+              login: 'Beria',
+              avatar: "./assets/avatar.svg",
+              has_star: false,
+              his_turn: false,
+              total_cards:0,
+              score: 0,
+            },
+            {
+              login: 'Hitler',
+              avatar: "./assets/avatar.svg",
+              has_star: true,
+              his_turn: false,
+              total_cards:0,
+              score: 0,
+            },
+            {
+              login: 'Goebbels',
+              avatar: "./assets/avatar.svg",
+              his_turn: false,
+              has_star: false,
+              total_cards:0,
+              score: 0,
+            },];
+
+            this.players.push(new Player(JSON.parse(localStorage.getItem('UserProfile'))));
+            data.forEach(function(item){
+              this.players.push(new Player(item));
+            }.bind(this));
+
+          }
+
+          //создать колоду и перетасовать
+          fill_deck(){
+            for(let card in g_deck){
+              for(let i= 4; i>0; i--){
+                this.deck.push(new Card({type:card, total_cards: 1}));
+              }
+            }
+            this.shuffle_deck();
+          }
+
+
+
         }
-
-
-
-      }
-      function getRandomInt(min, max) {
-        return Math.floor(Math.random() * (max - min)) + min;
-      }
-      window.SinglePlayer = SinglePlayer;
-    })();
+        function getRandomInt(min, max) {
+          return Math.floor(Math.random() * (max - min)) + min;
+        }
+        window.SinglePlayer = SinglePlayer;
+      })();

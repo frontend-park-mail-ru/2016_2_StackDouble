@@ -15,11 +15,12 @@
       this.action = {action:false, cards:[]};
       this.his_turn = data.his_turn || false;
       this.drawer = [];
+      this.out_of_game = false;
       this.onchange = function(){};
       this.onaction = function(){};
       this.hand = {};
       //TODO: исправить
-      this.new_cards = data.new_cards;
+      this.new_cards = data.new_cards || 1; //количество полученных карт и также количество, которое нужно обменять. поэтому не может быть 0
       data.hand = data.hand || g_deck;
       for(let card in data.hand){
         this.hand[card] = new Card(data.hand[card]);
@@ -43,10 +44,17 @@
 
 update(data){
   //переписать
-
+  this.out_of_game = data.out_of_game || this.out_of_game;
+  this.score =   data.score || this.score ;
   this.his_turn = data.his_turn || this.his_turn;
   if(data.hand){
+
+    //см. описание поля
+    if(data.hand.length !==0){
   this.new_cards = data.hand.length;
+}else{
+  this.new_cards = 1;
+}
   for(let card in this.hand){
     this.hand[card].new_cards =0;
   }
@@ -129,11 +137,11 @@ check_combo(cards){
   let hand = {};
   cards.forEach(function(item, i, cards){
     if(item.type in hand){
-      hand[item.type].total_cards+=1;
+      this[item.type].total_cards+=1;
     }else{
-      hand[item.type] = {total_cards:1};
+      this[item.type] = {total_cards:1};
     }
-  }.bind(this));
+  }.bind(hand));
   //TODO: переделать. тут оче криво
   let ok_notype = false, ok_type = false, comb_name;
   for(let comb in g_combinations){

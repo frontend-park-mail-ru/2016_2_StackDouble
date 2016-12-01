@@ -70,4 +70,5 @@
   <div class="timer">
     <div class="timer__time"><fest:value>data.desk.timer</fest:value></div>
   </div>
+  <div class="end_game" hidden="hidden"></div>
 </fest:template>
