@@ -7,12 +7,15 @@ five:{type:"five"},four:{type:"four"},three:{type:"three"},two:{type:"two"}};
 {type:"ten", total_cards: 4},{type:"nine", total_cards: 4},{type:"eight", total_cards: 4},{type:"seven", total_cards: 4},{type:"six", total_cards: 4},
 {type:"five", total_cards: 4},{type:"four", total_cards: 4},{type:"three", total_cards: 4},{type:"two", total_cards: 4}];*/
 
-const pair = {notype:2, score: 10};
-const set = {notype:3, score: 16};
-const square = {notype:4, score: 25};
-const long_combo_1 = {notype:4, type:{joker:2,}, score: 50};
+const pair = {notype:[2], score: 10};
+const set = {notype:[3], score: 16};
+const square = {notype:[4], score: 25};
+const long_combo_1 = {notype:[4], type:{joker:2,}, score: 50};
+const test = {notype:[2], type:{joker:1, jack:1}, score: 100};
+const test1 = {notype:[5, 4, 3 , 2], score: 200};
+const test2 = {notype:[3, 2], type:{joker:2, jack:1, king:3}, score: 300};
 
-g_combinations = {pair:pair, set:set, square:square, long_combo_1:long_combo_1}
+g_combinations = {pair:pair, set:set, square:square, long_combo_1:long_combo_1, test1:test1, test2:test2, test:test}
 
 var g_action_name__combo = "combo",
 g_action_name__exchange = "exchange";

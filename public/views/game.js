@@ -234,7 +234,7 @@
 					this.now =  this.now || Date.now();
 					let dt =(Date.now() - this.now)/1000;
 					let timer;
-					if(window.gamesession.desk){clearInterval(this.timerId); timer=0; return;}
+					if(!window.gamesession.desk){clearInterval(this.timerId); timer=0; return;}
 					if(window.gamesession.desk.timer - dt>0){
 						timer = window.gamesession.desk.timer-dt;
 					} else{

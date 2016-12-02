@@ -5827,9 +5827,19 @@ button.close {
 .blank_150 {
   height: 150px; }
 
+.b_rival-info {
+  height: 140px;
+  width: 80%;
+  min-width: 780px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row; }
+
 .rival-info {
-  display: table;
   width: 200px;
+  height: 130px;
   padding: 5px;
   background-color: #d9e6fc;
   border-radius: 10px; }
@@ -5838,13 +5848,14 @@ button.close {
 
 .rival-info_his-turn {
   transition: all 0.1s linear;
-  transform: scale(1.05, 1.05);
+  transform: scale(1.03, 1.03);
+  width: 210px;
+  height: 140px;
   border-style: solid;
   border-color: gold;
   border-width: 5px; }
 
 .rival-info__avatar {
-  display: table-row;
   position: relative;
   z-index: 1;
   height: 90px;
@@ -5855,12 +5866,14 @@ button.close {
 .rival-info__nick {
   width: 90px;
   text-align: center;
-  left: 0; }
+  left: 0;
+  float: left; }
 
 .rival-info__score {
   width: 90px;
   text-align: center;
-  right: 0; }
+  right: 0;
+  float: right; }
 
 .rival-info__avatar-star {
   position: relative;
@@ -5989,10 +6002,11 @@ button.close {
   order: 14; }
 
 .deck {
-  position: absolute;
+  position: fixed;
   padding: auto;
   margin: auto;
   right: 0;
+  top: 25%;
   min-height: 50px;
   min-width: 50px;
   height: 18%;
@@ -6036,7 +6050,7 @@ button.close {
 
 .deck__num-cards {
   position: relative;
-  font-size: 5vw;
+  font-size: 5em;
   color: red;
   top: 12%;
   text-align: center;
@@ -6059,7 +6073,8 @@ button.close {
   position: absolute;
   padding: auto;
   margin: auto;
-  left: 0;
+  left: 3%;
+  top: 27%;
   min-height: 40px;
   height: 15%;
   width: 15%;
@@ -6077,7 +6092,6 @@ button.close {
   position: relative;
   padding: auto;
   margin: auto;
-  left: 3%;
   right: 0;
   top: 55%;
   height: auto;

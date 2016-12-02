@@ -109,7 +109,11 @@ do_action(action, cards){
 }
 
 
-
+/**
+* существует ли комбо с такими картами
+* @param {Card[]} cards
+* @return {string} - название комбо или 0
+*/
 check_combo(cards){
   let hand = {};
   cards.forEach(function(item, i, cards){
@@ -119,32 +123,53 @@ check_combo(cards){
       this[item.type] = {total_cards:1};
     }
   }.bind(hand));
-  //TODO: переделать. тут оче криво
-  let ok_notype = false, ok_type = false, comb_name;
+
+  let best_score=0, bestcomb, l_combination, have_all_cards, have_card, b_hand;
   for(let comb in g_combinations){
-    ok_notype = false;
-    ok_type = false;
-    for(let card in hand){
-      if(g_combinations[comb].notype && g_combinations[comb].notype==hand[card].total_cards){
-        ok_notype = true;
-      }
-      if(g_combinations[comb].type){
-        for(let scard in hand){
-          if(scard in g_combinations[comb].type && g_combinations[comb].type[scard] === hand[card].total_cards){
-            ok_type = true;
-          }
+    l_combination = g_combinations[comb];
+    b_hand= JSON.stringify(hand);
+    b_hand = JSON.parse(b_hand);
+    have_all_cards=true;
+    if(l_combination.type){
+      for(let scard in l_combination.type){
+        if(!(scard in hand && hand[scard].total_cards===l_combination.type[scard])){
+          have_all_cards=false;
+          break;
         }
-      }else{
-        ok_type = true;
+        delete b_hand[scard];
       }
     }
-    if(ok_notype && ok_type){
-      comb_name = comb;
+
+    if(!have_all_cards){
+      continue;
     }
+
+    have_card = false, have_all_cards = true;
+    for(let i=0; i<l_combination.notype.length && have_all_cards===true; i++){
+      for(let scard in b_hand){
+        if(b_hand[scard].total_cards===l_combination.notype[i]){
+          have_card = true;
+          delete b_hand[scard];
+          break;
+        }
+      }
+      if(!have_card){
+        have_all_cards = false;
+      }
   }
 
-  if(comb_name){
-     return comb_name;
+let tmp = true;
+//пуст ли массив
+for(let b in b_hand){tmp= false;}
+
+  if(tmp && have_all_cards){
+    bestcomb = comb;
+    break;
+  }
+
+}
+  if(bestcomb){
+     return bestcomb;
   } else {
     return 0;
   }

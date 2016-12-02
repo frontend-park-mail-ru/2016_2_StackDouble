@@ -1,9 +1,7 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
   <div class="col-md-12 blank_50"></div>
-  <div class="row-fluid container-fluid">
-    <div class="col-md-2"></div>
+  <div class="b_rival-info">
     <fest:for iterate="data.rivals.list" index="i" value="rival">
-      <div class="col-md-2 col-sm-3">
         <div class="rival-info center-block">
           <div class="rival-info__avatar" alt="100x100" align="right" style="background-image: url({rival.avatar});">
             <fest:if test="rival.has_star">
@@ -16,7 +14,6 @@
           <h3 class="nopadding rival-info__nick"><fest:value>rival.login</fest:value></h3>
           <h3 class="nopadding rival-info__score"><fest:value>rival.score</fest:value></h3>
         </div>
-      </div>
     </fest:for>
 
   </div>
