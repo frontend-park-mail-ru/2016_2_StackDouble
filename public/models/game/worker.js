@@ -23,19 +23,10 @@ var g_min_combo = 2;
 (function () {
   'use strict';
 
-
   const Desk = window.GameDesk;
   const Rivals = window.GameRivals;
   const Player = window.GamePlayer;
   const SinglePlayer = window.SinglePlayer;
-
-//test
-  class Fakesocket{
-    constructor(){
-    }
-  }
-
-
 
   class Worker {
     /**
@@ -46,6 +37,7 @@ var g_min_combo = 2;
     * @param {number} status - прогресс выполнения
     */
     constructor(user, nrivals=4) {
+      console.log("worker created");
       this.status_pr = 0;//socket opened =1, поиск игроков, игра создана, игра окончена
       this.nrivals = nrivals;
       this.desk;
@@ -92,8 +84,7 @@ var g_min_combo = 2;
 
       //test
       //this.socket = new WebSocket(address);
-      this.socket = new Fakesocket();
-
+      this.socket = {};
       //TODO:  если не удалось установить соединение, то сохдать SingePlayer
       this.single = new SinglePlayer(this);
       //TODO: отправка сешн ид для установки/восстановления соединения
@@ -127,27 +118,9 @@ var g_min_combo = 2;
     */
     start() {
       this.setconnection();
-
-      //test
-/*      let event = new CustomEvent("onmessage");
-      event.data = JSON.stringify(window.TestInfo.data['game_start']);
-      this.receiver(event);
-      event.data = JSON.stringify(window.TestInfo.data['change_player']);
-      this.receiver(event);
-      event.data = JSON.stringify(window.TestInfo.data['change_rivals']);
-      this.receiver(event);
-      event.data = JSON.stringify(window.TestInfo.data['next_round']);
-      this.receiver(event);*/
-
       //TODO:запрос на поиск игроков и начало игры
       //TODO:вызов апдейтов стола, игрока и соперников
       //TODO: проверка игрока и переправка серверу/переделать в лисен объекта?
-      /*this.intervalId= setInterval(function(){
-        if(this.player.has_new_action === true){
-          this.send(this.player.action);
-          this.player.has_new_action = false;
-        }
-      }.bind(this), 500);*/
 
       this.player.onaction = function(){
         this.desk.timer = 0;
@@ -184,7 +157,8 @@ var g_min_combo = 2;
     /**
     * колбек на сообщения сокета. вызывает апдейты
     * @callback WebSocket-onmessage
-    * @param {Card[]} hand - колода игрока
+    * @param {event} event - событие
+    * @param {object} event.data - переданная инфа
     */
     receiver(event){
       let msg = JSON.parse(event.data);
@@ -197,6 +171,7 @@ var g_min_combo = 2;
         this.status = 3;
         break;
         case "game_end"://коректно завершаем
+        this.status = 4;
         this.player.update(msg.data.player);
         this.rivals.update(msg.data.rivals);
         this.onendgame();
@@ -214,19 +189,6 @@ var g_min_combo = 2;
         this.desk.update(msg.data.desk);
         this.player.update(msg.data.player);
         break;
-      }
-
-    }
-
-    /**
-    * проверка сделал ли игрок действие и вызов его отправки
-    * @private
-    */
-    checkPlayer() {
-      let t = this.player.get_action();
-      if(t.action !== false){
-        //отправка действия и списка карт
-        this.send(t.action, t.cards);
       }
     }
 

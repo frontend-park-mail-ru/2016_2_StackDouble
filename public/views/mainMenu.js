@@ -15,9 +15,8 @@
 
       //test
       if (localStorage.getItem('UserProfile')) {
-            window.UserProfile= JSON.parse(localStorage.getItem('UserProfile'));
+        window.UserProfile= JSON.parse(localStorage.getItem('UserProfile'));
       }
-
 
       this.topmenu = new TopMenu({
         data: window.UserProfile
@@ -94,16 +93,14 @@
         event.preventDefault();
         this.mainmenu._el.querySelector('.waiting-sign').hidden = false;
 
-
-        window.UserProfile = new UserModel(JSON.parse(localStorage.getItem('UserProfile')));
         window.gamesession = new GameWorker(window.UserProfile);
         window.gamesession.onstatuschange = function(){
-        if(window.gamesession.status === 3){
-          console.log("go to game");
-          this.router.go('/game');
-        }
-      }.bind(this);
-      window.gamesession.start();
+          if(window.gamesession.status === 3){
+            console.log("go to game");
+            this.router.go('/game');
+          }
+        }.bind(this);
+        window.gamesession.start();
       });
 
     }
@@ -118,11 +115,11 @@
       if (!options.username && !options.email) {
         //		return this.router.go('/');
       }
-//test
+      //test
 
-if (!localStorage.getItem('UserProfile')) {
-  		return this.router.go('/');
-}
+      if (!localStorage.getItem('UserProfile')) {
+        return this.router.go('/');
+      }
 
 
 

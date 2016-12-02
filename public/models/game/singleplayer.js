@@ -1,27 +1,28 @@
 (function(){
 
-  const shuffle_times =[700, 1400];
   const Player = window.GamePlayer;
   const Card = window.GameCard;
+  const shuffle_times =[700, 1400];
   const value_deal_cards = 5; //число раздаваемых в начале карт
   const speed_move = 500; //время между ходами
   class SinglePlayer{
     /**
     * Создаёт сингл игру
-    * @param {GameWorker} gamesession - объукт клиента
-    * @param {array} deck - колода
+    * @param {GameWorker} gamesession - объект клиента
+    * @param {Card[]} deck - колода
     * @param {Player[]} players - игроки
     * @param {number} his_turn - чей ход. меняется циклично
     */
     constructor(data = {}){
-      this.gamesession = window.gamesession || data;
+      console.log("SinglePlayer created");
+      this.gamesession = data || window.gamesession ;
       this.deck =[];
       this.players = [];
-      this.his_turn = 0;
       this.gamesession.send = this.onsend.bind(this);
       this.previous_thrown_cards = 1;
       this.queue = 0;
       this.intervalId;
+      this.do_move = false;
 
       this.fill_deck();
       this.fill_players();
@@ -31,58 +32,75 @@
     /**
     * колбек на send GameWorker
     * @callback
-    * @param {Card[]} hand - колода игрока
+    * @param {object} msg -
+    * @param {string} msg.action - дейсвие
+    * @param {Cards[]} msg.cards - карты
     */
     onsend(msg){
+      console.log("SinglePlayer received message");
       switch(msg.action) {
         case "combo":
-        let combo = this.players[0].check_combo(msg.cards);
-        if (combo!==0) {
-          let hand={};
-          msg.cards.forEach(function(item, i, cards){
-            if(item.type in hand){
-              this[item.type].total_cards+=1;
-            }else{
-              this[item.type] = {total_cards:1};
-            }
-          }.bind(hand));
-          for (let item in hand){
-            this.players[0].hand[item].total_cards -= hand[item].total_cards;
-          }
+        break;
+        this.handle_combo_message(msg);
+        case "exchange":
+        this.handle_exchange_message(msg);
+        break;
+      }
+      this.next_round();
+    }
 
-
-          this.players[0].score+= g_combinations[combo].score;
-          let event = new CustomEvent("onmessage");
-          let data = {action: 'change_player', data:{
-            player:{
-              his_turn: false,
-              score: this.players[0].score
-            }}};
-            this.previous_thrown_cards = 2;
-            event.data = JSON.stringify(data);
-            this.gamesession.receiver(event);
-          }
-          break;
-
-          case "exchange":
-          let hand={};
-          msg.cards.forEach(function(item, i, cards){
-            if(item.type in hand){
-              this[item.type].total_cards+=1;
-            }else{
-              this[item.type] = {total_cards:1};
-            }
-          }.bind(hand));
-          for (let item in hand){
-            this.players[0].hand[item].total_cards -= hand[item].total_cards;
-          }
-          this.put_deck_cards(msg.cards);
-          break;
+    /**
+    * обработка сообщения
+    */
+    handle_exchange_message(msg){
+      let hand={};
+      msg.cards.forEach(function(item, i, cards){
+        if(item.type in hand){
+          this[item.type].total_cards+=1;
+        }else{
+          this[item.type] = {total_cards:1};
         }
-        this.next_round();
+      }.bind(hand));
+      for (let item in hand){
+        this.players[0].hand[item].total_cards -= hand[item].total_cards;
+      }
+      this.put_deck_cards(msg.cards);
+    }
+
+    /**
+    * обработка сообщения
+    */
+    handle_combo_message(msg){
+      let combo = this.players[0].check_combo(msg.cards);
+      if (combo!==0) {
+        let hand={};
+        msg.cards.forEach(function(item, i, cards){
+          if(item.type in hand){
+            this[item.type].total_cards+=1;
+          }else{
+            this[item.type] = {total_cards:1};
+          }
+        }.bind(hand));
+        for (let item in hand){
+          this.players[0].hand[item].total_cards -= hand[item].total_cards;
+        }
+
+        this.players[0].score+= g_combinations[combo].score;
+        let event = new CustomEvent("onmessage");
+        let data = {action: 'change_player', data:{
+          player:{
+            his_turn: false,
+            score: this.players[0].score
+          }}};
+          this.previous_thrown_cards = 2;
+          event.data = JSON.stringify(data);
+          this.gamesession.receiver(event);
+        }
       }
 
-      //подать сигнал о нчале игры
+      /**
+      * подать сигнал о нчале игры
+      */
       start(){
         this.deal_cards();
         this.players.forEach((item)=>{
@@ -103,28 +121,36 @@
         this.gamesession.receiver(event);
       }
 
-      //соперники делают ход и отправка даннах
+      /**
+      * соперники делают ход и отправка даннах
+      */
       next_round(){
         //1 т.к. 0 это пользователь
-        this.players[1].his_turn = true;
-        this.send_change_rivals();
-        this.players[1].his_turn = false;
         this.queue = 1;
         this.intervalId =  setInterval(this.make_move.bind(this), speed_move);
-
-
       }
 
 
-      //сделать ход игроку
+      /**
+      * сделать ход игроку
+      */
       make_move(){
-          console.log("make_move");
         let i = this.queue, player = this.players[i];
-
         if(!player.out_of_game){
-          let cards = this.take_deck_cards(this.previous_thrown_cards);
-          player.update({hand:cards});
-          let exchange, combo = this.pick_combo(player.hand);
+          //создание видимости, что делается ход
+          let cards, exchange, combo;
+          if(!this.do_move){
+            this.do_move =! this.do_move;
+            cards = this.take_deck_cards(this.previous_thrown_cards);
+            player.update({hand:cards});
+            player.his_turn = true;
+            this.send_change_rivals();
+            player.his_turn = false;
+            return;
+          }
+          this.do_move =! this.do_move;
+
+          combo = this.pick_combo(player.hand);
           if(combo){
             player.score += g_combinations[combo].score;
             this.previous_thrown_cards = 1;
@@ -143,16 +169,6 @@
             this.previous_thrown_cards=1;
           }
         }
-
-
-        let n=i+1;
-        //симуляция для отображения хода. информация о картах не достоверна
-        if(n>this.players.length-1){
-          n=1;
-        }
-        this.players[n].his_turn = true;
-        this.send_change_rivals();
-        this.players[n].his_turn = false;
 
         this.queue++;
         if(this.queue>this.players.length-1){
@@ -177,6 +193,7 @@
           event.data = JSON.stringify(data);
           this.gamesession.receiver(event);
 
+          //проверяем все ли игроки вышли из игры и завершаем её
           let end = this.players.filter(function(player) {
             return !player.out_of_game;
           });
@@ -191,8 +208,8 @@
               event.data = JSON.stringify(data);
               this.gamesession.receiver(event);
             }
+
           }
-          console.log("make_move");
         }
 
         send_change_rivals(){
@@ -208,7 +225,6 @@
           * @return {string} name - имя комбинации
           */
           pick_combo(hand){
-            console.log("pick_combo");
             let best = 0;
             let bestcomb, notype_card_name;
 
@@ -248,35 +264,35 @@
                 hand[card].total_cards -= g_combinations[bestcomb].type[card];
               }
             }
-            console.log("pick_combo");
             return bestcomb;
           }
 
-          //случайно выбираем карты на обмен
+          /**
+          * случайно выбираем карты на обмен
+          */
           pick_exchange(player){
-                        console.log("pick_exchange");
             //пока так
             let i =player.new_cards, j=10, cards =[];
             if(i>player.total_cards){i=player.total_cards;}
             while(i>0){
               for(let card in player.hand){
-                if((getRandomInt(1, 5)==3 || j<0) && player.hand[card].total_cards>0 && i>0){
+                if((getRandomInt(1, 5)==3 || j<0) && player.hand[card].total_cards>0){
                   player.hand[card].total_cards--;
                   cards.push(new Card({type:player.hand[card].type, total_cards: 1}));
                   i--;
                   if(i===0){
-
                     break;
                   }
                 }
               }
               j--;
             }
-                        console.log("pick_exchange");
             return cards;
           }
 
-          //передать обрезаную версию игрока, как соперников
+          /**
+          * передать обрезаную версию игрока, как соперников
+          */
           prepared_rivals(beg=1, end=this.players.length){
             if(end>this.players.length){
               end-=this.players.length;
@@ -292,7 +308,9 @@
             return tmp;
           }
 
-          //раздать карты
+          /**
+          * раздать карты
+          */
           deal_cards(){
             this.players.forEach(function(item){
               let hand=[];
@@ -301,10 +319,11 @@
               }
               item.update({hand:hand});
             }.bind(this));
-
           }
 
-          //взять из колоды карты
+          /**
+          * взять из колоды карты
+          */
           take_deck_cards(number){
             let hand = [];
             for(let i= 0; i<number && this.deck.length>0; i++){
@@ -313,7 +332,9 @@
             return hand;
           }
 
-          //положить карты в колоду
+          /**
+          * положить карты в колоду
+          */
           put_deck_cards(cards){
             let e_deck=[];
             for(let i=0; i<cards.length; i++){
@@ -322,7 +343,9 @@
             this.deck = [].concat(this.deck, e_deck);
           }
 
-          //перетасовать колоду
+          /**
+          * перетасовать колоду
+          */
           shuffle_deck(min=shuffle_times[0], max=shuffle_times[1]){
             let length = this.deck.length;
             for(let pos1, pos2, tmp, i=getRandomInt(min, max); i>0; i--){
@@ -334,7 +357,9 @@
             }
           }
 
-          //создать всех игроков
+          /**
+          * создать всех игроков
+          */
           fill_players(){
             let data = [{
               login: 'Stalin',
@@ -376,7 +401,9 @@
 
           }
 
-          //создать колоду и перетасовать
+          /**
+          * создать колоду и перетасовать
+          */
           fill_deck(){
             for(let card in g_deck){
               for(let i= 4; i>0; i--){

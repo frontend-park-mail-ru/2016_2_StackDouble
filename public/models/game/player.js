@@ -14,7 +14,6 @@
       super(data);
       this.action = {action:false, cards:[]};
       this.his_turn = data.his_turn || false;
-      this.drawer = [];
       this.out_of_game = false;
       this.onchange = function(){};
       this.onaction = function(){};
@@ -27,21 +26,13 @@
       }
     }
 
-    //TODO: сделать колоду ассоциативным массивом?
-    /*    get_card(str){
-    for(let j=0; j<this.hand.length; j++){
-    if(str === this.hand[j].type) {
-    return this.hand[j];
-  }}
-}*/
-
 
 //TODO: выбрать реализацию в зависимости от инфы от сервера
 /**
 * апдейт колоды игрока
-* @param {Card[]} hand - колода игрока
+* @param {object} data - поля для обновления
+* @param {Card[]} data.hand - колода игрока
 */
-
 update(data){
   //переписать
   this.out_of_game = data.out_of_game || this.out_of_game;
@@ -67,21 +58,6 @@ update(data){
   this.onchange();
 }
 
-/**
-* действие игрока
-* @returns {object} action - колода игрока
-* @returns {string} action.action - название дейстия
-* @returns {Card[]} action.cards - название дейстия
-*/
-//не нужна?
-get_action(){
-  if(this.action.action !== true){
-    this.has_new_action = false;
-    return this.action;
-  } else {
-    return {action:false};
-  }
-}
 
 /**
 * возвращает колличество карт у игрока
@@ -125,7 +101,8 @@ do_action(action, cards){
     this.action.cards = cards;
     this.action.action = action;
   }
-  //так или ждать ответа серва?
+
+  //TODO: так или ждать ответа серва?
   this.his_turn = false;
   this.onaction();
   return "ok";
@@ -190,24 +167,9 @@ class Card{
   }
 }
 
-class Deck{
-  /**
-  * колода как ассоциативный массив
-  * @param {Array} deck
-  */
-  constructor(deck = g_deck) {
-    this.deck_pr = {};
-    for(let card in deck){
-      this.deck_pr[card] = new Card(deck[card]);
-    }
-  }
-
-}
-
 
 //export
 window.GamePlayer = Player;
-window.GameDeck = Deck;
 window.GameCard = Card;
 
 })();

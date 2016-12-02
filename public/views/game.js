@@ -82,6 +82,10 @@
 				this.update_rivals();
 			}
 
+			/**
+	    *
+	    * @callback
+	    */
 			btn_reset_onclick(event){
 				window.drawer = [];
 				let tmp = document.querySelector('.player-desk-drawer');
@@ -98,6 +102,10 @@
 				tmp.forEach((b)=>{b.innerText = window.gamesession.player.new_cards});
 			}
 
+			/**
+	    *
+	    * @callback
+	    */
 			player_deck_card_onclick(event){
 				let tmp, card = window.gamesession.player.hand[event.target.id];
 				//TODO: переделать
@@ -151,6 +159,10 @@
 				});
 			}
 
+			/**
+	    *
+	    * @callback
+	    */
 			update_player_desk(){
 				let tmp = document.querySelectorAll('.player-deck__card');
 				for(let j=0; j<tmp.length; j++){
@@ -179,6 +191,10 @@
 				}
 			}
 
+			/**
+	    *
+	    * @callback
+	    */
 			update_rivals(){
 				let tmp = document.querySelectorAll('.rival-info__card__num-cards');
 				for(let j=0; j<tmp.length; j++){
@@ -206,6 +222,10 @@
 				}
 			}
 
+			/**
+	    *
+	    * @callback
+	    */
 			update_desk(){
 				clearInterval(this.timerId);
 				let tmp = document.querySelector('.deck__num-cards');
@@ -214,7 +234,7 @@
 					this.now =  this.now || Date.now();
 					let dt =(Date.now() - this.now)/1000;
 					let timer;
-					if(window.gamesession.desk){clearInterval(this.timerId);}
+					if(window.gamesession.desk){clearInterval(this.timerId); timer=0; return;}
 					if(window.gamesession.desk.timer - dt>0){
 						timer = window.gamesession.desk.timer-dt;
 					} else{
