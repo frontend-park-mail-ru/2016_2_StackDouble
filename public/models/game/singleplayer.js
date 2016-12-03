@@ -3,9 +3,9 @@
   const Player = window.GamePlayer;
   const Card = window.GameCard;
   const shuffle_times =[700, 1400];
-  const value_deal_cards = 10; //число раздаваемых в начале карт
+  const value_deal_cards = 15; //число раздаваемых в начале карт
   const speed_move = 500; //время между ходами
-  const amount_of_each_card = 8; //количество одинаковых карт
+  const amount_of_each_card = 15; //количество одинаковых карт
   class SinglePlayer{
     /**
     * Создаёт сингл игру
@@ -246,21 +246,29 @@
           */
           pick_combo(hand){
             let best_score = 0;
-            let bestcomb, notype_card_name, l_combination, have_all_cards, have_card, b_hand, no_type_combo_cards=[];
+            let bestcomb, l_combination, have_all_cards, have_card, b_hand, no_type_combo_cards=[], best_no_type_combo_cards=[];
             for(let comb in g_combinations){
+              no_type_combo_cards =[];
               l_combination = g_combinations[comb];
               if(!l_combination.type){
                 b_hand= JSON.stringify(hand);
                 b_hand = JSON.parse(b_hand);
                 have_card = false, have_all_cards = true;
+                let max=0, max_card;
                 for(let i=0; i<l_combination.notype.length && have_all_cards===true; i++){
+                  max=0, have_card=false;
                   for(let scard in b_hand){
-                    if(b_hand[scard].total_cards>=l_combination.notype[i]){
-                      delete b_hand[scard];
-                      have_card = true;
-                      break;
+                    if(b_hand[scard].total_cards>=l_combination.notype[i] && b_hand[scard].total_cards>max){
+                      max=b_hand[scard].total_cards;
+                      max_card = scard;
                     }
                   }
+                  if(max>0){
+                    no_type_combo_cards.push(max_card);
+                    delete b_hand[max_card];
+                    have_card = true;
+                  }
+
                   if(!have_card){
                     have_all_cards = false;
                   }
@@ -268,6 +276,7 @@
                 if(have_all_cards && l_combination.score>best_score){
                   best_score=l_combination.score;
                   bestcomb = comb;
+                  best_no_type_combo_cards = JSON.parse(JSON.stringify(no_type_combo_cards));
                 }
               }else{
 
@@ -290,14 +299,21 @@
                 }
 
                 have_card = false, have_all_cards = true, no_type_combo_cards=[];
+                let max=0, max_card;
                 for(let i=0; i<l_combination.notype.length && have_all_cards===true; i++){
+                  max=0, have_card=false;
                   for(let scard in b_hand){
-                    if(b_hand[scard].total_cards>=l_combination.notype[i]){
-                      no_type_combo_cards.push(scard);
-                      have_card = true;
-                      break;
+                    if(b_hand[scard].total_cards>=l_combination.notype[i] && b_hand[scard].total_cards>max){
+                      max=b_hand[scard].total_cards;
+                      max_card = scard;
                     }
                   }
+                  if(max>0){
+                    no_type_combo_cards.push(max_card);
+                    delete b_hand[max_card];
+                    have_card = true;
+                  }
+
                   if(!have_card){
                     have_all_cards = false;
                   }
@@ -306,15 +322,15 @@
                 if(have_all_cards && l_combination.score>best_score){
                   best_score=l_combination.score;
                   bestcomb = comb;
+                  best_no_type_combo_cards = JSON.parse(JSON.stringify(no_type_combo_cards));
                 }
 
               }
             }
 
-
             if(bestcomb){
-              for(let i=0; i< no_type_combo_cards.length; i++){
-                hand[no_type_combo_cards[i]].total_cards -= g_combinations[bestcomb].notype[i];
+              for(let i=0; i< best_no_type_combo_cards.length; i++){
+                hand[best_no_type_combo_cards[i]].total_cards -= g_combinations[bestcomb].notype[i];
               }
               for(let card in g_combinations[bestcomb].type){
                 hand[card].total_cards -= g_combinations[bestcomb].type[card];
@@ -328,7 +344,7 @@
           */
           pick_exchange(player){
             //пока так
-            let i =player.new_cards, j=10, cards =[];
+            let i =this.previous_thrown_cards, j=10, cards =[];
             if(i>player.total_cards){i=player.total_cards;}
             while(i>0){
               for(let card in player.hand){
