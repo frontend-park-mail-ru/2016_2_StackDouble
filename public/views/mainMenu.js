@@ -15,7 +15,8 @@
 
       //test
       if (localStorage.getItem('UserProfile')) {
-        window.UserProfile= JSON.parse(localStorage.getItem('UserProfile'));
+        window.UserProfile= new UserModel(JSON.parse(localStorage.getItem('UserProfile')));
+          window.UserProfile.avatar= "http://lorempixel.com/40/40";
       }
 
       this.topmenu = new TopMenu({

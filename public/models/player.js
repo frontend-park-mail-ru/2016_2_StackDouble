@@ -10,7 +10,7 @@
 		 */
 		constructor(data = {}) {
 			this.login = data.login;
-			this.avatar = data.avatar;
+			this.avatar = data.avatar || "./assets/avatar.svg";
       this.score = data.score || 0;
 		}
 

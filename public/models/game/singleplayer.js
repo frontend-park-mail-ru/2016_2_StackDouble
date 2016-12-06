@@ -6,6 +6,7 @@
   const value_deal_cards = 15; //число раздаваемых в начале карт
   const speed_move = 500; //время между ходами
   const amount_of_each_card = 15; //количество одинаковых карт
+  const player_move_time = 20;
   class SinglePlayer{
     /**
     * Создаёт сингл игру
@@ -133,7 +134,7 @@
           rivals: this.prepared_rivals(),
           desk:{
             deck: this.deck.length,
-            timer: 80},
+            timer: player_move_time},
             player: this.players[0]
           }
         };
@@ -203,7 +204,7 @@
             rivals: this.prepared_rivals(),
             desk:{
               deck: this.deck.length,
-              timer: 80},
+              timer: player_move_time},
               player: {
                 his_turn: true,
                 hand: cards,
@@ -435,7 +436,7 @@
           fill_players(){
             let data = [{
               login: 'Stalin',
-              avatar: "./assets/avatar.svg",
+              avatar: "http://lorempixel.com/91/91",
               has_star: true,
               his_turn: false,
               total_cards:0,
@@ -443,7 +444,7 @@
             },
             {
               login: 'Beria',
-              avatar: "./assets/avatar.svg",
+              avatar: "http://lorempixel.com/91/91/",
               has_star: false,
               his_turn: false,
               total_cards:0,
@@ -451,7 +452,7 @@
             },
             {
               login: 'Hitler',
-              avatar: "./assets/avatar.svg",
+              avatar: "http://lorempixel.com/90/90/",
               has_star: true,
               his_turn: false,
               total_cards:0,
@@ -459,7 +460,7 @@
             },
             {
               login: 'Goebbels',
-              avatar: "./assets/avatar.svg",
+              avatar: "http://lorempixel.com/89/89/",
               his_turn: false,
               has_star: false,
               total_cards:0,

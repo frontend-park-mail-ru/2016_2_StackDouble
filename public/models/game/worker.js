@@ -9,13 +9,13 @@ five:{type:"five"},four:{type:"four"},three:{type:"three"},two:{type:"two"}};
 
 const pair = {notype:[2], score: 10};
 const set = {notype:[3], score: 16};
-const square = {notype:[4], score: 25};
-const long_combo_1 = {notype:[4], type:{joker:2,}, score: 50};
-const test = {notype:[2], type:{joker:1, jack:1}, score: 100};
-const test1 = {notype:[5, 4, 3, 2], score: 200};
-const test2 = {notype:[3, 2], type:{joker:2, jack:1, king:3}, score: 300};
+const double_pair = {notype:[2, 2], score: 24};
+const square = {notype:[4], score: 28};
+const full_house = {notype:[3, 2], score: 35};
+const low_straight = {notype:[], type:{two:1, three:1, four:1, five:1, six: 1}, score: 70};
+const flush_royal = {notype:[], type:{ten:1, jack:1, queen:1, king:1, ace: 1}, score: 100};
 
-g_combinations = {pair:pair, set:set, square:square, long_combo_1:long_combo_1, test1:test1, test2:test2, test:test}
+var g_combinations = {pair:pair, set:set, square:square, double_pair:double_pair, full_house:full_house, flush_royal:flush_royal, low_straight:low_straight};
 
 var g_action_name__combo = "combo",
 g_action_name__exchange = "exchange";

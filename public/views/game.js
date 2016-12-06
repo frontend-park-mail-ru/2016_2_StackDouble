@@ -181,7 +181,8 @@
 					}else{
 						t.hidden=true;
 					}
-
+					t = document.querySelectorAll('.player-desk__btns__game-btn__num');
+					t.forEach((b)=>{b.innerText = window.gamesession.player.new_cards});
 				}
 
 				document.querySelector('#btn_reset').click();
@@ -228,6 +229,10 @@
 	    */
 			update_desk(){
 				clearInterval(this.timerId);
+				this.now = null;
+				document.querySelector('.timer').classList.remove("timer_red");
+				document.querySelector('.timer').classList.remove("timer_red-dead");
+				document.querySelector('.timer').hidden = false;
 				let tmp = document.querySelector('.deck__num-cards');
 				tmp.innerText=window.gamesession.desk.deck;
 				this.timerId = setInterval(function(){
@@ -240,6 +245,15 @@
 					} else{
 						clearInterval(this.timerId);
 						timer=0;
+						this.now = null;
+						document.querySelector('.timer').classList.remove("timer_red");
+						document.querySelector('.timer').hidden = true;
+					}
+					if(timer <=10){
+						document.querySelector('.timer').classList.add("timer_red");
+					}
+					if(timer <=3){
+						document.querySelector('.timer').classList.add("timer_red-dead");
 					}
 					tmp = document.querySelector('.timer__time');
 					tmp.innerText = Math.round(timer);
@@ -256,7 +270,6 @@
 					//		return this.router.go('/');
 				}
 				this.show();
-
 
 				//for test
 				this._el = document.querySelector('#js-topmenu');

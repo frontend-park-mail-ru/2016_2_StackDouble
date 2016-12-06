@@ -57,9 +57,11 @@ $path: "../assets/"
 	height: 90px
 	width: 90px
 	background-size: 100% 100%
+	border-radius: 10px
 	float: left
 	&:hover
 		@extend .avatar:hover
+
 
 .rival-info__nick
 	width: 90px
@@ -113,11 +115,12 @@ $path: "../assets/"
 .rival-info__card__num-cards
 	position: absolute
 	top: 15%
-	left: 0
+	left: -1%
 	z-index: 3
 	height: 100%
 	width: 100%
 	font-size: 48px
+	font-weight: bold
 	color: green
 	text-align: center
 	vertical-align: bottom
@@ -210,9 +213,10 @@ $suit_list: joker ace king queen jack ten nine eight seven six five four three t
 
 .deck__num-cards
 	position: relative
-	font-size: 5em
+	font-size: 4em
 	color: red
-	top: 12%
+	top: 15%
+	left: -1%
 	text-align: center
 	backface-visibility: hidden
 	&::selection
@@ -254,6 +258,40 @@ $suit_list: joker ace king queen jack ten nine eight seven six five four three t
 		animation-duration: 2s
 		animation-iteration-count: infinite
 		animation-timing-function: linear
+
+.timer_red
+	animation-name: timer_red-animation
+	animation-duration: 0.8s
+	animation-iteration-count: infinite
+	animation-timing-function: ease
+
+	@keyframes timer_red-animation
+		0%
+			transform: scale(1.0, 1.0)
+			background-image: url($path +"clock.svg")
+		50%
+			background-image: url($path +"clock_red.svg")
+			transform: scale(1.15, 1.15)
+		100%
+			background-image: url($path +"clock.svg")
+			transform: scale(1.0, 1.0)
+
+.timer_red-dead
+	animation-name: timer_red-dead-animation
+	animation-duration: 3s
+	animation-iteration-count: 1
+	animation-timing-function: linear
+	border-radius: 50%
+
+	@keyframes timer_red-dead-animation
+		0%
+			background-image: url($path +"clock_red.svg")
+			transform: scale(1.0, 1.0)
+		50%
+			transform: scale(1.0, 1.0)
+		100%
+			transform: scale(0, 0)
+			background-image: url($path +"clock_red.svg")
 
 .timer__time
 	position: relative
@@ -418,8 +456,9 @@ $suit_list: joker ace king queen jack ten nine eight seven six five four three t
 
 
 .main-menu__btn
-	width: 16vw
-	min-width: 150px
+	width: 36vmin
+	min-width: 200px
+	height: 8vmin
 
 .end_game
 	position: fixed
@@ -459,15 +498,23 @@ div[class$="top-list-score-line"]:nth-of-type(even)
 	background: skyblue
 	padding: 0.2%
 
-.top-menu__avatar
+.top-menu__user-info
+	display: flex
+	justify-content: flex-start
+	align-items: flex-end
+	flex-direction: row
+
+
+.top-menu__user-info__avatar
 	height: 40
 	width: 40
 	float: left
-	margin-right: 5%
+	margin-right: 2%
 
-.top-menu__score
+.top-menu__user-info__score
 	@extend .top-list__goblet
-	@extend .top-menu__avatar
+	@extend .top-menu__user-info__avatar
+	margin-left: 5%
 
 
 
