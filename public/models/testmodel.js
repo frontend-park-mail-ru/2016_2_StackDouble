@@ -120,5 +120,5 @@
       }
     }
 
-  window.TestInfo = new TestInfo();
+  //window.TestInfo = new TestInfo();
 })();
