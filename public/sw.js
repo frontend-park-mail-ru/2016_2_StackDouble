@@ -40,6 +40,8 @@ const cacheUrls = [
   "/views/registration.js",
   "/views/mainMenu.js",
   "/views/topList.js",
+  "/assets/clock.svg",
+
 
   "main.js",
 ];
@@ -65,12 +67,20 @@ this.addEventListener('fetch', function (event) {
 		caches.match(event.request).then(function (cachedResponse) {
 
 			// выдаём кэш, если он есть
-			if (cachedResponse) {
+/*			if (cachedResponse) {
 				return cachedResponse;
-			}
+			}*/
 
 			// иначе запрашиваем из сети как обычно
 			return fetch(event.request);
 		})
 	);
 });
+
+
+if(navigator.serviceWorker){
+  navigator.serviceWorker.getRegistrations().then(function(registrations) {
+   for(let registration of registrations) {
+    registration.unregister()
+  } });
+}
