@@ -25,7 +25,11 @@
 				data:data,
 			});
 		}
-
+		
+		pause(options = {}) {
+			this._el = document.querySelector('#js-topList');
+			this.hide();
+		}
 
 		init(options = {}) {
 			this.setAttrs(options.attrs);

@@ -40,6 +40,8 @@ const cacheUrls = [
   "/views/registration.js",
   "/views/mainMenu.js",
   "/views/topList.js",
+  "/assets/clock.svg",
+
 
   "main.js",
 ];

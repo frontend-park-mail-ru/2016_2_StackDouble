@@ -85,8 +85,12 @@
 			});
 			this.show();
 		}
-	}
 
+		pause(options = {}) {
+			this._el = document.querySelector('#js-registration');
+			this.hide();
+		}
+	}
 
 	// export
 	window.RegistrationView = RegistrationView;
