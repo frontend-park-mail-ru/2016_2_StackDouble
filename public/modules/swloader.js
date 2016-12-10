@@ -14,9 +14,4 @@
 		throw new Error('ServiceWorker error: ' + err);
 	});
 
-//test
-	navigator.serviceWorker.getRegistrations().then(function(registrations) {
-	 for(let registration of registrations) {
-	  registration.unregister()
-	} })
 })();
