@@ -65,12 +65,16 @@
       console.log("init topmenu");
       this.topmenu._el.querySelector('#top_btn_exit').addEventListener('click', (event)=> {
         event.preventDefault();
+        if(window.location.pathname != '/MainMenu/' || window.location.pathname != '/MainMenu'){
+          this.router.back();
+        }else{
         this._el = document.querySelector('#js-topmenu');
         this.hide();
         //TODO: доделать выход
         localStorage.removeItem('UserProfile');
         //TODO: пересоздавать вью или как тест пусть будет
         this.router.go('/');
+      }
       });
 
       console.log("init mainmenu");
@@ -103,6 +107,25 @@
         }.bind(this);
         window.gamesession.start();
       });
+
+
+      let target = document.getElementById('js-mainmenu');
+      let observer = new MutationObserver(function(mutations) {
+
+        //TODO: исправить
+      if(window.location.pathname == '/MainMenu/' || window.location.pathname == '/MainMenu'){
+        let target = document.querySelector('#top_btn_exit > i');
+        target.classList.add("glyphicon-remove");
+        target.classList.remove("glyphicon-arrow-left");
+
+      }else{
+        let target = document.querySelector('#top_btn_exit > i');
+        target.classList.remove("glyphicon-remove");
+        target.classList.add("glyphicon-arrow-left");
+      }
+      });
+      let config = { attributes: true};
+      observer.observe(target, config);
 
     }
 
