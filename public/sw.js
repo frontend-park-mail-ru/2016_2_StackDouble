@@ -67,9 +67,9 @@ this.addEventListener('fetch', function (event) {
 		caches.match(event.request).then(function (cachedResponse) {
 
 			// выдаём кэш, если он есть
-			if (cachedResponse) {
+/*			if (cachedResponse) {
 				return cachedResponse;
-			}
+			}*/
 
 			// иначе запрашиваем из сети как обычно
 			return fetch(event.request);
