@@ -77,6 +77,17 @@ this.addEventListener('fetch', function (event) {
 	);
 });
 
+this.addEventListener('activate', function(event) {
+
+  event.waitUntil(
+    caches.keys().then(function(keyList) {
+      return Promise.all(keyList.map(function(key) {
+          return caches.delete(key);
+      }));
+    })
+  );
+});
+
 
 if(navigator.serviceWorker){
   navigator.serviceWorker.getRegistrations().then(function(registrations) {
