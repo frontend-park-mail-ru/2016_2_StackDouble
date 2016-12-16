@@ -4,6 +4,7 @@
 	const View = window.View;
 	const Form = window.Form;
 	const request = window.request;
+  const UserModel = window.UserModel;
 
 	class RegistrationView extends View {
 		constructor(options = {}) {
@@ -65,6 +66,8 @@
 						const resultRequest = request(url , formData);
 						if (resultRequest.status === 200){
 							alert('Регистрация прошла успешно!');
+							let u = new UserModel({login: formData.login, avatar:"http://lorempixel.com/40/40", score: 0});
+							localStorage.setItem("UserProfile", JSON.stringify(u));
 							console.log("go to game");
 							this.router.go('/MainMenu');
 						}else {
@@ -78,11 +81,16 @@
 				}else {
 					alert('Такой пользователь уже существует!');
 				}
+
 			});
 			this.show();
 		}
-	}
 
+		pause(options = {}) {
+			this._el = document.querySelector('#js-registration');
+			this.hide();
+		}
+	}
 
 	// export
 	window.RegistrationView = RegistrationView;

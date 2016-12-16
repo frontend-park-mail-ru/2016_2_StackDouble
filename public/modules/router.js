@@ -1,8 +1,8 @@
 (function () {
 	'use strict';
-	
+
 	const Route = window.Route;
-	
+
 	class Router {
 		/**
 		 * Создаёт новый роутер или возвращает уже созданный инстанс

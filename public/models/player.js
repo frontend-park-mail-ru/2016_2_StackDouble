@@ -9,9 +9,9 @@
 		 * @param {number} score - очки пользователя
 		 */
 		constructor(data = {}) {
-			this.username = data.login;
-			this.avatar = data.avatar;
-      this.score = data.score;
+			this.login = data.login;
+			this.avatar = data.avatar || "./assets/avatar.svg";
+      this.score = data.score || 0;
 		}
 
 		set_player(data){

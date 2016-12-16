@@ -5,21 +5,24 @@
   const TopMenu = window.TopMenu;
   const request = window.request;
   const MainMenu = window.MainMenu;
+  const UserModel = window.UserModel;
 
   class MainMenuView extends View {
     constructor(options = {}) {
       super(options);
       this._el = document.querySelector('#js-topmenu');
       this.hide();
+
+      if (localStorage.getItem('UserProfile')) {
+            window.UserProfile= new UserModel(JSON.parse(localStorage.getItem('UserProfile')));
+            window.UserProfile.avatar= "http://lorempixel.com/40/40";
+      }
+
       this.topmenu = new TopMenu({
-        data:{
-          //TODO:передавать инфу игрока
-          nick: "Amadeus",
-          avatar: "http://lorempixel.com/40/40",
-          score: "318"
-        }
+        data: window.UserProfile
       });
       this._el.appendChild(this.topmenu._el);
+      window.topmenu = this.topmenu;
 
       this._el = document.querySelector('#js-mainmenu');
       this.hide();
@@ -62,14 +65,26 @@
       console.log("init topmenu");
       this.topmenu._el.querySelector('#top_btn_exit').addEventListener('click', (event)=> {
         event.preventDefault();
+        if(!(window.location.pathname == '/MainMenu/' || window.location.pathname == '/MainMenu')){
+          this.router.back();
+        }else{
+        this._el = document.querySelector('#js-topmenu');
+        this.hide();
+        //TODO: доделать выход
+        localStorage.removeItem('UserProfile');
         //TODO: пересоздавать вью или как тест пусть будет
         this.router.go('/');
+      }
       });
 
       console.log("init mainmenu");
       this.mainmenu._el.querySelector('#btn_exit').addEventListener('click', (event)=> {
         event.preventDefault();
-        console.log("exit");
+        this._el = document.querySelector('#js-topmenu');
+        this.hide();
+        //TODO: доделать выход
+        localStorage.removeItem('UserProfile');
+        //TODO: пересоздавать вью или как тест пусть будет
         this.router.go('/');
       });
 
@@ -82,14 +97,34 @@
       this.mainmenu._el.querySelector('#btn_start').addEventListener('click', (event)=> {
         event.preventDefault();
         this.mainmenu._el.querySelector('.waiting-sign').hidden = false;
-        //for test
-        setTimeout((function(){
-          console.log("go to game");
-          this.router.go('/game');
-        }).bind(this), 2000);
-
+        window.gamesession = new GameWorker(window.UserProfile);
+        window.gamesession.onstatuschange = function(){
+          if(window.gamesession.status === 3){
+            console.log("go to game");
+            this.router.go('/game');
+          }
+        }.bind(this);
+        window.gamesession.start();
       });
 
+
+      let target = document.getElementById('js-mainmenu');
+      let observer = new MutationObserver(function(mutations) {
+
+        //TODO: исправить
+      if(window.location.pathname == '/MainMenu/' || window.location.pathname == '/MainMenu'){
+        let target = document.querySelector('#top_btn_exit > i');
+        target.classList.add("glyphicon-remove");
+        target.classList.remove("glyphicon-arrow-left");
+
+      }else{
+        let target = document.querySelector('#top_btn_exit > i');
+        target.classList.remove("glyphicon-remove");
+        target.classList.add("glyphicon-arrow-left");
+      }
+      });
+      let config = { attributes: true};
+      observer.observe(target, config);
 
     }
 
@@ -103,12 +138,13 @@
       if (!options.username && !options.email) {
         //		return this.router.go('/');
       }
-      //window.location.assign(window.location.host+"/waitingroom");
-      //window.location.reload([true]);
+
+      if (!localStorage.getItem('UserProfile')) {
+        return this.router.go('/');
+      }
       // TODO: дописать реализацию
 
       this._el = document.querySelector('#js-topmenu');
-      //this._el.appendChild(this.topmenu._el);
       this.show();
       this._el = document.querySelector('#js-mainmenu');
       this.show();

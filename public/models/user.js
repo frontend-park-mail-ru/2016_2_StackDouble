@@ -5,9 +5,6 @@
 
 	/**
 	 * Создаёт нового пользователя
-	 * @param {string} login - имя пользователя
-	 * @param {string} avatar - аватар пользователя
-	 * @param {number} score - очки пользователя
 	 */
 	class UserProfile extends Player {
 		constructor(data = {}) {
@@ -41,7 +38,7 @@
 					if (this.status !== 201) {
 						return reject(this.statusText);
 					}
-					var ans = JSON.parse(json);
+					let ans = JSON.parse(json);
 					this.set_player(ans);
 					resolve(JSON.parse(json));
 				};

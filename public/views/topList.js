@@ -9,8 +9,8 @@
 			super(options);
 			this._el = document.querySelector('#js-topList');
 			this.hide();
-			var data = new Array(40);
-			for(var i=0; i<data.length; i++){
+			let data = new Array(40);
+			for(let i=0; i<data.length; i++){
 				data[i]={
 					nick: "player_" + (i+1),
 					id: i,
@@ -25,7 +25,11 @@
 				data:data,
 			});
 		}
-
+		
+		pause(options = {}) {
+			this._el = document.querySelector('#js-topList');
+			this.hide();
+		}
 
 		init(options = {}) {
 			this.setAttrs(options.attrs);
