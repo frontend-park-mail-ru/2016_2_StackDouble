@@ -1,0 +1,58 @@
+{
+  "name": "2016_2_StackDouble",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "karma start --single-run",
+    "lint": "./node_modules/.bin/eslint public/components/**/*.js",
+    "fest": "./node_modules/.bin/fest-build --dir=public/components/",
+    "karma:start": "karma start",
+    "karma:run": "karma run",
+    "start": "node server.js",
+    "css": "node-sass ./public/sass/style.sass ./public/css/style.css && gulp css",
+    "postinstall": "npm run fest && npm run css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frontend-park-mail-ru/2016_2_StackDouble.git"
+  },
+  "engines": {
+    "node": "6.5.0"
+  },
+  "keywords": [],
+  "author": "",
+  "dependencies": {
+    "body-parser": "^1.15.*",
+    "express": "^4.14.*",
+    "technologger": "1.0.*",
+    "json-schema-mock": "0.0.8",
+    "raml-typesystem": "0.0.55",
+    "techno-gendoc": "0.4.1",
+    "technolibs": "1.1.0",
+    "fest": "^0.12.1",
+    "node-sass": "^3.13.0",
+    "bootstrap-sass": "3.3.7",
+    "gulp": "^3.9.1",
+    "gulp-postcss": "^6.2.0",
+    "autoprefixer": "^6.5.3"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.5.3",
+    "bootstrap-sass": "3.3.7",
+    "eslint": "^3.5.0",
+    "eslint-config-airbnb": "^11.1.0",
+    "eslint-plugin-import": "^1.15.0",
+    "eslint-plugin-jsx-a11y": "^2.2.2",
+    "eslint-plugin-react": "^6.2.2",
+    "fest": "^0.12.1",
+    "node-sass": "^3.13.0",
+    "gulp": "^3.9.1",
+    "gulp-postcss": "^6.2.0",
+    "jasmine": "^2.5.2",
+    "karma": "^1.3.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-coverage": "^1.1.1",
+    "karma-jasmine": "^1.0.2"
+  }
+}

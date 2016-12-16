@@ -1,0 +1,71 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+  <div class="col-md-12 blank_50"></div>
+  <div class="b_rival-info">
+    <fest:for iterate="data.rivals.list" index="i" value="rival">
+        <div class="rival-info center-block">
+          <div class="rival-info__avatar" alt="100x100" align="right" style="background-image: url({rival.avatar});">
+            <fest:if test="rival.has_star">
+              <img class="rival-info__avatar-star" alt="24x24"/>
+            </fest:if>
+          </div>
+          <div class="rival-info__card" alt="100x100">
+            <span class="nopadding rival-info__card__num-cards"><fest:value>rival.total_cards</fest:value></span>
+          </div>
+          <h3 class="nopadding rival-info__nick"><fest:value>rival.login</fest:value></h3>
+          <h3 class="nopadding rival-info__score"><fest:value>rival.score</fest:value></h3>
+        </div>
+    </fest:for>
+
+  </div>
+
+  <div class="col-md-12 blank_50"></div>
+
+  <div class="container player-desk">
+    <div class="row">
+      <div class="col-md-10 player-deck">
+      <fest:each iterate="data.player.hand" index="i" value="card">
+        <div id="{card.type}" type="{card.type}" class="player-deck__card player-deck__card_type-{card.type}">
+          <div class="nopadding player-deck__card__num-new-cards" hidden="hidden"><fest:value>card.new_cards</fest:value></div>
+          <span class="nopadding player-deck__card__num-cards"><fest:value>card.total_cards</fest:value></span>
+        </div>
+    </fest:each>
+
+      </div>
+      <div class="col-md-2 player-desk__btns hidden-sm hidden-xs"  align="center">
+        <button id="btn_exchange" type="button" class="btn player-desk__btns__game-btn btn-success" disabled="disabled"><span>Обменять</span>
+        <span class="player-desk__btns__game-btn__num"><fest:value>data.player.new_cards</fest:value></span></button>
+        <br></br>
+        <button id="btn_combo" type="button" class="btn player-desk__btns__game-btn btn-success" disabled="disabled">Комбо</button>
+        <br></br>
+        <button id="btn_reset" type="button" class="btn player-desk__btns__game-btn btn-success" disabled="disabled">Сброс</button>
+      </div>
+      <div class="col-sm-12 player-desk__btns-horizontal hidden-md hidden-lg"  align="center">
+        <button id="btn_exchange" type="button" class="btn player-desk__btns__game-btn btn-success" disabled="disabled"><span>Обменять</span>
+        <span class="player-desk__btns__game-btn__num"><fest:value>data.player.new_cards</fest:value></span></button>
+        <br></br>
+        <button id="btn_combo" type="button" class="btn player-desk__btns__game-btn btn-success" disabled="disabled">Комбо</button>
+        <br></br>
+        <button id="btn_reset" type="button" class="btn player-desk__btns__game-btn btn-success" disabled="disabled">Сброс</button>
+      </div>
+      <div class="player-desk-drawer" >
+              <fest:for from="1"  to="data.capacity_of_drawer" index="i">
+        <div id="card_drawer_{i}" class="player-desk-drawer__card"></div>
+            </fest:for>
+      </div>
+    </div>
+  </div>
+
+  <div class="deck">
+    <div class="deck__top">
+    <div class="deck__top_back">
+    <div class="deck__num-cards"><fest:value>data.desk.deck</fest:value></div>
+  </div>
+  <div class="deck__top_front">
+</div>
+</div>
+</div>
+  <div class="timer">
+    <div class="timer__time"><fest:value>data.desk.timer</fest:value></div>
+  </div>
+  <div class="end_game" hidden="hidden"></div>
+</fest:template>

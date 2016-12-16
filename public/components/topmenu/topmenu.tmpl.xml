@@ -1,0 +1,23 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+  <div class="row top-menu">
+    <div class="col-md-5 col-xs-7 top-menu__user-info">
+      <img name="avatar" class="media-object img-rounded top-menu__user-info__avatar" alt="40x40" src="{data.avatar}"/>
+      <h4 id="login" class="top-menu__login">
+        <fest:value>data.login</fest:value></h4>
+        <img id="score_img" class="media-object img-rounded top-menu__user-info__score" alt="40x40"/>
+        <h4 id="score">
+          <fest:value>data.score</fest:value>
+      </h4>
+      </div>
+
+      <div class="col-md-4">
+      </div>
+
+      <div id="js-top-controls" class="col-md-3 col-xs-5" align="right">
+        <button id="top_btn_volume" type="button" class="btn btn-margin"> <i class='glyphicon glyphicon-volume-off'></i></button>
+        <button id="top_btn_tutorial" type="button" class="btn btn-margin"> <i class='glyphicon glyphicon-question-sign'></i></button>
+        <button id="top_btn_combo_list" type="button" class="btn btn-margin"> <i class='glyphicon glyphicon-info-sign'></i></button>
+        <button id="top_btn_exit" type="button" class="btn btn-margin"> <i class='glyphicon glyphicon-remove'></i></button>
+      </div>
+    </div>
+  </fest:template>

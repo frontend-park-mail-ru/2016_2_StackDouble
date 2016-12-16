@@ -1,0 +1,18 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-xs-12 blank_150" ></div>
+    </div>
+    <div class="col-md-4 col-md-offset-4 col-xs-6 col-xs-offset-3 blank_50">
+      <img class="waiting-sign" alt="50x50" hidden="true"/>
+    </div>
+  </div>
+  <div class="col-md-12 col-xs-12 blank_20"></div>
+
+  <div class="col-md-4 col-md-offset-4 col-xs-6 col-xs-offset-3 " align="center">
+    <fest:for iterate="data.buttons" index="i" value="button">
+      <button id="{button.id}" tabindex="{button.tabindex}" type="button" class="btn btn-success btn-margin main-menu__btn"><fest:value>button.text</fest:value></button>
+      <div class="col-md-12 col-xs-12 blank_20"></div>
+    </fest:for>
+  </div>
+  </fest:template>

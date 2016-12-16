@@ -1,0 +1,11 @@
+node_modules/
+/.idea/
+/npm-debug.log
+/public/api/
+/public/module.js
+/api.raml
+*.tmpl.js
+/.sass-cache
+/public/css/*
+!/public/css/style.css
+!/public/css/style.css.map
