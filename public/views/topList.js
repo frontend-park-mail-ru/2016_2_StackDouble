@@ -17,11 +17,11 @@
 		}
 
 		update_list(){
-			this.toplistdata.get_next().then(data => {
+			this.toplistdata.get_next().then(function(data){
 				this._el = document.querySelector('.list-group');
 				this.template = window.fest['toplist/toplistitem.tmpl'];
 				this._el.innerHTML+=this.template(data);
-			});
+			}.bind(this));
 		}
 
 		pause(options = {}) {
@@ -44,7 +44,6 @@
 					document.body.clientHeight, document.documentElement.clientHeight
 				);
 				if(scrollHeight-window.scrollY<1000){
-									debugger;
 					this.update_list();
 				}
 			}.bind(this);
