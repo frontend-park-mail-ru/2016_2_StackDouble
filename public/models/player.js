@@ -20,29 +20,6 @@
 			this.score = data.score;
 		}
 
-		/**
-		 * Получает список пользователей с сервера
-		 * @returns {Promise}
-		 */
-		static fetchAll(amount) {
-			return new Promise(function (resolve, reject) {
-				const xhr = new XMLHttpRequest();
-
-				xhr.open('GET', `/api/users`, true);
-				xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-				xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-				xhr.onreadystatechange = function () {
-					if (this.readyState !== 4) return;
-					if (this.status !== 200) {
-						return reject(this.statusText);
-					}
-					resolve(JSON.parse(this.responseText));
-				};
-
-				xhr.send();
-			});
-		}
 
 		/**
 		 * Возвращает характеристики пользователя в виде plain объекта

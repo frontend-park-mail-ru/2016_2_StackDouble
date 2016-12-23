@@ -12,6 +12,10 @@
       super(options);
       this._el = document.querySelector('#js-topmenu');
       this.hide();
+      if(!window.UserProfile && localStorage.getItem('UserProfile')){
+        let user =JSON.parse(localStorage.getItem('UserProfile'));
+        window.UserProfile = new UserModel(user);
+      }
       this.topmenu = new TopMenu({
         data: window.UserProfile
       });
@@ -60,7 +64,7 @@
       this.topmenu._el.querySelector('#top_btn_exit').addEventListener('click', (event)=> {
         event.preventDefault();
         if(!(window.location.pathname == '/MainMenu/' || window.location.pathname == '/MainMenu')){
-          this.router.back();
+          this.router.go('/MainMenu');
         }else{
         this._el = document.querySelector('#js-topmenu');
         this.hide();
@@ -96,6 +100,7 @@
           if(window.gamesession.status === 3){
             console.log("go to game");
             this.router.go('/game');
+            this.mainmenu._el.querySelector('.waiting-sign').hidden = true;
           }
         }.bind(this);
         window.gamesession.start();

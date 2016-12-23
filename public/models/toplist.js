@@ -26,7 +26,6 @@
 						item.position = this.list.length+i+1;
 						item.avatar ="../assets/avatar.svg";
 					}.bind(this));
-
 					 this.list =this.list.concat(players);
 					 resolve(players);
 				});
@@ -37,9 +36,9 @@
 		* Получает список пользователей с сервера
 		* @returns {Promise}
 		*/
-		fetch(page = 0) {
+		fetch(since_id = 0, limit=25) {
 			return new Promise(function (resolve, reject) {
-				const url = window.baseUrlApp + '/api/top';
+				const url = window.baseUrlApp + '/api/top?' + 'since_id='+since_id +'&limit=' + limit;
 				const xhr = new XMLHttpRequest();
 				xhr.open('GET', url, false);
 				xhr.setRequestHeader('Content-Type', 'application/json');
@@ -52,7 +51,6 @@
 					//вернуть только список игроков
 					resolve(JSON.parse(this.responseText).response);
 				};
-
 				xhr.send();
 			});
 		}

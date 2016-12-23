@@ -6,7 +6,7 @@
   const value_deal_cards = 15; //число раздаваемых в начале карт
   const speed_move = 500; //время между ходами
   const amount_of_each_card = 15; //количество одинаковых карт
-  const player_move_time = 20;
+  const player_move_time = 5;
   class SinglePlayer{
     /**
     * Создаёт сингл игру
@@ -17,7 +17,7 @@
     */
     constructor(data = {}){
       console.log("SinglePlayer created");
-      this.gamesession = data || window.gamesession ;
+      this.gamesession = data || window.gamesession;
       this.deck =[];
       this.players = [];
       this.gamesession.send = this.onsend.bind(this);
@@ -26,11 +26,38 @@
       this.intervalId;
       this.do_move = false;
       this.cards_out_of_combo = [];
+      this.timerId;
 
       this.fill_deck();
       this.fill_players();
       this.find_cards_out_of_combo();
       this.start();
+    }
+
+    player_timer(){
+      this.now = null;
+      this.timerId = setInterval(function(){
+        this.now =  this.now || Date.now();
+        let dt =(Date.now() - this.now)/1000;
+        let timer;
+        //+1 секунда на сглаживание задержки
+       if(window.gamesession!=this.gamesession){
+          clearInterval(this.timerId);
+          return;
+        }
+        if(player_move_time-dt+1<0){
+          clearInterval(this.timerId);
+          let event = new CustomEvent("onmessage");
+          let data = {action: 'game_end', data:{
+            rivals: this.prepared_rivals(),
+            player: {
+              score: this.players[0].score,
+              out_of_game: this.players[0].out_of_game,
+            }}};
+            event.data = JSON.stringify(data);
+            this.gamesession.receiver(event);
+        }
+          }.bind(this), 1000);
     }
 
     find_cards_out_of_combo(){
@@ -59,6 +86,7 @@
     * @param {Cards[]} msg.cards - карты
     */
     onsend(msg){
+      clearInterval(this.timerId);
       console.log("SinglePlayer received message");
       switch(msg.action) {
         case "combo":
@@ -140,6 +168,7 @@
         };
         event.data = JSON.stringify(data);
         this.gamesession.receiver(event);
+          this.player_timer();
       }
 
       /**
@@ -213,6 +242,7 @@
           };
           event.data = JSON.stringify(data);
           this.gamesession.receiver(event);
+          this.player_timer();
 
           //проверяем все ли игроки вышли из игры и завершаем её
           let end = this.players.filter(function(player) {

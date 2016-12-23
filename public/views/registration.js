@@ -53,36 +53,51 @@
 			//this._el.appendChild(this.form._el);
 		}
 
+		init(){
+						this.form.on('submit', (event) => {
+								event.preventDefault();
+								const formData = this.form.getFormData();
+								const url = window.baseUrlApp + '/api/user';
+								if (formData.password !== formData.lastpassword){
+										alert('Пароли не совпадают');
+								}else{
+										const resultRequest = request(url , {login: formData.login, email: formData.email, password: formData.password});
+										if (resultRequest.status === 200){
+											console.log(formData);
+												console.log(resultRequest.responseText);
+												const response = JSON.parse(resultRequest.responseText);
+												debugger;
+												switch (response.code){
+														case 0:
+																alert('Регистрация прошла успешно!');
+																window.UserProfile= new UserModel(response.response);
+																localStorage.setItem("UserProfile", JSON.stringify(window.UserProfile));
+																console.log("go to game");
+																this.router.go('/MainMenu');
+																break;
+														case 1:
+														case 2:
+														case 3:
+														case 4:
+														case 5:
+																alert("такой пользователь уже существует");
+																console.log("go to registration");
+																this.router.go('/registration');
+																break;
+														default:
+																alert('Неизвестная ошибка!');
+												}
+										}else{
+												alert('Неизвестная ошибка!');
+										}
+								}
+			   });
+				 this._el = document.querySelector('#js-registration');
+					this.show();
+		}
+
 		resume(options = {}) {
-
-			// TODO: дописать реализацию
-			this.form.on('submit', (event) => {
-				event.preventDefault();
-				const formData = this.form.getFormData();
-				const url = window.baseUrlApp + '/api/user';
-				console.log(formData);
-				if (request(url, {login:formData.login},'GET').status !== 200) {
-					if (formData.password === formData.lastpassword) {
-						const resultRequest = request(url , formData);
-						if (resultRequest.status === 200){
-							alert('Регистрация прошла успешно!');
-							let u = new UserModel({login: formData.login, avatar:"http://lorempixel.com/40/40", score: 0});
-							localStorage.setItem("UserProfile", JSON.stringify(u));
-							console.log("go to game");
-							this.router.go('/MainMenu');
-						}else {
-							alert('Упс что-то пошло не так');
-							console.log("go to registration");
-							this.router.go('/registration');
-						}
-					}else {
-						alert('Пароли не совпадают');
-					}
-				}else {
-					alert('Такой пользователь уже существует!');
-				}
-
-			});
+			this._el = document.querySelector('#js-registration');
 			this.show();
 		}
 

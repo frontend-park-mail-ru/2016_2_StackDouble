@@ -13,7 +13,6 @@
 			this.toplist = new TopList({
 				el:this._el,
 			});
-			this.update_list();
 		}
 
 		update_list(){
@@ -38,15 +37,16 @@
 				this.router.back();
 			});
 			window.onscroll=function(){
-				let scrollHeight = Math.max(
+				/*let scrollHeight = Math.max(
 					document.body.scrollHeight, document.documentElement.scrollHeight,
 					document.body.offsetHeight, document.documentElement.offsetHeight,
 					document.body.clientHeight, document.documentElement.clientHeight
-				);
-				if(scrollHeight-window.scrollY<1000){
+				);*/
+				if(document.body.scrollHeight-window.scrollY<1000){
 					this.update_list();
 				}
 			}.bind(this);
+			this.update_list();
 		}
 	}
 	// export

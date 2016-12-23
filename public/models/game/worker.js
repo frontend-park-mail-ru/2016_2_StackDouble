@@ -63,12 +63,12 @@ var g_min_combo = 2;
 
     finish(){
       //TODO:доработать
-      this.status = null;
+      /*  this.status = null;
       this.nrivals = null;
       this.desk = null;
       this.user = null;
       this.rivals = null;
-      this.player = null;
+      this.player = null;*/
     }
 
 
@@ -125,9 +125,9 @@ var g_min_combo = 2;
 
       this.player.onaction = function(){
         this.desk.timer = 0;
-          this.send(this.player.action);
-    }.bind(this);
-  }
+        this.send(this.player.action);
+      }.bind(this);
+    }
 
     isStopped() {
       return this._stopped;
@@ -140,7 +140,7 @@ var g_min_combo = 2;
     * @param {Card[].type} data - номиналы карт
     * @return {textstatus} - status
     */
-   send(msg){
+    send(msg){
       try {
         this.socket.send(JSON.stringify(msg));
 
@@ -163,7 +163,8 @@ var g_min_combo = 2;
     */
     receiver(event){
       let msg = JSON.parse(event.data);
-
+      //исправление очень редкого пага "пользователь клацает просто так туда сюда"
+      if(window.gamesession!=this){return;}
       switch(msg.action) {
         case "game_start"://апдейт игрока, соперников, стола
         this.rivals = new Rivals(msg.data.rivals);
