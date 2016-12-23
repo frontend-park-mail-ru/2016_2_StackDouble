@@ -9,23 +9,21 @@
 			super(options);
 			this._el = document.querySelector('#js-topList');
 			this.hide();
-			let data = new Array(40);
-			for(let i=0; i<data.length; i++){
-				data[i]={
-					nick: "player_" + (i+1),
-					id: i,
-					avatar: "http://lorempixel.com/40/40",
-					score: 367853-3447*i,
-					position: i+1,
-				};
-			};
-
+			this.toplistdata = new TopListModel();
 			this.toplist = new TopList({
 				el:this._el,
-				data:data,
+			});
+			this.update_list();
+		}
+
+		update_list(){
+			this.toplistdata.get_next().then(data => {
+				this._el = document.querySelector('.list-group');
+				this.template = window.fest['toplist/toplistitem.tmpl'];
+				this._el.innerHTML+=this.template(data);
 			});
 		}
-		
+
 		pause(options = {}) {
 			this._el = document.querySelector('#js-topList');
 			this.hide();
@@ -39,6 +37,17 @@
 				console.log("back from toplist");
 				this.router.back();
 			});
+			window.onscroll=function(){
+				let scrollHeight = Math.max(
+					document.body.scrollHeight, document.documentElement.scrollHeight,
+					document.body.offsetHeight, document.documentElement.offsetHeight,
+					document.body.clientHeight, document.documentElement.clientHeight
+				);
+				if(scrollHeight-window.scrollY<1000){
+									debugger;
+					this.update_list();
+				}
+			}.bind(this);
 		}
 	}
 	// export

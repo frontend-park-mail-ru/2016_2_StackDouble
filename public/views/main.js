@@ -24,7 +24,7 @@
 							tabindex: '1',
 							name: 'login',
 							type: 'text',
-							placeholder: 'Введите e-mail',
+							placeholder: 'Введите login',
 							required: true,
 						},
 						{
@@ -79,23 +79,16 @@
 		}
 
 		init(options = {}) {
-
 			// TODO: дописать реализацию
 			console.log("init mainView");
 			this.form.on('submit', (event) => {
 				event.preventDefault();
-				console.log("go MainMenu");
-				//TODO: переделать в
-				/*
-				var user = new UserModel();
-				user.singin(this.form.getFormData());
-				localStorage.setItem("UserProfile", user);
-				*/
-
 				const formData = this.form.getFormData();
 				const url = window.baseUrlApp + '/api/session';
 				const resultRequest = request(url, formData);
-				if (resultRequest.status === 200){
+				const response = JSON.parse(resultRequest.responseText);
+				if (resultRequest.status === 200 && response.code === 0){
+					window.UserProfile= new UserModel(response.response);
 					console.log("go MainMenu");
 					this.router.go('/MainMenu');
 				}else {

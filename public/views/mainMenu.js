@@ -12,12 +12,6 @@
       super(options);
       this._el = document.querySelector('#js-topmenu');
       this.hide();
-
-      if (localStorage.getItem('UserProfile')) {
-            window.UserProfile= new UserModel(JSON.parse(localStorage.getItem('UserProfile')));
-            window.UserProfile.avatar= "http://lorempixel.com/40/40";
-      }
-
       this.topmenu = new TopMenu({
         data: window.UserProfile
       });
@@ -139,7 +133,7 @@
         //		return this.router.go('/');
       }
 
-      if (!localStorage.getItem('UserProfile')) {
+      if (!window.UserProfile) {
         return this.router.go('/');
       }
       // TODO: дописать реализацию
