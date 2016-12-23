@@ -6398,6 +6398,15 @@ div[class$="top-list-score-line"]:nth-of-type(even) {
 .top-menu__user-info__score {
   margin-left: 5%; }
 
+.main-menu__canvas-loading {
+  position: absolute;
+  margin: auto;
+  margin-bottom: 1%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0; }
+
 .waiting-sign {
   position: absolute;
   height: 50px;

@@ -35,7 +35,7 @@
     }
 
     player_timer(){
-      this.now = null;
+    /*  this.now = null;
       this.timerId = setInterval(function(){
         this.now =  this.now || Date.now();
         let dt =(Date.now() - this.now)/1000;
@@ -57,7 +57,7 @@
             event.data = JSON.stringify(data);
             this.gamesession.receiver(event);
         }
-          }.bind(this), 1000);
+      }.bind(this), 1000);*/
     }
 
     find_cards_out_of_combo(){
