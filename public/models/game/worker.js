@@ -10,12 +10,14 @@ five:{type:"five"},four:{type:"four"},three:{type:"three"},two:{type:"two"}};
 const pair = {notype:[2], score: 10};
 const set = {notype:[3], score: 16};
 const double_pair = {notype:[2, 2], score: 24};
-const square = {notype:[4], score: 28};
+const square = {notype:[4], score: 32};
 const full_house = {notype:[3, 2], score: 35};
 const low_straight = {notype:[], type:{two:1, three:1, four:1, five:1, six: 1}, score: 70};
 const flush_royal = {notype:[], type:{ten:1, jack:1, queen:1, king:1, ace: 1}, score: 100};
+const quadro_pair = {notype:[], type:{two:2, three:2, four:2, five:2}, score: 70};
+const quadro_royal_pair = {notype:[], type:{jack:2, queen:2, king:2, ace: 2}, score: 100};
 
-var g_combinations = {pair:pair, set:set, square:square, double_pair:double_pair, full_house:full_house, flush_royal:flush_royal, low_straight:low_straight};
+var g_combinations = {pair:pair, square:square, double_pair:double_pair, quadro_pair:quadro_pair, quadro_royal_pair:quadro_royal_pair};
 
 var g_action_name__combo = "combo",
 g_action_name__exchange = "exchange";
@@ -176,7 +178,7 @@ var g_min_combo = 2;
         this.status = 4;
         this.player.update(msg.data.player);
         this.rivals.update(msg.data.rivals);
-        this.onendgame();
+        this.onendgame(msg.data.win);
         this.finish();
         break;
         case "change_player": //новые карты от обмена, колво очков от комбо

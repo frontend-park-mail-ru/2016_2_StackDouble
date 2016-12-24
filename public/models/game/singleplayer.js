@@ -3,10 +3,10 @@
   const Player = window.GamePlayer;
   const Card = window.GameCard;
   const shuffle_times =[700, 1400];
-  const value_deal_cards = 15; //число раздаваемых в начале карт
+  const value_deal_cards = 6; //число раздаваемых в начале карт
   const speed_move = 500; //время между ходами
-  const amount_of_each_card = 15; //количество одинаковых карт
-  const player_move_time = 5;
+  const amount_of_each_card = 4; //количество одинаковых карт
+  const player_move_time = 30;
   class SinglePlayer{
     /**
     * Создаёт сингл игру
@@ -35,7 +35,7 @@
     }
 
     player_timer(){
-    /*  this.now = null;
+     this.now = null;
       this.timerId = setInterval(function(){
         this.now =  this.now || Date.now();
         let dt =(Date.now() - this.now)/1000;
@@ -57,7 +57,7 @@
             event.data = JSON.stringify(data);
             this.gamesession.receiver(event);
         }
-      }.bind(this), 1000);*/
+      }.bind(this), 1000);
     }
 
     find_cards_out_of_combo(){
@@ -177,6 +177,7 @@
       next_round(){
         //1 т.к. 0 это пользователь
         this.queue = 1;
+        //создание видимости, что делается ход
         this.intervalId =  setInterval(this.make_move.bind(this), speed_move);
       }
 
@@ -187,7 +188,6 @@
       make_move(){
         let i = this.queue, player = this.players[i];
         if(!player.out_of_game){
-          //создание видимости, что делается ход
           let cards, exchange, combo;
           if(!this.do_move){
             this.do_move =! this.do_move;
@@ -214,7 +214,7 @@
           }
           //если карты кончились вывести из игры, следующий игрок передаст только 1 карту, так как ничего не получит
           //длина колоды, чтобы быстро не выходили из игры пока
-          if(player.total_cards===0 && this.deck.length===0){
+          if(player.total_cards===0 /*&& this.deck.length===0*/){
             player.out_of_game = true;
             this.previous_thrown_cards=1;
           }
@@ -225,7 +225,7 @@
           clearInterval(this.intervalId);
           let event = new CustomEvent("onmessage");
           let cards = this.take_deck_cards(this.previous_thrown_cards);
-          if(cards.length===0 && this.players[0].total_cards===0){
+          if(/*cards.length===0 &&*/ this.players[0].total_cards===0){
             this.players[0].out_of_game=true;
           }
           this.players[0].update({hand:cards});
@@ -235,7 +235,8 @@
               deck: this.deck.length,
               timer: player_move_time},
               player: {
-                his_turn: true,
+                his_turn: this.players[0].out_of_game ? false: true,
+                out_of_game: this.players[0].out_of_game,
                 hand: cards,
               }
             }
@@ -252,6 +253,7 @@
             let event = new CustomEvent("onmessage");
             let data = {action: 'game_end', data:{
               rivals: this.prepared_rivals(),
+              win: this.find_winner(),
               player: {
                 score: this.players[0].score,
                 out_of_game: this.players[0].out_of_game,
@@ -261,6 +263,19 @@
             }
 
           }
+        }
+
+        find_winner(){
+          let winner=0;
+          for(let i=1; i<this.players.length; i++){
+            if(this.players[winner].score<this.players[i].score){
+              winner=i;
+            }
+          }
+          if(winner===0){
+            return true;
+          }
+          return false;
         }
 
         send_change_rivals(){

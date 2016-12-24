@@ -36,6 +36,7 @@
 				this.tmp = document.querySelectorAll('#btn_exchange');
 				this.tmp.forEach(function(tmp){
 					tmp.addEventListener("click", (event)=>{
+						if(window.drawer.length===0){return;}
 						if(window.gamesession.player.do_action(g_action_name__exchange, window.drawer)=="ok"){
 
 						}else{
@@ -74,9 +75,14 @@
 				window.gamesession.desk.onchange = this.update_desk;
 				window.gamesession.player.onchange = this.update_player_desk;
 				window.gamesession.rivals.onchange = this.update_rivals;
-				window.gamesession.onendgame = function(){
+				window.gamesession.onendgame = function(win){
 					//TODO: написать завершение игры
+					if(win){
+						document.querySelector('.end_game').innerText = "YOU WIN!";
+					}
+					else{
 					document.querySelector('.end_game').innerText = "YOU DIED!";
+				}
 					document.querySelector('.end_game').hidden = false;
 					localStorage.setItem("UserProfile", JSON.stringify(window.UserProfile));
 					clearInterval(window.game_timerId);
