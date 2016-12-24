@@ -3,6 +3,8 @@ const CACHE_NAME = 'app_serviceworker_v_1';
 const MAX_AGE = 30000;
 // ссылки на кэшируемые файлы
 const cacheUrls = [
+
+  "/main.js",
   "/assets/avatar.svg",
   "/assets/card.svg",
   "/assets/clock.svg",
@@ -64,7 +66,6 @@ const cacheUrls = [
 "/views/topList.js",
 "/assets/clock.svg",
 
-"/main.js",
 
 ];
 
