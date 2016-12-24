@@ -36,6 +36,7 @@
 				this.tmp = document.querySelectorAll('#btn_exchange');
 				this.tmp.forEach(function(tmp){
 					tmp.addEventListener("click", (event)=>{
+						if(window.drawer.length===0){return;}
 						if(window.gamesession.player.do_action(g_action_name__exchange, window.drawer)=="ok"){
 
 						}else{
@@ -52,6 +53,8 @@
 				this.tmp = document.querySelectorAll('#btn_combo');
 				this.tmp.forEach(function(tmp){
 					tmp.addEventListener("click", (event)=>{
+						event.preventDefault();
+						if(window.drawer.length===0){return;}
 						if(window.gamesession.player.do_action(g_action_name__combo, window.drawer)=="ok"){
 
 						}else{
@@ -72,11 +75,19 @@
 				window.gamesession.desk.onchange = this.update_desk;
 				window.gamesession.player.onchange = this.update_player_desk;
 				window.gamesession.rivals.onchange = this.update_rivals;
-				window.gamesession.onendgame = function(){
+				window.gamesession.onendgame = function(win){
 					//TODO: написать завершение игры
+					if(win){
+						document.querySelector('.end_game').innerText = "YOU WIN!";
+					}
+					else{
 					document.querySelector('.end_game').innerText = "YOU DIED!";
+				}
 					document.querySelector('.end_game').hidden = false;
-					clearInterval(this.timerId);
+					localStorage.setItem("UserProfile", JSON.stringify(window.UserProfile));
+					clearInterval(window.game_timerId);
+					this.tmp = document.querySelector('.end_game');
+					this.tmp.addEventListener("click", function(){document.querySelector('#top_btn_exit').click();});
 				}
 
 				this.update_desk();
@@ -191,6 +202,7 @@
 				// if while test test
 				if(document.querySelector("#score")){
 					document.querySelector("#score").innerText = window.UserProfile.score;
+					localStorage.setItem("UserProfile", JSON.stringify(window.UserProfile));
 				}
 			}
 
@@ -230,22 +242,22 @@
 	    * @callback
 	    */
 			update_desk(){
-				clearInterval(this.timerId);
+				clearInterval(window.game_timerId);
 				this.now = null;
 				document.querySelector('.timer').classList.remove("timer_red");
 				document.querySelector('.timer').classList.remove("timer_red-dead");
 				document.querySelector('.timer').hidden = false;
 				let tmp = document.querySelector('.deck__num-cards');
 				tmp.innerText=window.gamesession.desk.deck;
-				this.timerId = setInterval(function(){
+				window.game_timerId = setInterval(function(){
 					this.now =  this.now || Date.now();
 					let dt =(Date.now() - this.now)/1000;
 					let timer;
-					if(!window.gamesession.desk){clearInterval(this.timerId); timer=0; return;}
+					if(!window.gamesession.desk){clearInterval(window.game_timerId); timer=0; return;}
 					if(window.gamesession.desk.timer - dt>0){
 						timer = window.gamesession.desk.timer-dt;
 					} else{
-						clearInterval(this.timerId);
+						clearInterval(window.game_timerId);
 						timer=0;
 						this.now = null;
 						document.querySelector('.timer').classList.remove("timer_red");
@@ -263,15 +275,13 @@
 			}
 
 			pause(options = {}) {
+				clearInterval(window.game_timerId);
 				this._el = document.querySelector('#js-game');
 				this.hide();
+				if(document.querySelector('.end_game')){document.querySelector('.end_game').hidden = true;}
 			}
 
 			resume(options = {}) {
-				if (!options.username && !options.email) {
-					//		return this.router.go('/');
-				}
-
 				if (!window.gamesession || !localStorage.getItem('UserProfile')) {
 					return this.router.go('/');
 				}

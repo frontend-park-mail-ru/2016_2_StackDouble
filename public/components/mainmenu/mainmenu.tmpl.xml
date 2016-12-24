@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col-md-12 col-xs-12 blank_150" ></div>
     </div>
-    <div class="col-md-4 col-md-offset-4 col-xs-6 col-xs-offset-3 blank_50">
-      <img class="waiting-sign" alt="50x50" hidden="true"/>
+    <div class="col-md-8 col-md-offset-2 col-xs-10 col-xs-offset-1 blank_50">
+      <canvas id='loading' class="main-menu__canvas-loading"></canvas>
     </div>
   </div>
   <div class="col-md-12 col-xs-12 blank_20"></div>

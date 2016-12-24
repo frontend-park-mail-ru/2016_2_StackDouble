@@ -12,12 +12,10 @@
       super(options);
       this._el = document.querySelector('#js-topmenu');
       this.hide();
-
-      if (localStorage.getItem('UserProfile')) {
-            window.UserProfile= new UserModel(JSON.parse(localStorage.getItem('UserProfile')));
-            window.UserProfile.avatar= "http://lorempixel.com/40/40";
+      if(!window.UserProfile && localStorage.getItem('UserProfile')){
+        let user =JSON.parse(localStorage.getItem('UserProfile'));
+        window.UserProfile = new UserModel(user);
       }
-
       this.topmenu = new TopMenu({
         data: window.UserProfile
       });
@@ -66,15 +64,15 @@
       this.topmenu._el.querySelector('#top_btn_exit').addEventListener('click', (event)=> {
         event.preventDefault();
         if(!(window.location.pathname == '/MainMenu/' || window.location.pathname == '/MainMenu')){
-          this.router.back();
+          this.router.go('/MainMenu');
         }else{
-        this._el = document.querySelector('#js-topmenu');
-        this.hide();
-        //TODO: доделать выход
-        localStorage.removeItem('UserProfile');
-        //TODO: пересоздавать вью или как тест пусть будет
-        this.router.go('/');
-      }
+          this._el = document.querySelector('#js-topmenu');
+          this.hide();
+          //TODO: доделать выход
+          localStorage.removeItem('UserProfile');
+          //TODO: пересоздавать вью или как тест пусть будет
+          this.router.go('/');
+        }
       });
 
       console.log("init mainmenu");
@@ -96,61 +94,65 @@
 
       this.mainmenu._el.querySelector('#btn_start').addEventListener('click', (event)=> {
         event.preventDefault();
-        this.mainmenu._el.querySelector('.waiting-sign').hidden = false;
+        this.canvas = new window.LoadingAnimation({id:'loading'});
+        this.canvas.run_animation();
         window.gamesession = new GameWorker(window.UserProfile);
         window.gamesession.onstatuschange = function(){
           if(window.gamesession.status === 3){
-            console.log("go to game");
-            this.router.go('/game');
+              console.log("go to game");
+              this.router.go('/game');
+              this.canvas.stop_animation();
+            }
+          }.bind(this);
+          //щадержка для демонстрации канвас
+          setTimeout(function(){
+          window.gamesession.start();}.bind(this), 5000);
+        });
+
+
+        let target = document.getElementById('js-mainmenu');
+        let observer = new MutationObserver(function(mutations) {
+
+          //TODO: исправить
+          if(window.location.pathname == '/MainMenu/' || window.location.pathname == '/MainMenu'){
+            let target = document.querySelector('#top_btn_exit > i');
+            target.classList.add("glyphicon-remove");
+            target.classList.remove("glyphicon-arrow-left");
+
+          }else{
+            let target = document.querySelector('#top_btn_exit > i');
+            target.classList.remove("glyphicon-remove");
+            target.classList.add("glyphicon-arrow-left");
           }
-        }.bind(this);
-        window.gamesession.start();
-      });
+        });
+        let config = { attributes: true};
+        observer.observe(target, config);
 
-
-      let target = document.getElementById('js-mainmenu');
-      let observer = new MutationObserver(function(mutations) {
-
-        //TODO: исправить
-      if(window.location.pathname == '/MainMenu/' || window.location.pathname == '/MainMenu'){
-        let target = document.querySelector('#top_btn_exit > i');
-        target.classList.add("glyphicon-remove");
-        target.classList.remove("glyphicon-arrow-left");
-
-      }else{
-        let target = document.querySelector('#top_btn_exit > i');
-        target.classList.remove("glyphicon-remove");
-        target.classList.add("glyphicon-arrow-left");
-      }
-      });
-      let config = { attributes: true};
-      observer.observe(target, config);
-
-    }
-
-    pause(options = {}) {
-      this._el = document.querySelector('#js-mainmenu');
-      this.hide();
-    }
-
-
-    resume(options = {}) {
-      if (!options.username && !options.email) {
-        //		return this.router.go('/');
       }
 
-      if (!localStorage.getItem('UserProfile')) {
-        return this.router.go('/');
+      pause(options = {}) {
+        this._el = document.querySelector('#js-mainmenu');
+        this.hide();
       }
-      // TODO: дописать реализацию
 
-      this._el = document.querySelector('#js-topmenu');
-      this.show();
-      this._el = document.querySelector('#js-mainmenu');
-      this.show();
+
+      resume(options = {}) {
+        if (!options.username && !options.email) {
+          //		return this.router.go('/');
+        }
+
+        if (!window.UserProfile) {
+          return this.router.go('/');
+        }
+        // TODO: дописать реализацию
+
+        this._el = document.querySelector('#js-topmenu');
+        this.show();
+        this._el = document.querySelector('#js-mainmenu');
+        this.show();
+      }
     }
-  }
-  // export
-  window.MainMenuView = MainMenuView;
+    // export
+    window.MainMenuView = MainMenuView;
 
-})();
+  })();

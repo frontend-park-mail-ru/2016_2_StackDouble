@@ -1,0 +1,24 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+      <fest:for iterate="data" index="i" value="field">
+        <div id="{field.id}" class="row list-group-item top-list-score-line">
+          <div class="col-md-1 col-xs-1">
+            <h4 name="position"><fest:value>field.position</fest:value></h4>
+          </div>
+          <div class="col-md-1 col-xs-1">
+            <a>
+              <img class="media-object img-rounded top-list__avatar" alt="40x40" src="{field.avatar}"/>
+            </a>
+          </div>
+
+          <div class="col-md-4 col-xs-4">
+            <h4 name="name"><fest:value>field.login</fest:value></h4>
+          </div>
+          <div class="col-md-1 col-xs-1">
+            <img class="media-object img-rounded top-list__goblet" alt="40x40"/>
+          </div>
+          <div class="col-md-4 col-xs-4">
+            <h4 name="score"><fest:value>field.score</fest:value></h4>
+          </div>
+        </div>
+      </fest:for>
+</fest:template>

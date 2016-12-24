@@ -56,7 +56,9 @@ $path: "../assets/"
 	z-index: 1
 	height: 90px
 	width: 90px
-	background-size: 100% 100%
+	background-size: contain
+	background-repeat: no-repeat
+	background-position: center
 	border-radius: 10px
 	float: left
 	&:hover
@@ -98,13 +100,14 @@ $path: "../assets/"
 .rival-info__card
 	position: relative
 	top: 0
-	left: 0
 	z-index: 2
 	height: 90px
 	width: 90px
 	margin-left: 0
 	float: right
-	background-size: 100% 100%
+	background-size: contain
+	background-repeat: no-repeat
+	background-position: center
 	background-image: url($path +"deck/deck.svg")
 	&:hover
 		@extend .card:hover
@@ -149,7 +152,9 @@ $path: "../assets/"
 	width: 6%
 	margin-right: 0.5%
 	margin-left: 0.5%
-	background-size: 100% 100%
+	background-size: contain
+	background-repeat: no-repeat
+	background-position: center
 	background-image: url($path +"card.svg")
 	&:hover
 		@extend .card:hover
@@ -174,7 +179,9 @@ $suit_list: joker ace king queen jack ten nine eight seven six five four three t
 	height: 18%
 	width: 18%
 	float: right
-	background-size: 100% 100%
+	background-size: contain
+	background-repeat: no-repeat
+	background-position: center
 	background-image: url($path +"deck/deck.svg")
 	z-index: 1
 
@@ -197,7 +204,9 @@ $suit_list: joker ace king queen jack ten nine eight seven six five four three t
 	position: absolute
 	height: 100%
 	width: 100%
-	background-size: 100% 100%
+	background-size: contain
+	background-repeat: no-repeat
+	background-position: center
 	transform: rotateY(180deg)
 	background-image: url($path +"deck/deck_face.svg")
 	backface-visibility: hidden
@@ -206,7 +215,9 @@ $suit_list: joker ace king queen jack ten nine eight seven six five four three t
 	position: absolute
 	height: 100%
 	width: 100%
-	background-size: 100% 100%
+	background-size: contain
+	background-repeat: no-repeat
+	background-position: center
 	background-image: url($path +"deck/deck.svg")
 	backface-visibility: hidden
 
@@ -250,7 +261,9 @@ $suit_list: joker ace king queen jack ten nine eight seven six five four three t
 	height: 15%
 	width: 15%
 	float: right
-	background-size: 100% 100%
+	background-size: contain
+	background-repeat: no-repeat
+	background-position: center
 	background-image: url($path +"clock.svg")
 	&:hover
 		transform-style: preserve-3d
@@ -347,7 +360,9 @@ $suit_list: joker ace king queen jack ten nine eight seven six five four three t
 	width: 14%
 	float: left
 	margin-bottom: 3%
-	background-size: 100% 100%
+	background-size: contain
+	background-repeat: no-repeat
+	background-position: center
 	&:hover
 		@extend .card:hover
 
@@ -461,6 +476,10 @@ $suit_list: joker ace king queen jack ten nine eight seven six five four three t
 	height: 8vmin
 
 .end_game
+	width: 100%
+	height: 100%
+	background-color: black
+	opacity: 0.7
 	position: fixed
 	top: 0
 	bottom: 0
@@ -494,6 +513,10 @@ div[class$="top-list-score-line"]:nth-of-type(even)
 	top: 7%
 	width: 100px
 
+.top-list__avatar
+	height: 40px
+	width: 40px
+
 .top-menu
 	background: skyblue
 	padding: 0.2%
@@ -517,6 +540,14 @@ div[class$="top-list-score-line"]:nth-of-type(even)
 	margin-left: 5%
 
 
+.main-menu__canvas-loading
+	position: absolute 
+	margin: auto
+	margin-bottom: 1%
+	top: 0
+	bottom: 0
+	left: 0
+	right: 0
 
 .waiting-sign
 	position: absolute

@@ -24,7 +24,7 @@
 							tabindex: '1',
 							name: 'login',
 							type: 'text',
-							placeholder: 'Введите e-mail',
+							placeholder: 'Введите login',
 							required: true,
 						},
 						{
@@ -42,14 +42,17 @@
 								type: 'submit',
 								name: 'signIn',
 								class: "btn btn-success btn-margin",
+								id:'login'
 							}
 						},
 						{
 							text: 'Регистрация',
 							attrs: {
-								type: 'reset',
+								type: 'regist',
 								name: 'registration',
 								class: "btn btn-success btn-margin",
+								formnovalidate: "formnovalidate",
+								id:'registration'
 							}
 						},
 					]
@@ -64,6 +67,7 @@
 		}
 
 		resume(options = {}) {
+			this.form.reset();
 			this._el = document.querySelector('#js-login');
 			this.show();
 
@@ -79,34 +83,29 @@
 		}
 
 		init(options = {}) {
-
 			// TODO: дописать реализацию
 			console.log("init mainView");
 			this.form.on('submit', (event) => {
 				event.preventDefault();
-				console.log("go MainMenu");
-				//TODO: переделать в
-				/*
-				var user = new UserModel();
-				user.singin(this.form.getFormData());
-				localStorage.setItem("UserProfile", user);
-				*/
-
 				const formData = this.form.getFormData();
 				const url = window.baseUrlApp + '/api/session';
 				const resultRequest = request(url, formData);
-				if (resultRequest.status === 200){
+				const response = JSON.parse(resultRequest.responseText);
+				if (resultRequest.status === 200 && response.code === 0){
+					window.UserProfile= new UserModel(response.response);
+					localStorage.setItem("UserProfile", JSON.stringify(window.UserProfile));
 					console.log("go MainMenu");
 					this.router.go('/MainMenu');
 				}else {
 					alert('Неправильный логин/пароль');
 				}
 			});
-			this.form.on('reset', (event) => {
-				event.preventDefault();
-				console.log("go to registration");
-				this.router.go('/registration');
-			});
+			let tmp = document.querySelector('#registration');
+				tmp.addEventListener("click", (event) => {
+					event.preventDefault();
+					console.log("go to registration");
+					this.router.go('/registration');
+				});
 		}
 	}
 
