@@ -66,7 +66,6 @@
 											console.log(formData);
 												console.log(resultRequest.responseText);
 												const response = JSON.parse(resultRequest.responseText);
-												debugger;
 												switch (response.code){
 														case 0:
 																alert('Регистрация прошла успешно!');
